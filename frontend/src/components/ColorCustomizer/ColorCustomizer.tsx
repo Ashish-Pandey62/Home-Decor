@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MdUndo, MdRedo } from 'react-icons/md';
+import * as api from '../../services/api';
 
 const CustomizerContainer = styled.div`
   display: flex;
@@ -20,7 +21,21 @@ const CanvasContainer = styled.div`
 const Canvas = styled.canvas`
   width: 100%;
   height: auto;
-  cursor: crosshair;
+  cursor: pointer;
+`;
+
+const LoadingOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  color: #007bff;
 `;
 
 const ToolbarContainer = styled.div`
@@ -50,122 +65,71 @@ const ToolButton = styled.button<{ disabled?: boolean }>`
   }
 `;
 
-interface Point {
-  x: number;
-  y: number;
-}
+const SegmentOverlay = styled.svg`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+`;
 
 interface ColorCustomizerProps {
   image: HTMLImageElement;
   currentColor: string;
 }
 
+interface HistoryEntry {
+  imageUrl: string;
+  segments: api.WallSegment[];
+}
+
 const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [history, setHistory] = useState<ImageData[]>([]);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const [isDrawing, setIsDrawing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [segments, setSegments] = useState<api.WallSegment[]>([]);
+  const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const initializeImage = async () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-    // Set canvas dimensions to match image
-    canvas.width = image.width;
-    canvas.height = image.height;
+      // Set canvas dimensions to match image
+      canvas.width = image.width;
+      canvas.height = image.height;
 
-    // Draw initial image
-    ctx.drawImage(image, 0, 0);
+      // Draw initial image
+      ctx.drawImage(image, 0, 0);
 
-    // Save initial state to history
-    const initialState = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    setHistory([initialState]);
-    setHistoryIndex(0);
+      try {
+        setIsProcessing(true);
+        // Convert canvas data to file and upload
+        const imageFile = api.dataURLtoFile(canvas.toDataURL(), 'room.jpg');
+        const processedImage = await api.uploadImage(imageFile);
+
+        // Update segments and history
+        setSegments(processedImage.segments);
+        setHistory([{ imageUrl: processedImage.imageUrl, segments: processedImage.segments }]);
+        setHistoryIndex(0);
+      } catch (error) {
+        console.error('Failed to process image:', error);
+        alert('Failed to process image. Please try again.');
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
+    initializeImage();
   }, [image]);
 
-  const floodFill = (startX: number, startY: number, fillColor: string) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const pixels = imageData.data;
-
-    // Convert hex color to RGB
-    const fillRGB = {
-      r: parseInt(fillColor.slice(1, 3), 16),
-      g: parseInt(fillColor.slice(3, 5), 16),
-      b: parseInt(fillColor.slice(5, 7), 16)
-    };
-
-    // Get target color at click position
-    const startPos = (startY * canvas.width + startX) * 4;
-    const targetColor = {
-      r: pixels[startPos],
-      g: pixels[startPos + 1],
-      b: pixels[startPos + 2]
-    };
-
-    // Color matching threshold
-    const threshold = 30;
-
-    const matchesTarget = (pos: number) => {
-      return (
-        Math.abs(pixels[pos] - targetColor.r) <= threshold &&
-        Math.abs(pixels[pos + 1] - targetColor.g) <= threshold &&
-        Math.abs(pixels[pos + 2] - targetColor.b) <= threshold
-      );
-    };
-
-    const stack: Point[] = [{ x: startX, y: startY }];
-    const visited = new Set<string>();
-
-    while (stack.length > 0) {
-      const current = stack.pop()!;
-      const pixelPos = (current.y * canvas.width + current.x) * 4;
-
-      if (
-        current.x < 0 ||
-        current.x >= canvas.width ||
-        current.y < 0 ||
-        current.y >= canvas.height ||
-        visited.has(`${current.x},${current.y}`) ||
-        !matchesTarget(pixelPos)
-      ) {
-        continue;
-      }
-
-      visited.add(`${current.x},${current.y}`);
-
-      // Set new color
-      pixels[pixelPos] = fillRGB.r;
-      pixels[pixelPos + 1] = fillRGB.g;
-      pixels[pixelPos + 2] = fillRGB.b;
-
-      // Add neighbors to stack
-      stack.push(
-        { x: current.x + 1, y: current.y },
-        { x: current.x - 1, y: current.y },
-        { x: current.x, y: current.y + 1 },
-        { x: current.x, y: current.y - 1 }
-      );
-    }
-
-    ctx.putImageData(imageData, 0, 0);
-    
-    // Save to history
-    const newState = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    setHistory(prev => [...prev.slice(0, historyIndex + 1), newState]);
-    setHistoryIndex(prev => prev + 1);
-  };
-
-  const handleCanvasClick = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    if (isDrawing) return;
+  const handleCanvasClick = async (e: React.MouseEvent<HTMLCanvasElement>) => {
+    if (isProcessing) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -177,12 +141,66 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     const x = Math.floor((e.clientX - rect.left) * scaleX);
     const y = Math.floor((e.clientY - rect.top) * scaleY);
 
-    setIsDrawing(true);
-    floodFill(x, y, currentColor);
-    setIsDrawing(false);
+    // Find clicked segment
+    const clickedSegment = segments.find(segment => {
+      // Check if point is inside polygon
+      return isPointInPolygon([x, y], segment.coordinates);
+    });
+
+    if (clickedSegment) {
+      setSelectedSegment(clickedSegment.id);
+      try {
+        setIsProcessing(true);
+        const imageData = canvas.toDataURL();
+        const newImageUrl = await api.changeWallColor({
+          imageData,
+          segmentId: clickedSegment.id,
+          color: currentColor,
+        });
+
+        // Update history
+        const newHistory = history.slice(0, historyIndex + 1);
+        newHistory.push({ imageUrl: newImageUrl, segments });
+        setHistory(newHistory);
+        setHistoryIndex(prev => prev + 1);
+
+        // Load and draw new image
+        const newImage = new Image();
+        newImage.src = newImageUrl;
+        newImage.onload = () => {
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(newImage, 0, 0);
+          }
+        };
+      } catch (error) {
+        console.error('Failed to change wall color:', error);
+        alert('Failed to change wall color. Please try again.');
+      } finally {
+        setIsProcessing(false);
+      }
+    }
   };
 
-  const undo = () => {
+  const isPointInPolygon = (point: number[], polygon: number[][]) => {
+    const [x, y] = point;
+    let inside = false;
+
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+      const [xi, yi] = polygon[i];
+      const [xj, yj] = polygon[j];
+
+      const intersect = ((yi > y) !== (yj > y))
+        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
+  };
+
+  const undo = async () => {
     if (historyIndex <= 0) return;
 
     const canvas = canvasRef.current;
@@ -192,11 +210,20 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     if (!ctx) return;
 
     const newIndex = historyIndex - 1;
-    ctx.putImageData(history[newIndex], 0, 0);
+    const prevEntry = history[newIndex];
+
+    const img = new Image();
+    img.src = prevEntry.imageUrl;
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+    };
+
     setHistoryIndex(newIndex);
+    setSegments(prevEntry.segments);
   };
 
-  const redo = () => {
+  const redo = async () => {
     if (historyIndex >= history.length - 1) return;
 
     const canvas = canvasRef.current;
@@ -206,23 +233,32 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     if (!ctx) return;
 
     const newIndex = historyIndex + 1;
-    ctx.putImageData(history[newIndex], 0, 0);
+    const nextEntry = history[newIndex];
+
+    const img = new Image();
+    img.src = nextEntry.imageUrl;
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+    };
+
     setHistoryIndex(newIndex);
+    setSegments(nextEntry.segments);
   };
 
   return (
     <CustomizerContainer>
       <ToolbarContainer>
-        <ToolButton 
-          onClick={undo} 
-          disabled={historyIndex <= 0}
+        <ToolButton
+          onClick={undo}
+          disabled={historyIndex <= 0 || isProcessing}
           title="Undo"
         >
           <MdUndo />
         </ToolButton>
-        <ToolButton 
-          onClick={redo} 
-          disabled={historyIndex >= history.length - 1}
+        <ToolButton
+          onClick={redo}
+          disabled={historyIndex >= history.length - 1 || isProcessing}
           title="Redo"
         >
           <MdRedo />
@@ -233,6 +269,22 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
           ref={canvasRef}
           onClick={handleCanvasClick}
         />
+        <SegmentOverlay>
+          {segments.map((segment) => (
+            <path
+              key={segment.id}
+              d={`M ${segment.coordinates.map(([x, y]) => `${x},${y}`).join(' L ')} Z`}
+              fill="transparent"
+              stroke={segment.id === selectedSegment ? '#007bff' : 'transparent'}
+              strokeWidth="2"
+            />
+          ))}
+        </SegmentOverlay>
+        {isProcessing && (
+          <LoadingOverlay>
+            Processing...
+          </LoadingOverlay>
+        )}
       </CanvasContainer>
     </CustomizerContainer>
   );
