@@ -1,2 +1,7 @@
 models/sam_vit_h_4b8939.pth
 __pycache__
+myenv 
+venv
+backend/static/processed/*
+backend/static/uploads/*
+backend/logs/app.log
