@@ -117,7 +117,7 @@ const UploadButton = styled.button`
   }
 `;
 
-const DragActiveOverlay = styled.div<{ isDragging: boolean }>`
+const DragActiveOverlay = styled.div<{ $isDragging: boolean }>`
   position: absolute;
   top: 0;
   left: 0;
@@ -129,7 +129,7 @@ const DragActiveOverlay = styled.div<{ isDragging: boolean }>`
   align-items: center;
   font-size: 24px;
   color: #007bff;
-  opacity: ${props => props.isDragging ? 1 : 0};
+  opacity: ${props => props.$isDragging ? 1 : 0};
   pointer-events: none;
   transition: opacity 0.3s ease;
 `;
@@ -139,6 +139,17 @@ interface ImageUploaderProps {
 }
 
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
+  const logAction = (action: string, details?: any) => {
+    console.log(`📤 ImageUploader - ${action}`, details || '');
+  };
+
+  const logError = (action: string, error: any) => {
+    console.error(`❌ ImageUploader - ${action} Failed:`, {
+      message: error.message,
+      details: error
+    });
+  };
+
   const [preview, setPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -146,7 +157,14 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      logAction('File selected', {
+        name: file.name,
+        type: file.type,
+        size: `${(file.size / 1024).toFixed(2)}KB`
+      });
+
       if (!file.type.startsWith('image/')) {
+        logError('File validation', new Error('Invalid file type'));
         alert('Please upload an image file');
         return;
       }
@@ -154,11 +172,21 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         if (e.target?.result) {
+          logAction('File read complete');
           setPreview(e.target.result as string);
           const img = new Image();
           img.src = e.target.result as string;
-          img.onload = () => onImageUpload(img);
+          img.onload = () => {
+            logAction('Image loaded', {
+              width: img.width,
+              height: img.height
+            });
+            onImageUpload(img);
+          };
         }
+      };
+      reader.onerror = (e) => {
+        logError('File reading', reader.error);
       };
       reader.readAsDataURL(file);
     }
@@ -167,9 +195,17 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(false);
+    
     const file = event.dataTransfer.files[0];
     if (file) {
+      logAction('File dropped', {
+        name: file.name,
+        type: file.type,
+        size: `${(file.size / 1024).toFixed(2)}KB`
+      });
+
       if (!file.type.startsWith('image/')) {
+        logError('File validation', new Error('Invalid file type'));
         alert('Please upload an image file');
         return;
       }
@@ -177,11 +213,21 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         if (e.target?.result) {
+          logAction('File read complete');
           setPreview(e.target.result as string);
           const img = new Image();
           img.src = e.target.result as string;
-          img.onload = () => onImageUpload(img);
+          img.onload = () => {
+            logAction('Image loaded', {
+              width: img.width,
+              height: img.height
+            });
+            onImageUpload(img);
+          };
         }
+      };
+      reader.onerror = (e) => {
+        logError('File reading', reader.error);
       };
       reader.readAsDataURL(file);
     }
@@ -190,11 +236,13 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(true);
+    logAction('Drag over');
   };
 
   const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragging(false);
+    logAction('Drag leave');
   };
 
   const triggerFileInput = () => {
@@ -228,7 +276,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
             </SupportedFormats>
           </UploadText>
         )}
-        <DragActiveOverlay isDragging={isDragging}>
+        <DragActiveOverlay $isDragging={isDragging}>
           Drop your image here
         </DragActiveOverlay>
       </UploadArea>

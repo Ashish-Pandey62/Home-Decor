@@ -98,6 +98,17 @@ class FileService:
                         print(f"Error removing file {file_path}: {e}")
 
     @staticmethod
+    def get_file_path(image_id: str) -> Path:
+        """
+        Get the file path for a given image ID
+        """
+        for ext in settings.ALLOWED_EXTENSIONS:
+            file_path = settings.UPLOAD_DIR / f"{image_id}{ext}"
+            if file_path.exists():
+                return file_path
+        raise StorageError(f"No file found for image ID: {image_id}")
+
+    @staticmethod
     def get_file_url(file_path: Path) -> str:
         """
         Convert a file path to a URL path

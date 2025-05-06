@@ -19,17 +19,17 @@ const FormatToggle = styled.div`
   margin-bottom: 10px;
 `;
 
-const FormatButton = styled.button<{ active: boolean }>`
+const FormatButton = styled.button<{ $active: boolean }>`
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
-  background: ${props => props.active ? '#007bff' : '#e9ecef'};
-  color: ${props => props.active ? 'white' : 'black'};
+  background: ${props => props.$active ? '#007bff' : '#e9ecef'};
+  color: ${props => props.$active ? 'white' : 'black'};
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
-    background: ${props => props.active ? '#0056b3' : '#dee2e6'};
+    background: ${props => props.$active ? '#0056b3' : '#dee2e6'};
   }
 `;
 
@@ -104,13 +104,13 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ color, onChange }) => {
     <ColorPickerContainer>
       <FormatToggle>
         <FormatButton 
-          active={format === 'hex'} 
+          $active={format === 'hex'}
           onClick={() => setFormat('hex')}
         >
           HEX
         </FormatButton>
         <FormatButton 
-          active={format === 'rgb'} 
+          $active={format === 'rgb'}
           onClick={() => setFormat('rgb')}
         >
           RGB

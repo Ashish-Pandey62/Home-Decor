@@ -2,6 +2,9 @@ from pathlib import Path
 from pydantic_settings import BaseSettings
 from typing import Set
 from functools import lru_cache
+import logging
+import logging.handlers
+import sys
 
 class Settings(BaseSettings):
     # API Settings
@@ -41,11 +44,49 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     return Settings()
 
-# Create required directories
-def create_directories():
-    settings = get_settings()
-    settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    settings.PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
-
 # Initialize settings
 settings = get_settings()
+
+# Configure logging and create directories
+def setup_application():
+    # Create required directories
+    settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+    settings.PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # Create logs directory with absolute path
+    logs_dir = Path(__file__).parent.parent.parent / 'logs'
+    logs_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Setup logging
+    logger = logging.getLogger('app')
+    logger.setLevel(logging.DEBUG)
+
+    # Console handler with colored output
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(logging.INFO)
+    console_format = logging.Formatter(
+        '%(asctime)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    console_handler.setFormatter(console_format)
+    
+    # File handler for detailed logs
+    log_file = logs_dir / 'app.log'
+    file_handler = logging.handlers.RotatingFileHandler(
+        str(log_file),
+        maxBytes=1024*1024,  # 1MB
+        backupCount=5
+    )
+    file_handler.setLevel(logging.DEBUG)
+    file_format = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(pathname)s:%(lineno)d - %(message)s'
+    )
+    file_handler.setFormatter(file_format)
+    
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+    return logger
+
+# Initialize application (create directories and setup logging)
+logger = setup_application()
+logger.info("Application directories and logging initialized")

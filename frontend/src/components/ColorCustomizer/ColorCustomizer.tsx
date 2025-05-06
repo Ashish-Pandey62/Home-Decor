@@ -79,9 +79,15 @@ interface ColorCustomizerProps {
   currentColor: string;
 }
 
+interface WallSegment {
+  id: string;
+  coordinates: [number, number][];
+}
+
 interface HistoryEntry {
+  image_id: string;
   imageUrl: string;
-  segments: api.WallSegment[];
+  segments: WallSegment[];
 }
 
 const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }) => {
@@ -89,11 +95,26 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [segments, setSegments] = useState<api.WallSegment[]>([]);
+  const [segments, setSegments] = useState<WallSegment[]>([]);
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
+
+  const logAction = (action: string, details?: any) => {
+    console.log(`🎨 ColorCustomizer - ${action}`, details || '');
+  };
+
+  const logError = (action: string, error: any) => {
+    console.error(`🚫 ColorCustomizer - ${action} Failed:`, {
+      message: error.message,
+      details: error
+    });
+  };
 
   useEffect(() => {
     const initializeImage = async () => {
+      logAction('Initializing image', {
+        width: image.width,
+        height: image.height
+      });
       const canvas = canvasRef.current;
       if (!canvas) return;
 
@@ -109,17 +130,36 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
 
       try {
         setIsProcessing(true);
-        // Convert canvas data to file and upload
+        
+        logAction('Step 1: Uploading image');
         const imageFile = api.dataURLtoFile(canvas.toDataURL(), 'room.jpg');
-        const processedImage = await api.uploadImage(imageFile);
-
+        const uploadResponse = await api.uploadImage(imageFile);
+        logAction('Upload successful', uploadResponse);
+        
+        logAction('Step 2: Detecting walls', { image_id: uploadResponse.image_id });
+        const wallsResponse = await api.detectWalls(uploadResponse.image_id);
+        logAction('Wall detection successful', {
+          wallCount: wallsResponse.walls.length
+        });
+        
+        logAction('Converting wall data to segments');
+        const wallSegments = wallsResponse.walls.map(wall => ({
+          id: wall.mask_id,
+          coordinates: wall.coordinates
+        }));
+        
         // Update segments and history
-        setSegments(processedImage.segments);
-        setHistory([{ imageUrl: processedImage.imageUrl, segments: processedImage.segments }]);
+        setSegments(wallSegments);
+        setHistory([{
+          image_id: wallsResponse.image_id,
+          imageUrl: wallsResponse.preview_url,
+          segments: wallSegments
+        }]);
         setHistoryIndex(0);
       } catch (error) {
-        console.error('Failed to process image:', error);
-        alert('Failed to process image. Please try again.');
+        logError('Image processing', error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+        alert(`Failed to process image: ${errorMessage}\n\nPlease ensure the backend server is running at ${api.API_BASE_URL}`);
       } finally {
         setIsProcessing(false);
       }
@@ -140,6 +180,8 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
 
     const x = Math.floor((e.clientX - rect.left) * scaleX);
     const y = Math.floor((e.clientY - rect.top) * scaleY);
+    
+    logAction('Canvas click', { x, y });
 
     // Find clicked segment
     const clickedSegment = segments.find(segment => {
@@ -148,25 +190,33 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     });
 
     if (clickedSegment) {
+      logAction('Segment selected', {
+        segmentId: clickedSegment.id,
+        color: currentColor
+      });
       setSelectedSegment(clickedSegment.id);
       try {
         setIsProcessing(true);
-        const imageData = canvas.toDataURL();
-        const newImageUrl = await api.changeWallColor({
-          imageData,
-          segmentId: clickedSegment.id,
-          color: currentColor,
-        });
+        const currentEntry = history[historyIndex];
+        const colorResponse = await api.applyColor(
+          currentEntry.image_id,
+          currentColor,
+          [clickedSegment.id]
+        );
 
         // Update history
         const newHistory = history.slice(0, historyIndex + 1);
-        newHistory.push({ imageUrl: newImageUrl, segments });
+        newHistory.push({
+          image_id: colorResponse.image_id,
+          imageUrl: colorResponse.processed_image_url,
+          segments
+        });
         setHistory(newHistory);
         setHistoryIndex(prev => prev + 1);
 
         // Load and draw new image
         const newImage = new Image();
-        newImage.src = newImageUrl;
+        newImage.src = colorResponse.processed_image_url;
         newImage.onload = () => {
           const ctx = canvas.getContext('2d');
           if (ctx) {
@@ -175,7 +225,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
           }
         };
       } catch (error) {
-        console.error('Failed to change wall color:', error);
+        logError('Color application', error);
         alert('Failed to change wall color. Please try again.');
       } finally {
         setIsProcessing(false);
@@ -183,7 +233,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     }
   };
 
-  const isPointInPolygon = (point: number[], polygon: number[][]) => {
+  const isPointInPolygon = (point: [number, number], polygon: [number, number][]) => {
     const [x, y] = point;
     let inside = false;
 
@@ -201,6 +251,10 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
   };
 
   const undo = async () => {
+    logAction('Undo requested', {
+      currentIndex: historyIndex,
+      historyLength: history.length
+    });
     if (historyIndex <= 0) return;
 
     const canvas = canvasRef.current;
@@ -224,6 +278,10 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
   };
 
   const redo = async () => {
+    logAction('Redo requested', {
+      currentIndex: historyIndex,
+      historyLength: history.length
+    });
     if (historyIndex >= history.length - 1) return;
 
     const canvas = canvasRef.current;
