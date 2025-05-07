@@ -100,6 +100,7 @@ const ErrorMessage = styled.div`
 
 function App() {
   const [uploadedImage, setUploadedImage] = useState<HTMLImageElement | null>(null);
+  const [imageId, setImageId] = useState<string | null>(null);
   const [currentColor, setCurrentColor] = useState('#007bff');
   const [showComparison, setShowComparison] = useState(false);
   const [originalDataUrl, setOriginalDataUrl] = useState<string>('');
@@ -121,6 +122,10 @@ function App() {
         setOriginalDataUrl(canvas.toDataURL());
       }
 
+      // Upload image to server
+      const imageFile = api.dataURLtoFile(canvas.toDataURL(), 'room.jpg');
+      const uploadResponse = await api.uploadImage(imageFile);
+      setImageId(uploadResponse.image_id);
       setUploadedImage(image);
     } catch (err) {
       setError('Failed to process image. Please try again.');
@@ -156,6 +161,7 @@ function App() {
           <EditorSection>
             <ColorCustomizer
               image={uploadedImage}
+              imageId={imageId!}
               currentColor={currentColor}
             />
             <CompareButton

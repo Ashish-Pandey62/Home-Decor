@@ -1,11 +1,11 @@
 import shutil
 import aiofiles
 import uuid
+import os
 from pathlib import Path
 from fastapi import UploadFile
 from datetime import datetime, timedelta
-import os
-from ..core.config import settings
+from ..core.config import settings, logger
 from ..core.exceptions import StorageError, FileSizeLimitExceeded, InvalidFileType
 
 class FileService:
@@ -55,15 +55,30 @@ class FileService:
         Save a processed image and return its path
         """
         try:
+            # Ensure processed directory exists
+            settings.PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
+            
             filename = f"{image_id}{suffix}.jpg"
             file_path = settings.PROCESSED_DIR / filename
-
+            
+            # Create parent directories if they don't exist
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            # Check directory permissions
+            if not os.access(str(file_path.parent), os.W_OK):
+                raise StorageError(f"No write permission for directory: {file_path.parent}")
+            
             with open(file_path, 'wb') as f:
                 f.write(image_data)
-
+            
+            # Verify file was created
+            if not file_path.exists():
+                raise StorageError(f"Failed to create file: {file_path}")
+            
             return file_path
 
         except Exception as e:
+            logger.error(f"Error saving processed image {image_id}: {str(e)}", exc_info=True)
             raise StorageError(f"Error saving processed image: {str(e)}")
 
     @staticmethod

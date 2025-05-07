@@ -5,11 +5,11 @@ from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
 from .api.endpoints import wall, test  # Added test endpoints
-from .core.config import settings, create_directories
+from .core.config import settings, setup_application
 from .core.exceptions import BaseCustomException
 
-# Create required directories
-create_directories()
+# Setup application (creates directories and configures logging)
+setup_application()
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -19,7 +19,7 @@ app = FastAPI(
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.BACKEND_CORS_ORIGINS,
+    allow_origins=["http://192.168.1.64:5173","http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -1,4 +1,36 @@
-export const API_BASE_URL = 'http://localhost:8000/api/wall';
+// Get base URL from environment or use relative path
+const getApiBaseUrl = () => {
+  const apiURL = import.meta.env.VITE_API_URL;
+
+  // Log detailed API configuration
+  console.log('🔧 Detailed API Configuration:', {
+    VITE_API_URL: apiURL,
+    origin: window.location.origin,
+    href: window.location.href,
+    mode: import.meta.env.MODE,
+    prod: import.meta.env.PROD
+  });
+
+  // Always use the provided API URL if available
+  if (apiURL) {
+    return `${apiURL}/api/wall`;
+  }
+
+  // If no API URL is set, use a path relative to the current origin
+  return '/api/wall';
+};
+
+export const API_BASE_URL = getApiBaseUrl();
+
+// Add a helpful warning if using relative URL
+if (!import.meta.env.VITE_API_URL) {
+  console.warn(`⚠️ No VITE_API_URL set. Using relative path '${API_BASE_URL}'.
+To use a specific API URL, set VITE_API_URL in your .env file:
+- For development with IP: VITE_API_URL=http://192.168.1.64:8000
+- For development with localhost: VITE_API_URL=http://localhost:8000
+- For production: Set to your production API URL
+`);
+}
 
 export interface Wall {
   mask_id: string;
@@ -44,17 +76,36 @@ function logAPIResponse(endpoint: string, response: any) {
 function logAPIError(endpoint: string, error: any) {
   console.error(`❌ API Error: ${endpoint}`, {
     message: error.message,
+    type: error.constructor.name,
+    cause: error.cause,
     ...(error.response && {
       status: error.response.status,
       statusText: error.response.statusText,
       data: error.response.data
-    })
+    }),
+    // Additional connection diagnostics
+    diagnostics: {
+      url: endpoint,
+      apiBase: API_BASE_URL,
+      mode: import.meta.env.MODE,
+      origin: window.location.origin,
+      isOnline: navigator.onLine
+    }
   });
 }
 
 export async function uploadImage(file: File): Promise<UploadResponse> {
   const endpoint = `${API_BASE_URL}/upload`;
   try {
+    // Check API health before upload
+    try {
+      const health = await checkHealth();
+      console.log('🏥 API Health Check:', health);
+    } catch (healthError) {
+      console.error('🚨 API Health Check Failed:', healthError);
+      throw new Error('API is not available');
+    }
+
     logAPIRequest(endpoint, 'POST');
     console.log('📁 File details:', {
       name: file.name,
@@ -68,6 +119,13 @@ export async function uploadImage(file: File): Promise<UploadResponse> {
     const response = await fetch(endpoint, {
       method: 'POST',
       body: formData,
+      credentials: 'include',  // Include cookies if needed
+      headers: {
+        // Let browser set the Content-Type for FormData
+        ...(import.meta.env.DEV && {
+          'Origin': window.location.origin
+        })
+      },
     });
 
     const responseData = await response.text();
@@ -87,10 +145,34 @@ export async function uploadImage(file: File): Promise<UploadResponse> {
     return parsedData;
   } catch (error) {
     logAPIError(endpoint, error);
-    if (error instanceof Error) {
-      throw new Error(`Failed to upload image: ${error.message}`);
+    // Enhance error information
+    const enhancedError = new Error(
+      error instanceof Error
+        ? `Failed to upload image: ${error.message}`
+        : 'Failed to upload image: Network error'
+    );
+    Object.defineProperty(enhancedError, 'cause', { value: error });
+
+    // Try to determine if it's a CORS or connectivity issue
+    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+      console.warn('🔍 Connection Diagnostics:', {
+        'Backend URL': endpoint,
+        'CORS Headers': {
+          'credentials': 'include',
+          'origin': window.location.origin
+        },
+        'Network Status': {
+          'Online': navigator.onLine,
+          'Connection Type': (navigator as any).connection?.type || 'unknown'
+        },
+        'Environment': {
+          'Mode': import.meta.env.MODE,
+          'API Base': API_BASE_URL
+        }
+      });
     }
-    throw error;
+
+    throw enhancedError;
   }
 }
 
@@ -104,7 +186,11 @@ export async function detectWalls(imageId: string): Promise<WallDetectionRespons
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...(import.meta.env.DEV && {
+          'Origin': window.location.origin
+        })
       },
+      credentials: 'include',
       body: JSON.stringify(requestBody),
     });
 
@@ -125,7 +211,33 @@ export async function detectWalls(imageId: string): Promise<WallDetectionRespons
     return parsedData;
   } catch (error) {
     logAPIError(endpoint, error);
-    throw error;
+    const enhancedError = new Error(
+      error instanceof Error
+        ? `Failed to detect walls: ${error.message}`
+        : 'Failed to detect walls: Network error'
+    );
+    Object.defineProperty(enhancedError, 'cause', { value: error });
+
+    // Try to determine if it's a CORS or connectivity issue
+    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+      console.warn('🔍 Connection Diagnostics:', {
+        'Backend URL': endpoint,
+        'CORS Headers': {
+          'credentials': 'include',
+          'origin': window.location.origin
+        },
+        'Network Status': {
+          'Online': navigator.onLine,
+          'Connection Type': (navigator as any).connection?.type || 'unknown'
+        },
+        'Environment': {
+          'Mode': import.meta.env.MODE,
+          'API Base': API_BASE_URL
+        }
+      });
+    }
+
+    throw enhancedError;
   }
 }
 
@@ -154,7 +266,11 @@ export async function applyColor(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...(import.meta.env.DEV && {
+          'Origin': window.location.origin
+        })
       },
+      credentials: 'include',
       body: JSON.stringify(requestBody),
     });
 
@@ -175,18 +291,98 @@ export async function applyColor(
     return parsedData;
   } catch (error) {
     logAPIError(endpoint, error);
-    throw error;
+    const enhancedError = new Error(
+      error instanceof Error
+        ? `Failed to apply color: ${error.message}`
+        : 'Failed to apply color: Network error'
+    );
+    Object.defineProperty(enhancedError, 'cause', { value: error });
+
+    // Try to determine if it's a CORS or connectivity issue
+    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+      console.warn('🔍 Connection Diagnostics:', {
+        'Backend URL': endpoint,
+        'CORS Headers': {
+          'credentials': 'include',
+          'origin': window.location.origin
+        },
+        'Network Status': {
+          'Online': navigator.onLine,
+          'Connection Type': (navigator as any).connection?.type || 'unknown'
+        },
+        'Environment': {
+          'Mode': import.meta.env.MODE,
+          'API Base': API_BASE_URL
+        }
+      });
+    }
+
+    throw enhancedError;
   }
 }
 
 export async function checkHealth(): Promise<{ status: string }> {
-  const response = await fetch(`${API_BASE_URL}/health`);
-  
-  if (!response.ok) {
-    throw new Error('API health check failed');
-  }
+  const endpoint = `${API_BASE_URL}/health`;
+  try {
+    logAPIRequest(endpoint, 'GET');
 
-  return response.json();
+    const response = await fetch(endpoint, {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(import.meta.env.DEV && {
+          'Origin': window.location.origin
+        })
+      }
+    });
+
+    const responseData = await response.text();
+    let parsedData;
+    try {
+      parsedData = JSON.parse(responseData);
+    } catch (e) {
+      console.error('Failed to parse health check response as JSON:', responseData);
+      throw new Error('Invalid JSON response from server');
+    }
+
+    if (!response.ok) {
+      throw new Error(`Health check failed: ${response.status} - ${responseData}`);
+    }
+
+    logAPIResponse(endpoint, parsedData);
+    return parsedData;
+  } catch (error) {
+    logAPIError(endpoint, error);
+    const enhancedError = new Error(
+      error instanceof Error
+        ? `Health check failed: ${error.message}`
+        : 'Health check failed: Network error'
+    );
+    Object.defineProperty(enhancedError, 'cause', { value: error });
+
+    // Try to determine if it's a CORS or connectivity issue
+    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+      console.warn('🔍 Health Check Diagnostics:', {
+        'Backend URL': endpoint,
+        'CORS Headers': {
+          'credentials': 'include',
+          'origin': window.location.origin
+        },
+        'Network Status': {
+          'Online': navigator.onLine,
+          'Connection Type': (navigator as any).connection?.type || 'unknown'
+        },
+        'Environment': {
+          'Mode': import.meta.env.MODE,
+          'API Base': API_BASE_URL,
+          'Production': import.meta.env.PROD,
+          'Custom URL': import.meta.env.VITE_API_URL || 'not set'
+        }
+      });
+    }
+
+    throw enhancedError;
+  }
 }
 
 // Helper function to convert canvas data to File object

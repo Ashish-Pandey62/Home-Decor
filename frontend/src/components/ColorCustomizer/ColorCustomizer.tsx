@@ -71,11 +71,11 @@ const SegmentOverlay = styled.svg`
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
 `;
 
 interface ColorCustomizerProps {
   image: HTMLImageElement;
+  imageId: string;
   currentColor: string;
 }
 
@@ -90,13 +90,48 @@ interface HistoryEntry {
   segments: WallSegment[];
 }
 
-const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }) => {
+const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [segments, setSegments] = useState<WallSegment[]>([]);
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
+  const [scale, setScale] = useState({ x: 1, y: 1 });
+
+  // Update scale whenever canvas size changes
+  useEffect(() => {
+    const updateScale = () => {
+      if (canvasRef.current) {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Get the display dimensions
+        const displayWidth = canvas.clientWidth;
+        const displayHeight = canvas.clientHeight;
+
+        // Calculate scale based on original image dimensions
+        setScale({
+          x: image.width / displayWidth,
+          y: image.height / displayHeight
+        });
+
+        logAction('Scale updated', {
+          original: { width: image.width, height: image.height },
+          display: { width: displayWidth, height: displayHeight },
+          scale: {
+            x: image.width / displayWidth,
+            y: image.height / displayHeight
+          }
+        });
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, [image]);
 
   const logAction = (action: string, details?: any) => {
     console.log(`🎨 ColorCustomizer - ${action}`, details || '');
@@ -104,8 +139,9 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
 
   const logError = (action: string, error: any) => {
     console.error(`🚫 ColorCustomizer - ${action} Failed:`, {
-      message: error.message,
-      details: error
+      message: error instanceof Error ? error.message : 'Unknown error',
+      details: error,
+      stack: error instanceof Error ? error.stack : undefined
     });
   };
 
@@ -125,41 +161,85 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
       canvas.width = image.width;
       canvas.height = image.height;
 
-      // Draw initial image
-      ctx.drawImage(image, 0, 0);
+      // Draw initial image with proper dimensions
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      
+      logAction('Initial image drawn', {
+        canvasDimensions: { width: canvas.width, height: canvas.height },
+        imageDimensions: { width: image.width, height: image.height }
+      });
 
       try {
         setIsProcessing(true);
         
-        logAction('Step 1: Uploading image');
-        const imageFile = api.dataURLtoFile(canvas.toDataURL(), 'room.jpg');
-        const uploadResponse = await api.uploadImage(imageFile);
-        logAction('Upload successful', uploadResponse);
-        
-        logAction('Step 2: Detecting walls', { image_id: uploadResponse.image_id });
-        const wallsResponse = await api.detectWalls(uploadResponse.image_id);
+        logAction('Detecting walls', { image_id: imageId });
+        const wallsResponse = await api.detectWalls(imageId);
         logAction('Wall detection successful', {
           wallCount: wallsResponse.walls.length
         });
-        
-        logAction('Converting wall data to segments');
+
+        logAction('Converting wall data to segments', {
+          wallCount: wallsResponse.walls.length,
+          firstWallSample: wallsResponse.walls[0]?.coordinates.slice(0, 5),
+          dimensions: {
+            width: image.width,
+            height: image.height
+          }
+        });
         const wallSegments = wallsResponse.walls.map(wall => ({
           id: wall.mask_id,
           coordinates: wall.coordinates
         }));
-        
+
+        // Log scaled coordinates for first segment
+        if (wallSegments.length > 0) {
+          const firstSegment = wallSegments[0];
+          const sampleCoords = firstSegment.coordinates.slice(0, 5).map(([row, col]) => ({
+            original: [row, col],
+            transformed: [col, row],
+            normalized: [col / image.width, row / image.height]
+          }));
+          logAction('Sample coordinates transformation', {
+            segmentId: firstSegment.id,
+            sampleCoords
+          });
+        }
+
         // Update segments and history
-        setSegments(wallSegments);
-        setHistory([{
+        // Create initial history entry with original image
+        const initialEntry = {
           image_id: wallsResponse.image_id,
           imageUrl: wallsResponse.preview_url,
           segments: wallSegments
-        }]);
+        };
+
+        setSegments(wallSegments);
+        setHistory([initialEntry]);
         setHistoryIndex(0);
+
+        logAction('History initialized', {
+          entryCount: 1,
+          wallCount: wallSegments.length,
+          image_id: initialEntry.image_id
+        });
       } catch (error) {
         logError('Image processing', error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        alert(`Failed to process image: ${errorMessage}\n\nPlease ensure the backend server is running at ${api.API_BASE_URL}`);
+        logError('Image initialization', {
+          error,
+          canvas: {
+            width: canvas.width,
+            height: canvas.height,
+            context: ctx ? 'available' : 'missing'
+          },
+          image: {
+            width: image.width,
+            height: image.height,
+            src: image.src
+          }
+        });
+        alert(`Failed to process image: ${errorMessage}\n\nPlease check the browser console for more details.`);
       } finally {
         setIsProcessing(false);
       }
@@ -168,31 +248,24 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     initializeImage();
   }, [image]);
 
-  const handleCanvasClick = async (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleSegmentClick = async (segmentId: string) => {
     if (isProcessing) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-
-    const x = Math.floor((e.clientX - rect.left) * scaleX);
-    const y = Math.floor((e.clientY - rect.top) * scaleY);
-    
-    logAction('Canvas click', { x, y });
-
-    // Find clicked segment
-    const clickedSegment = segments.find(segment => {
-      // Check if point is inside polygon
-      return isPointInPolygon([x, y], segment.coordinates);
-    });
-
+    const clickedSegment = segments.find(segment => segment.id === segmentId);
     if (clickedSegment) {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
       logAction('Segment selected', {
         segmentId: clickedSegment.id,
-        color: currentColor
+        color: currentColor,
+        coordinates: {
+          sample: clickedSegment.coordinates.slice(0, 5),
+          total: clickedSegment.coordinates.length
+        }
       });
       setSelectedSegment(clickedSegment.id);
       try {
@@ -214,16 +287,50 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
         setHistory(newHistory);
         setHistoryIndex(prev => prev + 1);
 
-        // Load and draw new image
-        const newImage = new Image();
-        newImage.src = colorResponse.processed_image_url;
-        newImage.onload = () => {
+        // Load and handle new image
+        const updateCanvasWithNewImage = async () => {
           const ctx = canvas.getContext('2d');
-          if (ctx) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.drawImage(newImage, 0, 0);
+          if (!ctx) throw new Error('Failed to get canvas context');
+
+          // Load new image with error handling
+          const newImage = await new Promise<HTMLImageElement>((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';  // Handle CORS
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error('Failed to load updated image'));
+            img.src = colorResponse.processed_image_url;
+          });
+
+          // Update canvas dimensions if needed
+          if (canvas.width !== newImage.width || canvas.height !== newImage.height) {
+            canvas.width = newImage.width;
+            canvas.height = newImage.height;
+            logAction('Canvas dimensions updated', {
+              width: canvas.width,
+              height: canvas.height
+            });
           }
+
+          // Clear and draw new image
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(newImage, 0, 0);
+
+          logAction('Canvas updated with new image', {
+            imageUrl: colorResponse.processed_image_url,
+            dimensions: {
+              canvas: { width: canvas.width, height: canvas.height },
+              image: { width: newImage.width, height: newImage.height }
+            }
+          });
         };
+
+        await updateCanvasWithNewImage();
+
+        logAction('Image updated', {
+          url: colorResponse.processed_image_url,
+          historyLength: newHistory.length,
+          currentIndex: historyIndex + 1
+        });
       } catch (error) {
         logError('Color application', error);
         alert('Failed to change wall color. Please try again.');
@@ -233,16 +340,27 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     }
   };
 
-  const isPointInPolygon = (point: [number, number], polygon: [number, number][]) => {
-    const [x, y] = point;
+  const isPointInPolygon = (clickPoint: [number, number], polygon: [number, number][]) => {
+    if (!canvasRef.current) return false;
+
+    // Convert click coordinates to percentages
+    const [clickX, clickY] = clickPoint;
+    const percentX = clickX / canvasRef.current.clientWidth;
+    const percentY = clickY / canvasRef.current.clientHeight;
+
+    // Convert polygon coordinates from [row, col] to normalized [x, y]
+    const normalizedPolygon = polygon.map(([row, col]) => [
+      col / image.width,  // col becomes x
+      row / image.height  // row becomes y
+    ]);
+
     let inside = false;
+    for (let i = 0, j = normalizedPolygon.length - 1; i < normalizedPolygon.length; j = i++) {
+      const [xi, yi] = normalizedPolygon[i];
+      const [xj, yj] = normalizedPolygon[j];
 
-    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
-      const [xi, yi] = polygon[i];
-      const [xj, yj] = polygon[j];
-
-      const intersect = ((yi > y) !== (yj > y))
-        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+      const intersect = ((yi > percentY) !== (yj > percentY))
+        && (percentX < (xj - xi) * (percentY - yi) / (yj - yi) + xi);
 
       if (intersect) inside = !inside;
     }
@@ -266,12 +384,31 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     const newIndex = historyIndex - 1;
     const prevEntry = history[newIndex];
 
-    const img = new Image();
-    img.src = prevEntry.imageUrl;
-    img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    };
+    try {
+      setIsProcessing(true);
+      await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(null);
+        };
+        img.onerror = () => {
+          reject(new Error('Failed to load previous image'));
+        };
+        img.src = prevEntry.imageUrl;
+      });
+      
+      logAction('Undo complete', {
+        newIndex,
+        imageUrl: prevEntry.imageUrl
+      });
+    } catch (error) {
+      logError('Undo operation', error);
+      alert('Failed to load previous image. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
 
     setHistoryIndex(newIndex);
     setSegments(prevEntry.segments);
@@ -293,12 +430,31 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
     const newIndex = historyIndex + 1;
     const nextEntry = history[newIndex];
 
-    const img = new Image();
-    img.src = nextEntry.imageUrl;
-    img.onload = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-    };
+    try {
+      setIsProcessing(true);
+      await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          resolve(null);
+        };
+        img.onerror = () => {
+          reject(new Error('Failed to load next image'));
+        };
+        img.src = nextEntry.imageUrl;
+      });
+      
+      logAction('Redo complete', {
+        newIndex,
+        imageUrl: nextEntry.imageUrl
+      });
+    } catch (error) {
+      logError('Redo operation', error);
+      alert('Failed to load next image. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
 
     setHistoryIndex(newIndex);
     setSegments(nextEntry.segments);
@@ -325,18 +481,55 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, currentColor }
       <CanvasContainer>
         <Canvas
           ref={canvasRef}
-          onClick={handleCanvasClick}
         />
         <SegmentOverlay>
-          {segments.map((segment) => (
-            <path
-              key={segment.id}
-              d={`M ${segment.coordinates.map(([x, y]) => `${x},${y}`).join(' L ')} Z`}
-              fill="transparent"
-              stroke={segment.id === selectedSegment ? '#007bff' : 'transparent'}
-              strokeWidth="2"
-            />
-          ))}
+          {segments.map((segment) => {
+            // Scale coordinates to match canvas dimensions
+            // Backend sends coordinates as [row, col] pairs from np.where()
+            // We need to:
+            // 1. Swap row/col to x/y
+            // 2. Scale to canvas dimensions
+            const scaledCoords = segment.coordinates.map(([row, col]) => {
+              // Convert from [row, col] to [x, y]
+              const x = col; // column becomes x
+              const y = row; // row becomes y
+              
+              // Get percentage of position relative to original image
+              const percentX = x / image.width;
+              const percentY = y / image.height;
+              
+              // Convert percentage to display coordinates
+              const displayX = percentX * canvasRef.current!.clientWidth;
+              const displayY = percentY * canvasRef.current!.clientHeight;
+              
+              return [displayX, displayY];
+            });
+
+            return (
+              <path
+                key={segment.id}
+                d={`M ${scaledCoords.map(([x, y]) => `${x},${y}`).join(' L ')} Z`}
+              fill="rgba(128, 128, 128, 0.1)"
+              stroke={segment.id === selectedSegment ? '#007bff' : '#666'}
+              strokeWidth={segment.id === selectedSegment ? "3" : "1"}
+              style={{
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+              }}
+              onClick={() => handleSegmentClick(segment.id)}
+              onMouseEnter={(e) => {
+                const target = e.target as SVGPathElement;
+                target.style.fill = 'rgba(128, 128, 128, 0.2)';
+                target.style.strokeWidth = '2';
+              }}
+              onMouseLeave={(e) => {
+                const target = e.target as SVGPathElement;
+                target.style.fill = 'rgba(128, 128, 128, 0.1)';
+                target.style.strokeWidth = segment.id === selectedSegment ? '3' : '1';
+              }}
+              />
+            );
+          })}
         </SegmentOverlay>
         {isProcessing && (
           <LoadingOverlay>

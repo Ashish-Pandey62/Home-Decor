@@ -1,5 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, Depends, BackgroundTasks
 from fastapi.responses import JSONResponse
+from typing import AsyncGenerator
+from fastapi.responses import JSONResponse
 from ...models.schemas import (
     WallDetectionResponse,
     ColorRequest,
@@ -18,7 +20,16 @@ from typing import Dict
 from ...core.config import logger
 
 router = APIRouter()
-image_service = ImageService()
+
+async def get_image_service():
+    """
+    Dependency that provides an ImageService instance
+    """
+    service = ImageService()
+    try:
+        yield service
+    finally:
+        pass
 
 @router.post("/upload", response_model=ImageResponse)
 async def upload_image(
@@ -60,7 +71,8 @@ async def upload_image(
 @router.post("/detect-walls", response_model=WallDetectionResponse)
 async def detect_walls(
     request: WallDetectionRequest,
-    background_tasks: BackgroundTasks = None
+    background_tasks: BackgroundTasks = None,
+    image_service: ImageService = Depends(get_image_service)
 ) -> WallDetectionResponse:
     """
     Detect walls in an uploaded image
@@ -70,6 +82,9 @@ async def detect_walls(
         # Get the file path from the image ID
         logger.debug(f"Getting file path for image_id: {request.image_id}")
         file_path = FileService.get_file_path(request.image_id)
+        if not file_path.exists():
+            logger.error(f"File not found at path: {file_path}")
+            raise InvalidImageError("Image file not found")
         logger.debug(f"Found file at: {file_path}")
         
         # Process image and detect walls
@@ -82,8 +97,8 @@ async def detect_walls(
         
         # Schedule cleanup
         if background_tasks:
-            logger.debug(f"Scheduling cache cleanup for image_id: {request.image_id}")
-            background_tasks.add_task(image_service.cleanup_cache, request.image_id)
+            logger.debug("Scheduling file cleanup")
+            background_tasks.add_task(FileService.cleanup_old_files)
         
         response = WallDetectionResponse(
             image_id=request.image_id,
@@ -103,13 +118,20 @@ async def detect_walls(
 @router.post("/apply-color", response_model=ColorResponse)
 async def apply_color(
     request: ColorRequest,
-    background_tasks: BackgroundTasks = None
+    background_tasks: BackgroundTasks = None,
+    image_service: ImageService = Depends(get_image_service)
 ) -> ColorResponse:
     """
     Apply color to detected walls
     """
     logger.info(f"Received color application request for image_id: {request.image_id}")
     logger.debug(f"Color RGB: {request.color_rgb}, Wall IDs: {request.wall_ids}")
+    
+    # Check if original image exists
+    file_path = FileService.get_file_path(request.image_id)
+    if not file_path.exists():
+        logger.error(f"Original image not found at: {file_path}")
+        raise InvalidImageError("Original image not found. Please upload the image first.")
     try:
         # Apply color to walls
         logger.info("Starting color application process")

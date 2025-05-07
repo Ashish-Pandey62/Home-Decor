@@ -28,13 +28,16 @@ class Settings(BaseSettings):
     # File Cleanup
     CLEANUP_INTERVAL: int = 3600  # 1 hour
     MAX_FILE_AGE: int = 24 * 3600  # 24 hours
-    
     # CORS Settings
     BACKEND_CORS_ORIGINS: list = [
-        "http://localhost:5173",  # Vite default dev server
         "http://localhost:3000",
-        "http://localhost:8080",
-    ]
+        "http://localhost:8000",
+        "http://192.168.1.64:3000",
+        "http://192.168.1.64:8000",
+        "http://192.168.1.64:5173",
+        "http://localhost"
+        "http://192.168.1.64:5173",
+    ]  # Allowed origins
     
     class Config:
         case_sensitive = True

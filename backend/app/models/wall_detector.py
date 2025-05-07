@@ -65,9 +65,12 @@ class WallDetector:
                 if len(scores) > 0:
                     best_mask = masks_batch[scores.argmax()]
                     wall_mask = np.logical_or(wall_mask, best_mask)
+                    # Ensure score is between 0 and 1
+                    score = float(scores.max())
+                    normalized_score = min(max(score, 0.0), 1.0)
                     masks.append({
                         'segmentation': best_mask.tolist(),
-                        'score': float(scores.max()),
+                        'score': normalized_score,
                         'area': int(best_mask.sum())
                     })
 
