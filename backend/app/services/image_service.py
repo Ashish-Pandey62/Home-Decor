@@ -85,7 +85,7 @@ class ImageService:
                     mask_id=wall_id,
                     coordinates=self._encode_mask_coordinates(mask['segmentation']),
                     area=mask['area'],
-                    confidence=mask['score']
+                    confidence=mask.get('stability_score', 0.0)  # Use stability_score instead of score
                 )
                 walls.append(mask_obj)
             

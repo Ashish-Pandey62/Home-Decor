@@ -2764,3 +2764,500 @@ app.core.exceptions.ImageProcessingError: 422: Error applying color: 422: Failed
 2025-05-07 11:24:48,158 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 30509769-c82c-44c8-97a5-8b7d3517a579
 2025-05-07 11:24:48,158 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 30509769-c82c-44c8-97a5-8b7d3517a579
 2025-05-08 10:06:31,178 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:95 - Application directories and logging initialized
+2025-05-08 10:08:37,434 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:08:37,434 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:08:37,452 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:08:37,452 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:08:37,453 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:08:37,453 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:08:37,456 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:08:37,456 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:08:37,456 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:08:37,456 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:08:37,457 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:08:37,457 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:02,158 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:09:02,158 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:09:02,172 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:09:02,172 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:09:02,222 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:02,222 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:02,223 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:02,223 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:02,224 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67.jpg
+2025-05-08 10:09:02,224 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67.jpg
+2025-05-08 10:09:02,225 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 10:09:02,225 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 10:09:52,012 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:52,012 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:52,013 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 10:09:52,013 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 10:09:52,014 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:09:52,014 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:09:52,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67 to C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:09:52,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67 to C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:09:52,084 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:52,084 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:52,103 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-08 10:09:52,103 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-08 10:09:52,105 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 10:09:52,105 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 10:09:52,107 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:09:52,107 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:02,168 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:10:02,168 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:10:02,172 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:10:02,172 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:10:02,173 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:02,173 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:02,175 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:02,175 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:02,176 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67.jpg
+2025-05-08 10:10:02,176 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67.jpg
+2025-05-08 10:10:02,176 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 10:10:02,176 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 10:10:58,971 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:58,971 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:58,972 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 10:10:58,972 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 10:10:58,972 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:10:58,972 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:10:58,972 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67 to C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:10:58,972 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67 to C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:10:59,027 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:59,027 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:59,041 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-08 10:10:59,041 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-08 10:10:59,042 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 10:10:59,042 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 10:10:59,043 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:10:59,043 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:01,601 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:95 - Application directories and logging initialized
+2025-05-08 10:11:28,904 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:11:28,904 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:11:28,910 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:11:28,910 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:11:28,916 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:127 - Received color application request for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:28,916 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:127 - Received color application request for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:28,917 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:128 - Color RGB: (0, 123, 255), Wall IDs: ['e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_wall_3']
+2025-05-08 10:11:28,917 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:128 - Color RGB: (0, 123, 255), Wall IDs: ['e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_wall_3']
+2025-05-08 10:11:28,918 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:137 - Starting color application process
+2025-05-08 10:11:28,918 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:137 - Starting color application process
+2025-05-08 10:11:28,919 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:11:28,919 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:11:28,919 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:59 - Loading cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67 from C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:11:28,919 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:59 - Loading cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67 from C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:11:29,286 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:65 - Successfully loaded cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:29,286 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:65 - Successfully loaded cache for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:29,524 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:143 - Color applied successfully, result saved to: C:\Dev\Home-Decor\backend\static\processed\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_colored.jpg
+2025-05-08 10:11:29,524 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:143 - Color applied successfully, result saved to: C:\Dev\Home-Decor\backend\static\processed\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_colored.jpg
+2025-05-08 10:11:29,525 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:147 - Preview generated at: C:\Dev\Home-Decor\backend\static\processed\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_preview.jpg
+2025-05-08 10:11:29,525 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:147 - Preview generated at: C:\Dev\Home-Decor\backend\static\processed\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_preview.jpg
+2025-05-08 10:11:29,525 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:151 - Scheduling cache cleanup for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:29,525 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:151 - Scheduling cache cleanup for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:29,525 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:159 - Color application successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:29,525 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:159 - Color application successful for image_id: e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67
+2025-05-08 10:11:29,541 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:11:29,541 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67: C:\Dev\Home-Decor\backend\static\processed\cache\e9d0a1ab-d4b6-410c-be45-3ae8e36c0b67_cache.pkl
+2025-05-08 10:11:44,217 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:11:44,217 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:11:44,234 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:11:44,234 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:11:44,235 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:11:44,235 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:11:44,238 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:44,238 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:44,241 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:11:44,241 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:11:44,242 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:44,242 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:55,818 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:11:55,818 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 10:11:55,825 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:11:55,825 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 10:11:55,827 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:55,827 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:55,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:55,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: cff275a9-7a2e-4ae1-ad07-41792dfa7704
+2025-05-08 10:11:55,835 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\cff275a9-7a2e-4ae1-ad07-41792dfa7704.jpg
+2025-05-08 10:11:55,835 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\cff275a9-7a2e-4ae1-ad07-41792dfa7704.jpg
+2025-05-08 10:11:55,844 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 10:11:55,844 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 10:19:01,498 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:95 - Application directories and logging initialized
+2025-05-08 10:20:02,889 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:20:02,889 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:20:02,918 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:20:02,918 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:20:02,919 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:20:02,919 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:20:02,926 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 4ca221de-435a-4ace-84df-c5140fbc69c0
+2025-05-08 10:20:02,926 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 4ca221de-435a-4ace-84df-c5140fbc69c0
+2025-05-08 10:20:02,927 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:20:02,927 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:20:02,929 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 4ca221de-435a-4ace-84df-c5140fbc69c0
+2025-05-08 10:20:02,929 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 4ca221de-435a-4ace-84df-c5140fbc69c0
+2025-05-08 10:22:24,589 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:22:24,589 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:22:24,604 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:22:24,604 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:22:24,605 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:22:24,605 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:22:24,607 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: b837f250-279b-4301-bb87-ab853a009007
+2025-05-08 10:22:24,607 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: b837f250-279b-4301-bb87-ab853a009007
+2025-05-08 10:22:24,608 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:22:24,608 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:22:24,608 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: b837f250-279b-4301-bb87-ab853a009007
+2025-05-08 10:22:24,608 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: b837f250-279b-4301-bb87-ab853a009007
+2025-05-08 10:30:12,413 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-08 10:40:55,750 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-08 10:41:15,884 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:41:15,884 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:41:15,899 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:41:15,899 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:41:15,899 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:41:15,899 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:41:15,903 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: f7fcdd65-5a12-4a2a-9606-fcc5c9dcb276
+2025-05-08 10:41:15,903 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: f7fcdd65-5a12-4a2a-9606-fcc5c9dcb276
+2025-05-08 10:41:15,904 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:41:15,904 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:41:15,905 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: f7fcdd65-5a12-4a2a-9606-fcc5c9dcb276
+2025-05-08 10:41:15,905 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: f7fcdd65-5a12-4a2a-9606-fcc5c9dcb276
+2025-05-08 10:53:39,296 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-08 10:53:45,768 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:53:45,768 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 10:53:45,784 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:53:45,784 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 10:53:45,787 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:53:45,787 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 10:53:45,794 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: a6343aeb-e312-4313-885c-192cbeb9d0db
+2025-05-08 10:53:45,794 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: a6343aeb-e312-4313-885c-192cbeb9d0db
+2025-05-08 10:53:45,794 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:53:45,794 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 10:53:45,795 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: a6343aeb-e312-4313-885c-192cbeb9d0db
+2025-05-08 10:53:45,795 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: a6343aeb-e312-4313-885c-192cbeb9d0db
+2025-05-08 11:03:53,226 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-08 11:04:01,655 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 11:04:01,655 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 11:04:01,672 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 11:04:01,672 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 11:04:01,673 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 11:04:01,673 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 11:04:01,675 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:01,675 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:01,676 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 11:04:01,676 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 11:04:01,676 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:01,676 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:10,234 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:04:10,234 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:04:10,235 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:04:10,235 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:04:10,237 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:10,237 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:10,237 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:10,237 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:10,238 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\f56ec2ca-c22e-4a81-857b-d27532aef99a.jpg
+2025-05-08 11:04:10,238 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\f56ec2ca-c22e-4a81-857b-d27532aef99a.jpg
+2025-05-08 11:04:10,238 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:04:10,238 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:04:38,467 - app - ERROR - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:112 - Wall detection failed: 422: Error processing image: 'score'
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 88, in process_upload
+    confidence=mask['score']
+KeyError: 'score'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py", line 92, in detect_walls
+    result = await image_service.process_upload(
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 120, in process_upload
+    raise ImageProcessingError(f"Error processing image: {str(e)}")
+app.core.exceptions.ImageProcessingError: 422: Error processing image: 'score'
+2025-05-08 11:04:38,467 - app - ERROR - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:112 - Wall detection failed: 422: Error processing image: 'score'
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 88, in process_upload
+    confidence=mask['score']
+KeyError: 'score'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py", line 92, in detect_walls
+    result = await image_service.process_upload(
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 120, in process_upload
+    raise ImageProcessingError(f"Error processing image: {str(e)}")
+app.core.exceptions.ImageProcessingError: 422: Error processing image: 'score'
+2025-05-08 11:04:49,818 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:04:49,818 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:04:49,820 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:04:49,820 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:04:49,821 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:49,821 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:49,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:49,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: f56ec2ca-c22e-4a81-857b-d27532aef99a
+2025-05-08 11:04:49,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\f56ec2ca-c22e-4a81-857b-d27532aef99a.jpg
+2025-05-08 11:04:49,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\f56ec2ca-c22e-4a81-857b-d27532aef99a.jpg
+2025-05-08 11:04:49,823 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:04:49,823 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:05:18,864 - app - ERROR - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:112 - Wall detection failed: 422: Error processing image: 'score'
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 88, in process_upload
+    confidence=mask['score']
+KeyError: 'score'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py", line 92, in detect_walls
+    result = await image_service.process_upload(
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 120, in process_upload
+    raise ImageProcessingError(f"Error processing image: {str(e)}")
+app.core.exceptions.ImageProcessingError: 422: Error processing image: 'score'
+2025-05-08 11:05:18,864 - app - ERROR - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:112 - Wall detection failed: 422: Error processing image: 'score'
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 88, in process_upload
+    confidence=mask['score']
+KeyError: 'score'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py", line 92, in detect_walls
+    result = await image_service.process_upload(
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 120, in process_upload
+    raise ImageProcessingError(f"Error processing image: {str(e)}")
+app.core.exceptions.ImageProcessingError: 422: Error processing image: 'score'
+2025-05-08 11:05:34,371 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-08 11:05:52,006 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-08 11:06:00,792 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 11:06:00,792 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 11:06:00,803 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 11:06:00,803 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 11:06:00,803 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 11:06:00,803 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 324016 bytes
+2025-05-08 11:06:00,806 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:00,806 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:00,806 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 11:06:00,806 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 11:06:00,807 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:00,807 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:10,815 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:06:10,815 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:06:10,821 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:06:10,821 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:06:10,822 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:10,822 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:10,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:10,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:10,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\2c90e8da-0a36-4218-9a2f-9413c6be06e2.jpg
+2025-05-08 11:06:10,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\2c90e8da-0a36-4218-9a2f-9413c6be06e2.jpg
+2025-05-08 11:06:10,823 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:06:10,823 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:06:38,777 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:38,777 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:38,778 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 11:06:38,778 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 11:06:38,778 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 2c90e8da-0a36-4218-9a2f-9413c6be06e2: C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:06:38,778 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 2c90e8da-0a36-4218-9a2f-9413c6be06e2: C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:06:38,778 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2 to C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:06:38,778 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2 to C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:06:38,800 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:38,800 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:38,809 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 9 walls
+2025-05-08 11:06:38,809 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 9 walls
+2025-05-08 11:06:38,810 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 11:06:38,810 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 11:06:38,810 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:38,810 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:49,198 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:06:49,198 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 11:06:49,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:06:49,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 11:06:49,200 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:49,200 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:49,200 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:49,200 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:06:49,201 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\2c90e8da-0a36-4218-9a2f-9413c6be06e2.jpg
+2025-05-08 11:06:49,201 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\2c90e8da-0a36-4218-9a2f-9413c6be06e2.jpg
+2025-05-08 11:06:49,201 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:06:49,201 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 11:07:22,960 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:07:22,960 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:07:22,960 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 11:07:22,960 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 11:07:22,961 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 2c90e8da-0a36-4218-9a2f-9413c6be06e2: C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:07:22,961 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 2c90e8da-0a36-4218-9a2f-9413c6be06e2: C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:07:22,961 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2 to C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:07:22,961 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2 to C:\Dev\Home-Decor\backend\static\processed\cache\2c90e8da-0a36-4218-9a2f-9413c6be06e2_cache.pkl
+2025-05-08 11:07:22,983 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:07:22,983 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:07:22,989 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 9 walls
+2025-05-08 11:07:22,989 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 9 walls
+2025-05-08 11:07:22,989 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 11:07:22,989 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 11:07:22,990 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 11:07:22,990 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 2c90e8da-0a36-4218-9a2f-9413c6be06e2
+2025-05-08 20:11:24,302 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-08 20:12:46,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 20:12:46,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 20:12:46,844 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 20:12:46,844 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 20:12:46,847 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 191444 bytes
+2025-05-08 20:12:46,847 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 191444 bytes
+2025-05-08 20:12:46,859 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:12:46,859 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:12:46,860 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 20:12:46,860 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 20:12:46,860 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:12:46,860 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:13,044 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:13:13,044 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:13:13,054 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:13:13,054 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:13:13,089 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:13,089 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:13,091 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:13,091 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:13,092 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\7da06f7f-8687-4e47-b207-9e38a604d3a4.jpg
+2025-05-08 20:13:13,092 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\7da06f7f-8687-4e47-b207-9e38a604d3a4.jpg
+2025-05-08 20:13:13,092 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:13:13,092 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:13:40,685 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:40,685 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:40,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:13:40,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:13:40,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:13:40,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:13:40,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4 to C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:13:40,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4 to C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:13:40,727 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:40,727 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:40,745 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:13:40,745 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:13:40,746 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:13:40,746 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:13:40,746 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:40,746 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:50,798 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:13:50,798 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:13:50,801 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:13:50,801 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:13:50,801 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:50,801 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:50,802 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:50,802 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:13:50,803 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\7da06f7f-8687-4e47-b207-9e38a604d3a4.jpg
+2025-05-08 20:13:50,803 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\7da06f7f-8687-4e47-b207-9e38a604d3a4.jpg
+2025-05-08 20:13:50,803 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:13:50,803 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:14:21,208 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:14:21,208 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:14:21,209 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:14:21,209 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:14:21,210 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:14:21,210 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:14:21,211 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4 to C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:14:21,211 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4 to C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:14:21,262 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:14:21,262 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:14:21,275 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:14:21,275 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:14:21,276 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:14:21,276 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:14:21,277 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:14:21,277 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,187 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:20:55,187 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:20:55,192 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:20:55,192 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:20:55,218 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:127 - Received color application request for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,218 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:127 - Received color application request for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,218 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:128 - Color RGB: (155, 89, 182), Wall IDs: ['7da06f7f-8687-4e47-b207-9e38a604d3a4_wall_1']
+2025-05-08 20:20:55,218 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:128 - Color RGB: (155, 89, 182), Wall IDs: ['7da06f7f-8687-4e47-b207-9e38a604d3a4_wall_1']
+2025-05-08 20:20:55,219 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:137 - Starting color application process
+2025-05-08 20:20:55,219 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:137 - Starting color application process
+2025-05-08 20:20:55,221 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:20:55,221 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:20:55,222 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:59 - Loading cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4 from C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:20:55,222 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:59 - Loading cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4 from C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:20:55,773 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:65 - Successfully loaded cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,773 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:65 - Successfully loaded cache for 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,938 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:143 - Color applied successfully, result saved to: C:\Dev\Home-Decor\backend\static\processed\7da06f7f-8687-4e47-b207-9e38a604d3a4_colored.jpg
+2025-05-08 20:20:55,938 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:143 - Color applied successfully, result saved to: C:\Dev\Home-Decor\backend\static\processed\7da06f7f-8687-4e47-b207-9e38a604d3a4_colored.jpg
+2025-05-08 20:20:55,938 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:147 - Preview generated at: C:\Dev\Home-Decor\backend\static\processed\7da06f7f-8687-4e47-b207-9e38a604d3a4_preview.jpg
+2025-05-08 20:20:55,938 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:147 - Preview generated at: C:\Dev\Home-Decor\backend\static\processed\7da06f7f-8687-4e47-b207-9e38a604d3a4_preview.jpg
+2025-05-08 20:20:55,938 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:151 - Scheduling cache cleanup for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,938 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:151 - Scheduling cache cleanup for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,954 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:159 - Color application successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:55,954 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:159 - Color application successful for image_id: 7da06f7f-8687-4e47-b207-9e38a604d3a4
+2025-05-08 20:20:56,043 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:20:56,043 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 7da06f7f-8687-4e47-b207-9e38a604d3a4: C:\Dev\Home-Decor\backend\static\processed\cache\7da06f7f-8687-4e47-b207-9e38a604d3a4_cache.pkl
+2025-05-08 20:31:23,525 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 20:31:23,525 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-08 20:31:23,547 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 20:31:23,547 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-08 20:31:23,548 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 191503 bytes
+2025-05-08 20:31:23,548 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 191503 bytes
+2025-05-08 20:31:23,552 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:23,552 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:23,553 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 20:31:23,553 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-08 20:31:23,553 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:23,553 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:37,820 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:31:37,820 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:31:37,826 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:31:37,826 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:31:37,831 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:37,831 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:37,832 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:37,832 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:31:37,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\172fce1f-de16-4e23-94df-1a8251fd8b18.jpg
+2025-05-08 20:31:37,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\172fce1f-de16-4e23-94df-1a8251fd8b18.jpg
+2025-05-08 20:31:37,834 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:31:37,834 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:32:07,135 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:07,135 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:07,135 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:32:07,135 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:32:07,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 172fce1f-de16-4e23-94df-1a8251fd8b18: C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:07,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 172fce1f-de16-4e23-94df-1a8251fd8b18: C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:07,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 172fce1f-de16-4e23-94df-1a8251fd8b18 to C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:07,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 172fce1f-de16-4e23-94df-1a8251fd8b18 to C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:07,195 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:07,195 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:07,214 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:32:07,214 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:32:07,216 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:32:07,216 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:32:07,217 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:07,217 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:16,465 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:32:16,465 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-08 20:32:16,466 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:32:16,466 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-08 20:32:16,467 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:16,467 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:16,467 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:16,467 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:16,468 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\172fce1f-de16-4e23-94df-1a8251fd8b18.jpg
+2025-05-08 20:32:16,468 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\172fce1f-de16-4e23-94df-1a8251fd8b18.jpg
+2025-05-08 20:32:16,468 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:32:16,468 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-08 20:32:48,559 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:48,559 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:93 - Preparing cache data for image 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:48,560 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:32:48,560 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Cache data prepared successfully
+2025-05-08 20:32:48,560 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 172fce1f-de16-4e23-94df-1a8251fd8b18: C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:48,560 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 172fce1f-de16-4e23-94df-1a8251fd8b18: C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:48,560 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 172fce1f-de16-4e23-94df-1a8251fd8b18 to C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:48,560 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 172fce1f-de16-4e23-94df-1a8251fd8b18 to C:\Dev\Home-Decor\backend\static\processed\cache\172fce1f-de16-4e23-94df-1a8251fd8b18_cache.pkl
+2025-05-08 20:32:48,594 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:48,594 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:48,602 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:32:48,602 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-08 20:32:48,603 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:32:48,603 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-08 20:32:48,604 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18
+2025-05-08 20:32:48,604 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 172fce1f-de16-4e23-94df-1a8251fd8b18

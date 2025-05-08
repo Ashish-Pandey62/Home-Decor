@@ -1,3 +1,4 @@
+import torch
 from pathlib import Path
 from pydantic_settings import BaseSettings
 from typing import Set
@@ -23,7 +24,7 @@ class Settings(BaseSettings):
     # Model Settings
     MODEL_PATH: Path = BASE_DIR.parent / "models/sam_vit_h_4b8939.pth"
     MODEL_TYPE: str = "vit_h"
-    DEVICE: str = "cuda" if False else "cpu"  # We'll add CUDA check later
+    DEVICE: str = "cuda" if torch.cuda.is_available() else "cpu"  # Use CUDA if available
     
     # File Cleanup
     CLEANUP_INTERVAL: int = 3600  # 1 hour

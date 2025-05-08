@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import torch
 from pathlib import Path
-from segment_anything import sam_model_registry, SamPredictor
+from segment_anything import sam_model_registry, SamPredictor, SamAutomaticMaskGenerator
 from ..core.config import settings
 from ..core.exceptions import ModelError, InvalidImageError
 
@@ -14,6 +14,17 @@ class WallDetector:
             self.sam = sam_model_registry[settings.MODEL_TYPE](checkpoint=str(settings.MODEL_PATH))
             self.sam.to(device=self.device)
             self.predictor = SamPredictor(self.sam)
+            
+            # Initialize mask generator like in your Colab version
+            self.mask_generator = SamAutomaticMaskGenerator(
+                model=self.sam,
+                points_per_side=32,
+                pred_iou_thresh=0.9,
+                stability_score_thresh=0.92,
+                crop_n_layers=1,
+                crop_n_points_downscale_factor=2,
+                min_mask_region_area=100
+            )
         except Exception as e:
             raise ModelError(f"Failed to initialize SAM model: {str(e)}")
 
@@ -32,54 +43,67 @@ class WallDetector:
     def detect_walls(self, image: np.ndarray) -> dict:
         """Detect walls in the image using SAM"""
         try:
-            # Set image for predictor
+            # Set image for predictor (will be used in apply_color)
             self.predictor.set_image(image)
             
             # Get image dimensions
             height, width = image.shape[:2]
             
-            # Generate automatic mask
-            masks = []
+            # Generate automatic masks using the approach from your Colab code
+            segments = self.mask_generator.generate(image)
+            print(f"Generated {len(segments)} segments")
+            
+            selected_segments = []
             wall_mask = np.zeros((height, width), dtype=np.uint8)
             
-            # Process center points of image to detect walls
-            center_points = [
-                (width // 2, height // 2),
-                (width // 4, height // 2),
-                (3 * width // 4, height // 2),
-                (width // 2, height // 4),
-                (width // 2, 3 * height // 4)
-            ]
+            # Use your proven wall detection logic from Colab
+            sorted_segments = sorted(segments, key=lambda x: x['area'], reverse=True)
             
-            for point in center_points:
-                input_point = np.array([[point[0], point[1]]])
-                input_label = np.array([1])
+            # Take the top 30% of segments by area as candidates
+            num_candidates = max(1, int(len(sorted_segments) * 0.3))
+            candidates = sorted_segments[:num_candidates]
+            
+            for segment in candidates:
+                mask = segment['segmentation']
                 
-                masks_batch, scores, _ = self.predictor.predict(
-                    point_coords=input_point,
-                    point_labels=input_label,
-                    multimask_output=True
+                # Check if mask touches boundary
+                touches_boundary = (
+                    np.any(mask[0, :]) or
+                    np.any(mask[-1, :]) or
+                    np.any(mask[:, 0]) or
+                    np.any(mask[:, -1])
                 )
                 
-                # Take the highest scoring mask
-                if len(scores) > 0:
-                    best_mask = masks_batch[scores.argmax()]
-                    wall_mask = np.logical_or(wall_mask, best_mask)
-                    # Ensure score is between 0 and 1
-                    score = float(scores.max())
-                    normalized_score = min(max(score, 0.0), 1.0)
-                    masks.append({
-                        'segmentation': best_mask.tolist(),
-                        'score': normalized_score,
-                        'area': int(best_mask.sum())
-                    })
-
+                # Calculate solidity (area / convex hull area) as a measure of simplicity
+                contours, _ = cv2.findContours(mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                if len(contours) > 0:
+                    hull = cv2.convexHull(contours[0])
+                    hull_area = cv2.contourArea(hull)
+                    solidity = segment['area'] / hull_area if hull_area > 0 else 0
+                else:
+                    solidity = 0
+                
+                # Check color - walls are typically light colored
+                segment_pixels = image[mask]
+                avg_color = np.mean(segment_pixels, axis=0)
+                is_light = np.mean(avg_color) > 150  # Threshold for "lightness"
+                
+                # Combine all criteria
+                if touches_boundary and solidity > 0.7 and is_light:
+                    selected_segments.append(segment)
+                    wall_mask = np.logical_or(wall_mask, mask)
+            
+            # If no segments were selected, use fallback: just take the largest segment
+            if len(selected_segments) == 0 and len(sorted_segments) > 0:
+                selected_segments.append(sorted_segments[0])
+                wall_mask = np.logical_or(wall_mask, sorted_segments[0]['segmentation'])
+            
             # Convert to uint8 for storage/transmission
             wall_mask = wall_mask.astype(np.uint8) * 255
             
             return {
                 'wall_mask': wall_mask,
-                'masks': masks
+                'masks': selected_segments
             }
             
         except Exception as e:
@@ -88,8 +112,9 @@ class WallDetector:
     def apply_color(self, image: np.ndarray, wall_mask: np.ndarray, color_rgb: tuple) -> np.ndarray:
         """Apply color to detected walls"""
         try:
-            # Convert wall mask to boolean
-            wall_mask = wall_mask.astype(bool)
+            # Convert wall mask to boolean (accounting for potential 0-255 range)
+            if wall_mask.max() > 1:
+                wall_mask = wall_mask > 0
             
             # Convert image to LAB color space
             lab_image = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)

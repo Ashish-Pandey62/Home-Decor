@@ -91,6 +91,16 @@ interface HistoryEntry {
 }
 
 const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor }) => {
+  // Generate a consistent color for each wall segment
+  const getWallColor = (segmentId: string): string => {
+    // Use segmentId to generate a consistent hue
+    const hash = segmentId.split('').reduce((acc, char) => {
+      return char.charCodeAt(0) + ((acc << 5) - acc);
+    }, 0);
+    const hue = Math.abs(hash % 360);
+    return `hsl(${hue}, 70%, 50%)`;
+  };
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -248,96 +258,63 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     initializeImage();
   }, [image]);
 
-  const handleSegmentClick = async (segmentId: string) => {
+  const handleSegmentClick = (segmentId: string) => {
     if (isProcessing) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const clickedSegment = segments.find(segment => segment.id === segmentId);
-    if (clickedSegment) {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
+    if (!clickedSegment) return;
 
-      logAction('Segment selected', {
-        segmentId: clickedSegment.id,
-        color: currentColor,
-        coordinates: {
-          sample: clickedSegment.coordinates.slice(0, 5),
-          total: clickedSegment.coordinates.length
-        }
-      });
-      setSelectedSegment(clickedSegment.id);
-      try {
-        setIsProcessing(true);
-        const currentEntry = history[historyIndex];
-        const colorResponse = await api.applyColor(
-          currentEntry.image_id,
-          currentColor,
-          [clickedSegment.id]
-        );
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-        // Update history
-        const newHistory = history.slice(0, historyIndex + 1);
-        newHistory.push({
-          image_id: colorResponse.image_id,
-          imageUrl: colorResponse.processed_image_url,
-          segments
-        });
-        setHistory(newHistory);
-        setHistoryIndex(prev => prev + 1);
-
-        // Load and handle new image
-        const updateCanvasWithNewImage = async () => {
-          const ctx = canvas.getContext('2d');
-          if (!ctx) throw new Error('Failed to get canvas context');
-
-          // Load new image with error handling
-          const newImage = await new Promise<HTMLImageElement>((resolve, reject) => {
-            const img = new Image();
-            img.crossOrigin = 'anonymous';  // Handle CORS
-            img.onload = () => resolve(img);
-            img.onerror = () => reject(new Error('Failed to load updated image'));
-            img.src = colorResponse.processed_image_url;
-          });
-
-          // Update canvas dimensions if needed
-          if (canvas.width !== newImage.width || canvas.height !== newImage.height) {
-            canvas.width = newImage.width;
-            canvas.height = newImage.height;
-            logAction('Canvas dimensions updated', {
-              width: canvas.width,
-              height: canvas.height
-            });
-          }
-
-          // Clear and draw new image
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(newImage, 0, 0);
-
-          logAction('Canvas updated with new image', {
-            imageUrl: colorResponse.processed_image_url,
-            dimensions: {
-              canvas: { width: canvas.width, height: canvas.height },
-              image: { width: newImage.width, height: newImage.height }
-            }
-          });
-        };
-
-        await updateCanvasWithNewImage();
-
-        logAction('Image updated', {
-          url: colorResponse.processed_image_url,
-          historyLength: newHistory.length,
-          currentIndex: historyIndex + 1
-        });
-      } catch (error) {
-        logError('Color application', error);
-        alert('Failed to change wall color. Please try again.');
-      } finally {
-        setIsProcessing(false);
+    logAction('Segment selected', {
+      segmentId: clickedSegment.id,
+      color: currentColor,
+      coordinates: {
+        sample: clickedSegment.coordinates.slice(0, 5),
+        total: clickedSegment.coordinates.length
       }
-    }
+    });
+
+    setSelectedSegment(clickedSegment.id);
+    
+    // Create path for the segment
+    ctx.beginPath();
+    clickedSegment.coordinates.forEach(([row, col], index) => {
+      const x = (col / image.width) * canvas.width;
+      const y = (row / image.height) * canvas.height;
+      if (index === 0) {
+        ctx.moveTo(x, y);
+      } else {
+        ctx.lineTo(x, y);
+      }
+    });
+    ctx.closePath();
+
+    // Apply the new color
+    ctx.fillStyle = currentColor;
+    ctx.fill();
+
+    // Update history
+    const imageData = canvas.toDataURL();
+    const newHistory = history.slice(0, historyIndex + 1);
+    newHistory.push({
+      image_id: imageId, // Keep the same image_id since we're not sending to backend
+      imageUrl: imageData,
+      segments
+    });
+    setHistory(newHistory);
+    setHistoryIndex(prev => prev + 1);
+
+    logAction('Color applied locally', {
+      segmentId: clickedSegment.id,
+      color: currentColor,
+      historyLength: newHistory.length,
+      currentIndex: historyIndex + 1
+    });
   };
 
   const isPointInPolygon = (clickPoint: [number, number], polygon: [number, number][]) => {
@@ -368,7 +345,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     return inside;
   };
 
-  const undo = async () => {
+  const undo = () => {
     logAction('Undo requested', {
       currentIndex: historyIndex,
       historyLength: history.length
@@ -384,37 +361,23 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     const newIndex = historyIndex - 1;
     const prevEntry = history[newIndex];
 
-    try {
-      setIsProcessing(true);
-      await new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(null);
-        };
-        img.onerror = () => {
-          reject(new Error('Failed to load previous image'));
-        };
-        img.src = prevEntry.imageUrl;
-      });
-
+    setIsProcessing(true);
+    const img = new Image();
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      setIsProcessing(false);
+      setHistoryIndex(newIndex);
+      setSegments(prevEntry.segments);
       logAction('Undo complete', {
         newIndex,
         imageUrl: prevEntry.imageUrl
       });
-    } catch (error) {
-      logError('Undo operation', error);
-      alert('Failed to load previous image. Please try again.');
-    } finally {
-      setIsProcessing(false);
-    }
-
-    setHistoryIndex(newIndex);
-    setSegments(prevEntry.segments);
+    };
+    img.src = prevEntry.imageUrl;
   };
 
-  const redo = async () => {
+  const redo = () => {
     logAction('Redo requested', {
       currentIndex: historyIndex,
       historyLength: history.length
@@ -430,34 +393,20 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     const newIndex = historyIndex + 1;
     const nextEntry = history[newIndex];
 
-    try {
-      setIsProcessing(true);
-      await new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          resolve(null);
-        };
-        img.onerror = () => {
-          reject(new Error('Failed to load next image'));
-        };
-        img.src = nextEntry.imageUrl;
-      });
-
+    setIsProcessing(true);
+    const img = new Image();
+    img.onload = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      setIsProcessing(false);
+      setHistoryIndex(newIndex);
+      setSegments(nextEntry.segments);
       logAction('Redo complete', {
         newIndex,
         imageUrl: nextEntry.imageUrl
       });
-    } catch (error) {
-      logError('Redo operation', error);
-      alert('Failed to load next image. Please try again.');
-    } finally {
-      setIsProcessing(false);
-    }
-
-    setHistoryIndex(newIndex);
-    setSegments(nextEntry.segments);
+    };
+    img.src = nextEntry.imageUrl;
   };
 
   return (
@@ -509,9 +458,10 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
               <path
                 key={segment.id}
                 d={`M ${scaledCoords.map(([x, y]) => `${x},${y}`).join(' L ')} Z`}
-                fill="rgba(128, 128, 128, 0.1)"
-                stroke={segment.id === selectedSegment ? '#007bff' : '#666'}
-                strokeWidth={segment.id === selectedSegment ? "3" : "1"}
+                fill="none"
+                stroke={segment.id === selectedSegment ? '#007bff' : getWallColor(segment.id)}
+                strokeWidth={segment.id === selectedSegment ? "4" : "2.5"}
+                strokeDasharray={segment.id === selectedSegment ? "none" : "none"}
                 style={{
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
@@ -519,13 +469,13 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                 onClick={() => handleSegmentClick(segment.id)}
                 onMouseEnter={(e) => {
                   const target = e.target as SVGPathElement;
-                  target.style.fill = 'rgba(128, 128, 128, 0.2)';
-                  target.style.strokeWidth = '2';
+                  target.style.fill = 'rgba(255, 255, 255, 0.1)';
+                  target.style.strokeWidth = '5';
                 }}
                 onMouseLeave={(e) => {
                   const target = e.target as SVGPathElement;
-                  target.style.fill = 'rgba(128, 128, 128, 0.1)';
-                  target.style.strokeWidth = segment.id === selectedSegment ? '3' : '1';
+                  target.style.fill = 'none';
+                  target.style.strokeWidth = segment.id === selectedSegment ? '4' : '2.5';
                 }}
               />
             );
