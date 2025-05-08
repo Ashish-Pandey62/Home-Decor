@@ -164,7 +164,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       // Draw initial image with proper dimensions
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-      
+
       logAction('Initial image drawn', {
         canvasDimensions: { width: canvas.width, height: canvas.height },
         imageDimensions: { width: image.width, height: image.height }
@@ -172,7 +172,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
 
       try {
         setIsProcessing(true);
-        
+
         logAction('Detecting walls', { image_id: imageId });
         const wallsResponse = await api.detectWalls(imageId);
         logAction('Wall detection successful', {
@@ -398,7 +398,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         };
         img.src = prevEntry.imageUrl;
       });
-      
+
       logAction('Undo complete', {
         newIndex,
         imageUrl: prevEntry.imageUrl
@@ -444,7 +444,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         };
         img.src = nextEntry.imageUrl;
       });
-      
+
       logAction('Redo complete', {
         newIndex,
         imageUrl: nextEntry.imageUrl
@@ -493,15 +493,15 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
               // Convert from [row, col] to [x, y]
               const x = col; // column becomes x
               const y = row; // row becomes y
-              
+
               // Get percentage of position relative to original image
               const percentX = x / image.width;
               const percentY = y / image.height;
-              
+
               // Convert percentage to display coordinates
               const displayX = percentX * canvasRef.current!.clientWidth;
               const displayY = percentY * canvasRef.current!.clientHeight;
-              
+
               return [displayX, displayY];
             });
 
@@ -509,24 +509,24 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
               <path
                 key={segment.id}
                 d={`M ${scaledCoords.map(([x, y]) => `${x},${y}`).join(' L ')} Z`}
-              fill="rgba(128, 128, 128, 0.1)"
-              stroke={segment.id === selectedSegment ? '#007bff' : '#666'}
-              strokeWidth={segment.id === selectedSegment ? "3" : "1"}
-              style={{
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-              }}
-              onClick={() => handleSegmentClick(segment.id)}
-              onMouseEnter={(e) => {
-                const target = e.target as SVGPathElement;
-                target.style.fill = 'rgba(128, 128, 128, 0.2)';
-                target.style.strokeWidth = '2';
-              }}
-              onMouseLeave={(e) => {
-                const target = e.target as SVGPathElement;
-                target.style.fill = 'rgba(128, 128, 128, 0.1)';
-                target.style.strokeWidth = segment.id === selectedSegment ? '3' : '1';
-              }}
+                fill="rgba(128, 128, 128, 0.1)"
+                stroke={segment.id === selectedSegment ? '#007bff' : '#666'}
+                strokeWidth={segment.id === selectedSegment ? "3" : "1"}
+                style={{
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+                onClick={() => handleSegmentClick(segment.id)}
+                onMouseEnter={(e) => {
+                  const target = e.target as SVGPathElement;
+                  target.style.fill = 'rgba(128, 128, 128, 0.2)';
+                  target.style.strokeWidth = '2';
+                }}
+                onMouseLeave={(e) => {
+                  const target = e.target as SVGPathElement;
+                  target.style.fill = 'rgba(128, 128, 128, 0.1)';
+                  target.style.strokeWidth = segment.id === selectedSegment ? '3' : '1';
+                }}
               />
             );
           })}

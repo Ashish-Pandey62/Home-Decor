@@ -5,3 +5,4 @@ venv
 backend/static/processed/*
 backend/static/uploads/*
 backend/logs/app.log
+backend/logs/app.log
