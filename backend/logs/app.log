@@ -3937,3 +3937,1204 @@ app.core.exceptions.ImageProcessingError: 422: Error processing image: 'score'
 2025-05-09 07:38:59,789 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
 2025-05-09 07:38:59,790 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: cfaab6f5-4a18-47b8-bbac-811635e236c4
 2025-05-09 07:38:59,790 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: cfaab6f5-4a18-47b8-bbac-811635e236c4
+2025-05-09 08:05:10,148 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-09 08:05:49,355 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-09 08:07:32,039 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-09 08:09:46,705 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 08:09:46,705 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 08:09:46,746 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 08:09:46,746 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 08:09:46,747 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 6250415 bytes
+2025-05-09 08:09:46,747 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 6250415 bytes
+2025-05-09 08:09:46,757 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:09:46,757 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:09:46,758 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 08:09:46,758 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 08:09:46,758 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:09:46,758 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:10:00,670 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 08:10:00,670 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 08:10:00,677 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 08:10:00,677 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 08:10:00,698 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:10:00,698 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:10:00,699 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:10:00,699 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:10:00,700 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\78486814-8bb5-454d-9344-ecfc2604c911.jpg
+2025-05-09 08:10:00,700 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\78486814-8bb5-454d-9344-ecfc2604c911.jpg
+2025-05-09 08:10:00,700 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 08:10:00,700 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 08:18:48,588 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 3 masks
+2025-05-09 08:18:48,588 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 3 masks
+2025-05-09 08:18:48,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_0
+2025-05-09 08:18:48,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_0
+2025-05-09 08:18:48,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (2100, 3000), Type: bool, Range: False-True, Area: 4038423
+2025-05-09 08:18:48,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (2100, 3000), Type: bool, Range: False-True, Area: 4038423
+2025-05-09 08:18:48,895 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 08:18:48,895 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 08:18:48,939 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (2100, 3000), dtype: uint8, range: 0-255
+2025-05-09 08:18:48,939 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (2100, 3000), dtype: uint8, range: 0-255
+2025-05-09 08:18:48,945 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 8 points
+2025-05-09 08:18:48,945 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 8 points
+2025-05-09 08:18:48,946 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 11 points
+2025-05-09 08:18:48,946 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 11 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 2 with 9 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 2 with 9 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 3 with 10 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 3 with 10 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 4 with 10 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 4 with 10 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 5 with 11 points
+2025-05-09 08:18:48,947 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 5 with 11 points
+2025-05-09 08:18:48,948 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 6 with 10 points
+2025-05-09 08:18:48,948 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 6 with 10 points
+2025-05-09 08:18:48,948 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 7 with 11 points
+2025-05-09 08:18:48,948 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 7 with 11 points
+2025-05-09 08:18:48,948 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 8 with 12 points
+2025-05-09 08:18:48,948 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 8 with 12 points
+2025-05-09 08:18:48,949 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 9 with 9 points
+2025-05-09 08:18:48,949 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 9 with 9 points
+2025-05-09 08:18:48,949 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 10 with 4 points
+2025-05-09 08:18:48,949 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 10 with 4 points
+2025-05-09 08:18:48,950 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 11 contours
+2025-05-09 08:18:48,950 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 11 contours
+2025-05-09 08:18:48,958 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_0 with svg_path length: 1013
+2025-05-09 08:18:48,958 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_0 with svg_path length: 1013
+2025-05-09 08:18:48,958 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_1
+2025-05-09 08:18:48,958 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_1
+2025-05-09 08:18:48,959 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (2100, 3000), Type: bool, Range: False-True, Area: 367872
+2025-05-09 08:18:48,959 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (2100, 3000), Type: bool, Range: False-True, Area: 367872
+2025-05-09 08:18:49,094 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 08:18:49,094 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 08:18:49,130 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (2100, 3000), dtype: uint8, range: 0-255
+2025-05-09 08:18:49,130 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (2100, 3000), dtype: uint8, range: 0-255
+2025-05-09 08:18:49,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 08:18:49,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 08:18:49,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 08:18:49,136 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 08:18:49,137 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_1 with svg_path length: 35
+2025-05-09 08:18:49,137 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_1 with svg_path length: 35
+2025-05-09 08:18:49,137 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_2
+2025-05-09 08:18:49,137 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_2
+2025-05-09 08:18:49,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 2 properties - Shape: (2100, 3000), Type: bool, Range: False-True, Area: 157006
+2025-05-09 08:18:49,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 2 properties - Shape: (2100, 3000), Type: bool, Range: False-True, Area: 157006
+2025-05-09 08:18:49,316 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 08:18:49,316 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 08:18:49,362 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (2100, 3000), dtype: uint8, range: 0-255
+2025-05-09 08:18:49,362 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (2100, 3000), dtype: uint8, range: 0-255
+2025-05-09 08:18:49,367 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 08:18:49,367 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 08:18:49,367 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 08:18:49,367 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 08:18:49,368 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_2 with svg_path length: 38
+2025-05-09 08:18:49,368 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 78486814-8bb5-454d-9344-ecfc2604c911_wall_2 with svg_path length: 38
+2025-05-09 08:18:49,369 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 3 walls
+2025-05-09 08:18:49,369 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 3 walls
+2025-05-09 08:18:49,375 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:18:49,375 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:18:49,376 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 08:18:49,376 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 08:18:49,378 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 78486814-8bb5-454d-9344-ecfc2604c911: C:\Dev\Home-Decor\backend\static\processed\cache\78486814-8bb5-454d-9344-ecfc2604c911_cache.pkl
+2025-05-09 08:18:49,378 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 78486814-8bb5-454d-9344-ecfc2604c911: C:\Dev\Home-Decor\backend\static\processed\cache\78486814-8bb5-454d-9344-ecfc2604c911_cache.pkl
+2025-05-09 08:18:49,379 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 78486814-8bb5-454d-9344-ecfc2604c911 to C:\Dev\Home-Decor\backend\static\processed\cache\78486814-8bb5-454d-9344-ecfc2604c911_cache.pkl
+2025-05-09 08:18:49,379 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 78486814-8bb5-454d-9344-ecfc2604c911 to C:\Dev\Home-Decor\backend\static\processed\cache\78486814-8bb5-454d-9344-ecfc2604c911_cache.pkl
+2025-05-09 08:18:49,414 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:18:49,414 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:18:49,659 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 3 walls
+2025-05-09 08:18:49,659 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 3 walls
+2025-05-09 08:18:49,660 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 08:18:49,660 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 08:18:49,664 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:18:49,664 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:19:59,608 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 08:19:59,608 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 08:19:59,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 08:19:59,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 08:19:59,642 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:19:59,642 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:19:59,643 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:19:59,643 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 78486814-8bb5-454d-9344-ecfc2604c911
+2025-05-09 08:19:59,644 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\78486814-8bb5-454d-9344-ecfc2604c911.jpg
+2025-05-09 08:19:59,644 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\78486814-8bb5-454d-9344-ecfc2604c911.jpg
+2025-05-09 08:19:59,644 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 08:19:59,644 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 08:20:19,489 - app - ERROR - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:112 - Wall detection failed: 422: Error processing image: 500: Error detecting walls: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\models\wall_detector.py", line 53, in detect_walls
+    segments = self.mask_generator.generate(image)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\torch\utils\_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 163, in generate
+    mask_data = self._generate_masks(image)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 206, in _generate_masks
+    crop_data = self._process_crop(image, crop_box, layer_idx, orig_size)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 245, in _process_crop
+    batch_data = self._process_batch(points, cropped_im_size, crop_box, orig_size)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 297, in _process_batch
+    data.filter(keep_mask)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\utils\amg.py", line 49, in filter
+    self._stats[k] = v[torch.as_tensor(keep, device=v.device)]
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 78, in process_upload
+    detection_result = self.wall_detector.detect_walls(image)
+  File "C:\Dev\Home-Decor\backend\app\models\wall_detector.py", line 110, in detect_walls
+    raise ModelError(f"Error detecting walls: {str(e)}")
+app.core.exceptions.ModelError: 500: Error detecting walls: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py", line 92, in detect_walls
+    result = await image_service.process_upload(
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 171, in process_upload
+    raise ImageProcessingError(f"Error processing image: {str(e)}")
+app.core.exceptions.ImageProcessingError: 422: Error processing image: 500: Error detecting walls: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2025-05-09 08:20:19,489 - app - ERROR - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:112 - Wall detection failed: 422: Error processing image: 500: Error detecting walls: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\models\wall_detector.py", line 53, in detect_walls
+    segments = self.mask_generator.generate(image)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\torch\utils\_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 163, in generate
+    mask_data = self._generate_masks(image)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 206, in _generate_masks
+    crop_data = self._process_crop(image, crop_box, layer_idx, orig_size)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 245, in _process_crop
+    batch_data = self._process_batch(points, cropped_im_size, crop_box, orig_size)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\automatic_mask_generator.py", line 297, in _process_batch
+    data.filter(keep_mask)
+  File "C:\Dev\Home-Decor\backend\venv\lib\site-packages\segment_anything\utils\amg.py", line 49, in filter
+    self._stats[k] = v[torch.as_tensor(keep, device=v.device)]
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 78, in process_upload
+    detection_result = self.wall_detector.detect_walls(image)
+  File "C:\Dev\Home-Decor\backend\app\models\wall_detector.py", line 110, in detect_walls
+    raise ModelError(f"Error detecting walls: {str(e)}")
+app.core.exceptions.ModelError: 500: Error detecting walls: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py", line 92, in detect_walls
+    result = await image_service.process_upload(
+  File "C:\Dev\Home-Decor\backend\app\services\image_service.py", line 171, in process_upload
+    raise ImageProcessingError(f"Error processing image: {str(e)}")
+app.core.exceptions.ImageProcessingError: 422: Error processing image: 500: Error detecting walls: CUDA out of memory. Tried to allocate 3.92 GiB. GPU 0 has a total capacity of 6.00 GiB of which 0 bytes is free. Of the allocated memory 7.04 GiB is allocated by PyTorch, and 4.30 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+2025-05-09 08:21:20,248 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 08:21:20,248 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 08:21:20,270 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 08:21:20,270 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 08:21:20,270 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 124812 bytes
+2025-05-09 08:21:20,270 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 124812 bytes
+2025-05-09 08:21:20,280 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:21:20,280 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:21:20,281 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 08:21:20,281 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 08:21:20,284 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:21:20,284 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:22:21,243 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 08:22:21,243 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 08:22:21,263 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 08:22:21,263 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 08:22:21,279 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:22:21,279 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:22:21,280 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:22:21,280 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 08:22:21,283 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\5444da27-ec88-4ed4-84b7-95b1a55176da.jpg
+2025-05-09 08:22:21,283 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\5444da27-ec88-4ed4-84b7-95b1a55176da.jpg
+2025-05-09 08:22:21,283 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 08:22:21,283 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 09:10:36,617 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 2 masks
+2025-05-09 09:10:36,617 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 2 masks
+2025-05-09 09:10:36,632 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0
+2025-05-09 09:10:36,632 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0
+2025-05-09 09:10:36,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 171978
+2025-05-09 09:10:36,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 171978
+2025-05-09 09:10:36,644 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:10:36,644 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:10:36,650 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:10:36,650 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:10:36,651 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 7 points
+2025-05-09 09:10:36,651 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 7 points
+2025-05-09 09:10:36,652 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 5 points
+2025-05-09 09:10:36,652 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 5 points
+2025-05-09 09:10:36,652 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 2 contours
+2025-05-09 09:10:36,652 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 2 contours
+2025-05-09 09:10:36,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0 with svg_path length: 115
+2025-05-09 09:10:36,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0 with svg_path length: 115
+2025-05-09 09:10:36,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1
+2025-05-09 09:10:36,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1
+2025-05-09 09:10:36,657 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 33340
+2025-05-09 09:10:36,657 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 33340
+2025-05-09 09:10:36,663 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:10:36,663 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:10:36,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:10:36,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:10:36,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 09:10:36,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 09:10:36,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 09:10:36,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 09:10:36,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1 with svg_path length: 37
+2025-05-09 09:10:36,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1 with svg_path length: 37
+2025-05-09 09:10:36,665 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 2 walls
+2025-05-09 09:10:36,665 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 2 walls
+2025-05-09 09:10:36,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:10:36,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:10:36,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 09:10:36,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 09:10:36,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 5444da27-ec88-4ed4-84b7-95b1a55176da: C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:10:36,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 5444da27-ec88-4ed4-84b7-95b1a55176da: C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:10:36,667 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 5444da27-ec88-4ed4-84b7-95b1a55176da to C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:10:36,667 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 5444da27-ec88-4ed4-84b7-95b1a55176da to C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:10:36,670 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:10:36,670 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:10:36,686 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-09 09:10:36,686 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-09 09:10:36,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 09:10:36,686 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 09:10:36,689 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:10:36,689 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:11:28,691 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 09:11:28,691 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 09:11:28,708 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 09:11:28,708 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 09:11:28,724 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:11:28,724 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:11:28,724 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:11:28,724 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:11:28,725 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\5444da27-ec88-4ed4-84b7-95b1a55176da.jpg
+2025-05-09 09:11:28,725 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\5444da27-ec88-4ed4-84b7-95b1a55176da.jpg
+2025-05-09 09:11:28,726 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 09:11:28,726 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 09:20:39,220 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 2 masks
+2025-05-09 09:20:39,220 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 2 masks
+2025-05-09 09:20:39,230 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0
+2025-05-09 09:20:39,230 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0
+2025-05-09 09:20:39,231 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 171978
+2025-05-09 09:20:39,231 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 171978
+2025-05-09 09:20:39,245 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:20:39,245 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:20:39,250 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:20:39,250 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:20:39,251 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 7 points
+2025-05-09 09:20:39,251 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 7 points
+2025-05-09 09:20:39,252 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 5 points
+2025-05-09 09:20:39,252 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 5 points
+2025-05-09 09:20:39,252 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 2 contours
+2025-05-09 09:20:39,252 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 2 contours
+2025-05-09 09:20:39,254 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0 with svg_path length: 115
+2025-05-09 09:20:39,254 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_0 with svg_path length: 115
+2025-05-09 09:20:39,255 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1
+2025-05-09 09:20:39,255 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1
+2025-05-09 09:20:39,255 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 33340
+2025-05-09 09:20:39,255 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (408, 612), Type: bool, Range: False-True, Area: 33340
+2025-05-09 09:20:39,263 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:20:39,263 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 09:20:39,264 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:20:39,264 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (408, 612), dtype: uint8, range: 0-255
+2025-05-09 09:20:39,265 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 09:20:39,265 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 09:20:39,265 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 09:20:39,265 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 09:20:39,266 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1 with svg_path length: 37
+2025-05-09 09:20:39,266 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall 5444da27-ec88-4ed4-84b7-95b1a55176da_wall_1 with svg_path length: 37
+2025-05-09 09:20:39,266 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 2 walls
+2025-05-09 09:20:39,266 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 2 walls
+2025-05-09 09:20:39,267 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:20:39,267 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:20:39,267 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 09:20:39,267 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 09:20:39,268 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 5444da27-ec88-4ed4-84b7-95b1a55176da: C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:20:39,268 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 5444da27-ec88-4ed4-84b7-95b1a55176da: C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:20:39,268 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 5444da27-ec88-4ed4-84b7-95b1a55176da to C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:20:39,268 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 5444da27-ec88-4ed4-84b7-95b1a55176da to C:\Dev\Home-Decor\backend\static\processed\cache\5444da27-ec88-4ed4-84b7-95b1a55176da_cache.pkl
+2025-05-09 09:20:39,270 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:20:39,270 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:20:39,285 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-09 09:20:39,285 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 2 walls
+2025-05-09 09:20:39,286 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 09:20:39,286 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 09:20:39,287 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:20:39,287 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 5444da27-ec88-4ed4-84b7-95b1a55176da
+2025-05-09 09:50:53,687 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 09:50:53,687 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 09:50:53,727 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 09:50:53,727 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 09:50:53,728 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 201780 bytes
+2025-05-09 09:50:53,728 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 201780 bytes
+2025-05-09 09:50:53,739 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:50:53,739 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:50:53,740 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 09:50:53,740 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 09:50:53,742 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:50:53,742 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:51:47,182 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 09:51:47,182 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 09:51:47,198 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 09:51:47,198 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 09:51:47,216 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:51:47,216 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:51:47,217 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:51:47,217 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 09:51:47,219 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\a1555bbd-3a10-4654-8c0c-782e05556fee.jpg
+2025-05-09 09:51:47,219 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\a1555bbd-3a10-4654-8c0c-782e05556fee.jpg
+2025-05-09 09:51:47,219 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 09:51:47,219 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:00:58,046 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:00:58,046 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:00:58,051 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0
+2025-05-09 10:00:58,051 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0
+2025-05-09 10:00:58,052 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:00:58,052 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:00:58,059 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,059 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,065 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,065 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,067 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 8 points
+2025-05-09 10:00:58,067 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 8 points
+2025-05-09 10:00:58,067 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 8 points
+2025-05-09 10:00:58,067 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 8 points
+2025-05-09 10:00:58,068 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 2 with 5 points
+2025-05-09 10:00:58,068 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 2 with 5 points
+2025-05-09 10:00:58,068 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 3 contours
+2025-05-09 10:00:58,068 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 3 contours
+2025-05-09 10:00:58,070 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0 with svg_path length: 206
+2025-05-09 10:00:58,070 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0 with svg_path length: 206
+2025-05-09 10:00:58,070 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1
+2025-05-09 10:00:58,070 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1
+2025-05-09 10:00:58,070 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:00:58,070 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:00:58,077 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,077 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,078 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,078 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,078 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:00:58,078 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:00:58,079 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,079 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,079 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1 with svg_path length: 35
+2025-05-09 10:00:58,079 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1 with svg_path length: 35
+2025-05-09 10:00:58,079 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2
+2025-05-09 10:00:58,079 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2
+2025-05-09 10:00:58,080 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:00:58,080 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:00:58,085 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,085 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,086 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,086 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,087 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:00:58,087 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:00:58,087 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,087 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,088 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2 with svg_path length: 61
+2025-05-09 10:00:58,088 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2 with svg_path length: 61
+2025-05-09 10:00:58,088 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3
+2025-05-09 10:00:58,088 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3
+2025-05-09 10:00:58,088 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:00:58,088 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:00:58,094 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,094 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,095 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,095 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,096 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:00:58,096 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:00:58,097 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,097 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,097 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3 with svg_path length: 58
+2025-05-09 10:00:58,097 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3 with svg_path length: 58
+2025-05-09 10:00:58,097 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4
+2025-05-09 10:00:58,097 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4
+2025-05-09 10:00:58,098 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:00:58,098 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:00:58,102 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,102 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:00:58,103 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,103 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:00:58,104 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:00:58,104 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:00:58,104 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,104 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:00:58,105 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4 with svg_path length: 33
+2025-05-09 10:00:58,105 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4 with svg_path length: 33
+2025-05-09 10:00:58,105 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 5 walls
+2025-05-09 10:00:58,105 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 5 walls
+2025-05-09 10:00:58,106 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:00:58,106 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:00:58,106 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 10:00:58,106 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 10:00:58,107 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for a1555bbd-3a10-4654-8c0c-782e05556fee: C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:00:58,107 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for a1555bbd-3a10-4654-8c0c-782e05556fee: C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:00:58,107 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for a1555bbd-3a10-4654-8c0c-782e05556fee to C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:00:58,107 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for a1555bbd-3a10-4654-8c0c-782e05556fee to C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:00:58,110 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:00:58,110 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:00:58,123 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:00:58,123 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:00:58,124 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:00:58,124 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:00:58,125 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:00:58,125 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:01:56,927 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:01:56,927 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:01:56,942 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:01:56,942 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:01:56,954 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:01:56,954 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:01:56,955 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:01:56,955 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:01:56,956 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\a1555bbd-3a10-4654-8c0c-782e05556fee.jpg
+2025-05-09 10:01:56,956 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\a1555bbd-3a10-4654-8c0c-782e05556fee.jpg
+2025-05-09 10:01:56,956 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:01:56,956 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:11:38,264 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:11:38,264 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:11:38,283 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0
+2025-05-09 10:11:38,283 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0
+2025-05-09 10:11:38,286 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:11:38,286 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:11:38,296 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,296 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,302 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,302 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,304 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 8 points
+2025-05-09 10:11:38,304 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 8 points
+2025-05-09 10:11:38,304 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 8 points
+2025-05-09 10:11:38,304 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 1 with 8 points
+2025-05-09 10:11:38,304 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 2 with 5 points
+2025-05-09 10:11:38,304 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 2 with 5 points
+2025-05-09 10:11:38,305 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 3 contours
+2025-05-09 10:11:38,305 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 3 contours
+2025-05-09 10:11:38,308 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0 with svg_path length: 206
+2025-05-09 10:11:38,308 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0 with svg_path length: 206
+2025-05-09 10:11:38,308 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1
+2025-05-09 10:11:38,308 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1
+2025-05-09 10:11:38,309 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:11:38,309 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:11:38,316 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,316 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,318 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,318 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,318 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:11:38,318 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:11:38,319 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,319 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,319 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1 with svg_path length: 35
+2025-05-09 10:11:38,319 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1 with svg_path length: 35
+2025-05-09 10:11:38,320 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2
+2025-05-09 10:11:38,320 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2
+2025-05-09 10:11:38,320 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:11:38,320 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:11:38,327 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,327 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,328 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,328 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,328 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:11:38,328 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:11:38,329 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,329 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,329 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2 with svg_path length: 61
+2025-05-09 10:11:38,329 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2 with svg_path length: 61
+2025-05-09 10:11:38,329 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3
+2025-05-09 10:11:38,329 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3
+2025-05-09 10:11:38,330 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:11:38,330 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:11:38,336 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,336 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,338 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,338 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 6 points
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3 with svg_path length: 58
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3 with svg_path length: 58
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4
+2025-05-09 10:11:38,339 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:106 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4
+2025-05-09 10:11:38,340 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:11:38,340 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:110 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:11:38,345 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,345 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:300 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:11:38,346 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,346 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:215 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:11:38,347 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:11:38,347 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:263 - Added contour 0 with 4 points
+2025-05-09 10:11:38,347 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,347 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:270 - Generated SVG path with 1 contours
+2025-05-09 10:11:38,348 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4 with svg_path length: 33
+2025-05-09 10:11:38,348 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:132 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4 with svg_path length: 33
+2025-05-09 10:11:38,348 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 5 walls
+2025-05-09 10:11:38,348 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:141 - Successfully processed 5 walls
+2025-05-09 10:11:38,349 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:11:38,349 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:144 - Preparing cache data for image a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:11:38,349 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 10:11:38,349 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:151 - Cache data prepared successfully
+2025-05-09 10:11:38,350 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for a1555bbd-3a10-4654-8c0c-782e05556fee: C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:11:38,350 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for a1555bbd-3a10-4654-8c0c-782e05556fee: C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:11:38,351 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for a1555bbd-3a10-4654-8c0c-782e05556fee to C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:11:38,351 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for a1555bbd-3a10-4654-8c0c-782e05556fee to C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:11:38,354 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:11:38,354 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:11:38,369 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:11:38,369 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:11:38,371 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:11:38,371 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:11:38,374 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:11:38,374 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:11:46,398 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-09 10:13:41,280 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:13:41,280 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:13:41,282 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:13:41,282 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:13:41,284 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:13:41,284 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:13:41,284 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:13:41,284 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:13:41,285 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\a1555bbd-3a10-4654-8c0c-782e05556fee.jpg
+2025-05-09 10:13:41,285 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\a1555bbd-3a10-4654-8c0c-782e05556fee.jpg
+2025-05-09 10:13:41,285 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:13:41,285 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:14:10,160 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:14:10,160 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:14:10,166 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0
+2025-05-09 10:14:10,166 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0
+2025-05-09 10:14:10,167 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:14:10,167 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:14:10,174 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,174 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,175 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,175 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,176 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 8 points
+2025-05-09 10:14:10,176 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 8 points
+2025-05-09 10:14:10,176 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 1 with 8 points
+2025-05-09 10:14:10,176 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 1 with 8 points
+2025-05-09 10:14:10,177 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 2 with 5 points
+2025-05-09 10:14:10,177 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 2 with 5 points
+2025-05-09 10:14:10,177 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 3 contours
+2025-05-09 10:14:10,177 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 3 contours
+2025-05-09 10:14:10,178 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0 with svg_path length: 206
+2025-05-09 10:14:10,178 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_0 with svg_path length: 206
+2025-05-09 10:14:10,178 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1
+2025-05-09 10:14:10,178 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1
+2025-05-09 10:14:10,179 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:14:10,179 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:14:10,187 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,187 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,189 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,189 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,189 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:14:10,189 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:14:10,190 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,190 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,190 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1 with svg_path length: 35
+2025-05-09 10:14:10,190 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_1 with svg_path length: 35
+2025-05-09 10:14:10,191 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2
+2025-05-09 10:14:10,191 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2
+2025-05-09 10:14:10,191 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:14:10,191 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:14:10,197 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,197 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,198 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,198 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2 with svg_path length: 61
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_2 with svg_path length: 61
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3
+2025-05-09 10:14:10,199 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3
+2025-05-09 10:14:10,200 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:14:10,200 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:14:10,204 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,204 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,206 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,206 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,206 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:14:10,206 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:14:10,207 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,207 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,207 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3 with svg_path length: 58
+2025-05-09 10:14:10,207 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_3 with svg_path length: 58
+2025-05-09 10:14:10,208 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4
+2025-05-09 10:14:10,208 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4
+2025-05-09 10:14:10,208 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:14:10,208 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:14:10,212 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,212 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:14:10,213 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,213 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:14:10,213 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:14:10,213 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:14:10,214 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,214 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:14:10,214 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4 with svg_path length: 33
+2025-05-09 10:14:10,214 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall a1555bbd-3a10-4654-8c0c-782e05556fee_wall_4 with svg_path length: 33
+2025-05-09 10:14:10,215 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed 5 walls
+2025-05-09 10:14:10,215 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed 5 walls
+2025-05-09 10:14:10,215 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:155 - Preparing cache data for image a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:14:10,215 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:155 - Preparing cache data for image a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:14:10,215 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:162 - Cache data prepared successfully
+2025-05-09 10:14:10,215 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:162 - Cache data prepared successfully
+2025-05-09 10:14:10,216 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for a1555bbd-3a10-4654-8c0c-782e05556fee: C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:14:10,216 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for a1555bbd-3a10-4654-8c0c-782e05556fee: C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:14:10,216 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for a1555bbd-3a10-4654-8c0c-782e05556fee to C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:14:10,216 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for a1555bbd-3a10-4654-8c0c-782e05556fee to C:\Dev\Home-Decor\backend\static\processed\cache\a1555bbd-3a10-4654-8c0c-782e05556fee_cache.pkl
+2025-05-09 10:14:10,217 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:14:10,217 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for a1555bbd-3a10-4654-8c0c-782e05556fee
+2025-05-09 10:14:10,226 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:14:10,226 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:14:10,227 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:14:10,227 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:14:36,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 10:14:36,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:176 - Health check requested
+2025-05-09 10:14:36,151 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 10:14:36,151 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 10:14:36,151 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 201780 bytes
+2025-05-09 10:14:36,151 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 201780 bytes
+2025-05-09 10:14:36,155 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:36,155 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:36,156 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 10:14:36,156 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 10:14:36,157 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:36,157 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:44,743 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:14:44,743 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:14:44,744 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:14:44,744 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:14:44,745 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:44,745 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:44,745 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:44,745 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:14:44,746 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8.jpg
+2025-05-09 10:14:44,746 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8.jpg
+2025-05-09 10:14:44,746 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:14:44,746 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:15:15,120 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:15:15,120 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:15:15,123 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0
+2025-05-09 10:15:15,123 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0
+2025-05-09 10:15:15,124 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:15:15,124 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:15:15,129 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,129 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,130 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,130 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,132 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 8 points
+2025-05-09 10:15:15,132 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 8 points
+2025-05-09 10:15:15,132 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 1 with 8 points
+2025-05-09 10:15:15,132 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 1 with 8 points
+2025-05-09 10:15:15,132 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 2 with 5 points
+2025-05-09 10:15:15,132 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 2 with 5 points
+2025-05-09 10:15:15,133 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 3 contours
+2025-05-09 10:15:15,133 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 3 contours
+2025-05-09 10:15:15,133 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0 with svg_path length: 206
+2025-05-09 10:15:15,133 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0 with svg_path length: 206
+2025-05-09 10:15:15,133 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1
+2025-05-09 10:15:15,133 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1
+2025-05-09 10:15:15,134 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:15:15,134 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:15:15,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,140 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,140 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,140 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:15:15,140 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:15:15,141 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,141 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,141 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1 with svg_path length: 35
+2025-05-09 10:15:15,141 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1 with svg_path length: 35
+2025-05-09 10:15:15,141 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2
+2025-05-09 10:15:15,141 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2
+2025-05-09 10:15:15,142 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:15:15,142 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:15:15,147 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,147 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,148 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,148 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,149 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:15:15,149 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:15:15,149 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,149 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,150 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2 with svg_path length: 61
+2025-05-09 10:15:15,150 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2 with svg_path length: 61
+2025-05-09 10:15:15,150 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3
+2025-05-09 10:15:15,150 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3
+2025-05-09 10:15:15,150 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:15:15,150 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:15:15,156 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,156 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,157 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,157 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,158 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:15:15,158 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:15:15,158 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,158 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,158 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3 with svg_path length: 58
+2025-05-09 10:15:15,158 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3 with svg_path length: 58
+2025-05-09 10:15:15,159 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4
+2025-05-09 10:15:15,159 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4
+2025-05-09 10:15:15,159 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:15:15,159 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:15:15,163 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,163 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:15:15,164 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,164 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:15:15,165 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:15:15,165 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:15:15,168 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,168 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:15:15,168 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4 with svg_path length: 33
+2025-05-09 10:15:15,168 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4 with svg_path length: 33
+2025-05-09 10:15:15,169 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed 5 walls
+2025-05-09 10:15:15,169 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed 5 walls
+2025-05-09 10:15:15,170 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:155 - Preparing cache data for image 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:15,170 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:155 - Preparing cache data for image 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:15,170 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:162 - Cache data prepared successfully
+2025-05-09 10:15:15,170 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:162 - Cache data prepared successfully
+2025-05-09 10:15:15,171 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8: C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:15:15,171 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8: C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:15:15,171 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8 to C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:15:15,171 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8 to C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:15:15,173 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:15,173 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:15,177 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:15:15,177 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:15:15,178 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:15:15,178 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:15:23,596 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:15:23,596 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:15:23,598 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:15:23,598 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:15:23,598 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:23,598 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:23,599 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:23,599 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:15:23,599 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8.jpg
+2025-05-09 10:15:23,599 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8.jpg
+2025-05-09 10:15:23,599 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:15:23,599 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:16:06,812 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:16:06,812 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:16:06,814 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0
+2025-05-09 10:16:06,814 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0
+2025-05-09 10:16:06,815 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:16:06,815 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:16:06,821 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,821 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,822 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 8 points
+2025-05-09 10:16:06,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 8 points
+2025-05-09 10:16:06,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 1 with 8 points
+2025-05-09 10:16:06,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 1 with 8 points
+2025-05-09 10:16:06,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 2 with 5 points
+2025-05-09 10:16:06,823 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 2 with 5 points
+2025-05-09 10:16:06,824 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 3 contours
+2025-05-09 10:16:06,824 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 3 contours
+2025-05-09 10:16:06,824 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0 with svg_path length: 206
+2025-05-09 10:16:06,824 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_0 with svg_path length: 206
+2025-05-09 10:16:06,824 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1
+2025-05-09 10:16:06,824 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1
+2025-05-09 10:16:06,825 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:16:06,825 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:16:06,829 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,829 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,830 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,830 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,831 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:16:06,831 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:16:06,831 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,831 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,832 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1 with svg_path length: 35
+2025-05-09 10:16:06,832 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_1 with svg_path length: 35
+2025-05-09 10:16:06,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2
+2025-05-09 10:16:06,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2
+2025-05-09 10:16:06,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:16:06,833 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:16:06,841 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,841 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,842 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,842 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,843 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:16:06,843 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:16:06,843 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,843 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,844 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2 with svg_path length: 61
+2025-05-09 10:16:06,844 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_2 with svg_path length: 61
+2025-05-09 10:16:06,844 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3
+2025-05-09 10:16:06,844 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3
+2025-05-09 10:16:06,844 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:16:06,844 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:16:06,851 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,851 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,852 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,852 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,853 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:16:06,853 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 6 points
+2025-05-09 10:16:06,853 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,853 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,854 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3 with svg_path length: 58
+2025-05-09 10:16:06,854 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_3 with svg_path length: 58
+2025-05-09 10:16:06,854 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4
+2025-05-09 10:16:06,854 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:117 - Processing wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4
+2025-05-09 10:16:06,855 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:16:06,855 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:121 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:16:06,861 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,861 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:317 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:16:06,863 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,863 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:232 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:16:06,863 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:16:06,863 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:280 - Added contour 0 with 4 points
+2025-05-09 10:16:06,864 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,864 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:287 - Generated SVG path with 1 contours
+2025-05-09 10:16:06,864 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4 with svg_path length: 33
+2025-05-09 10:16:06,864 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:143 - Successfully processed wall 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_wall_4 with svg_path length: 33
+2025-05-09 10:16:06,864 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed 5 walls
+2025-05-09 10:16:06,864 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed 5 walls
+2025-05-09 10:16:06,865 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:155 - Preparing cache data for image 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:16:06,865 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:155 - Preparing cache data for image 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:16:06,866 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:162 - Cache data prepared successfully
+2025-05-09 10:16:06,866 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:162 - Cache data prepared successfully
+2025-05-09 10:16:06,866 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8: C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:16:06,866 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8: C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:16:06,866 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8 to C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:16:06,866 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8 to C:\Dev\Home-Decor\backend\static\processed\cache\55d44b96-db2c-44e3-b2b3-5832a7d2e3a8_cache.pkl
+2025-05-09 10:16:06,868 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:16:06,868 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for 55d44b96-db2c-44e3-b2b3-5832a7d2e3a8
+2025-05-09 10:16:06,875 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:16:06,875 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:16:06,876 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:16:06,876 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:16:50,227 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-09 10:17:17,494 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-09 10:17:43,038 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:177 - Health check requested
+2025-05-09 10:17:43,038 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:177 - Health check requested
+2025-05-09 10:17:43,048 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 10:17:43,048 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:42 - Received upload request for file: room.jpg
+2025-05-09 10:17:43,048 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 201780 bytes
+2025-05-09 10:17:43,048 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:45 - Saving file room.jpg with size 201780 bytes
+2025-05-09 10:17:43,050 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:43,050 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:47 - File saved successfully with ID: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:43,051 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 10:17:43,051 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:51 - Scheduling cleanup task
+2025-05-09 10:17:43,052 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:43,052 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:61 - Upload successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:51,761 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:17:51,761 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:17:51,763 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:17:51,763 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:17:51,764 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:51,764 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:51,765 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:51,765 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:17:51,765 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e0817101-6568-440c-9649-f25fb730f09e.jpg
+2025-05-09 10:17:51,765 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e0817101-6568-440c-9649-f25fb730f09e.jpg
+2025-05-09 10:17:51,766 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:17:51,766 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:18:20,960 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:18:20,960 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:18:20,968 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_0
+2025-05-09 10:18:20,968 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_0
+2025-05-09 10:18:20,969 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:18:20,969 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:18:20,977 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:20,977 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:20,978 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:20,978 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:20,979 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 8 points
+2025-05-09 10:18:20,979 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 8 points
+2025-05-09 10:18:20,980 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 1 with 8 points
+2025-05-09 10:18:20,980 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 1 with 8 points
+2025-05-09 10:18:20,980 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 2 with 5 points
+2025-05-09 10:18:20,980 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 2 with 5 points
+2025-05-09 10:18:20,980 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 3 contours
+2025-05-09 10:18:20,980 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 3 contours
+2025-05-09 10:18:20,981 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_0 with svg_path length: 206
+2025-05-09 10:18:20,981 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_0 with svg_path length: 206
+2025-05-09 10:18:20,981 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_1
+2025-05-09 10:18:20,981 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_1
+2025-05-09 10:18:20,982 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:18:20,982 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:18:20,987 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:20,987 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:20,988 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:20,988 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:20,989 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:18:20,989 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:18:20,989 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:20,989 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:20,990 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_1 with svg_path length: 35
+2025-05-09 10:18:20,990 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_1 with svg_path length: 35
+2025-05-09 10:18:20,990 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_2
+2025-05-09 10:18:20,990 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_2
+2025-05-09 10:18:20,990 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:18:20,990 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:18:20,995 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:20,995 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:20,997 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:20,997 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:20,997 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:18:20,997 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:18:20,998 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:20,998 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:20,998 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_2 with svg_path length: 61
+2025-05-09 10:18:20,998 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_2 with svg_path length: 61
+2025-05-09 10:18:20,998 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_3
+2025-05-09 10:18:20,998 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_3
+2025-05-09 10:18:20,999 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:18:20,999 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:18:21,004 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:21,004 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:21,005 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:21,005 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:21,006 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:18:21,006 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:18:21,006 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:21,006 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:21,006 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_3 with svg_path length: 58
+2025-05-09 10:18:21,006 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_3 with svg_path length: 58
+2025-05-09 10:18:21,007 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_4
+2025-05-09 10:18:21,007 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_4
+2025-05-09 10:18:21,007 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:18:21,007 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:18:21,012 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:21,012 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:18:21,013 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:21,013 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:18:21,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:18:21,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:18:21,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:21,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:18:21,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_4 with svg_path length: 33
+2025-05-09 10:18:21,015 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_4 with svg_path length: 33
+2025-05-09 10:18:21,015 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:161 - Successfully processed 5 walls
+2025-05-09 10:18:21,015 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:161 - Successfully processed 5 walls
+2025-05-09 10:18:21,017 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:164 - Preparing cache data for image e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:21,017 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:164 - Preparing cache data for image e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:21,018 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:171 - Cache data prepared successfully
+2025-05-09 10:18:21,018 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:171 - Cache data prepared successfully
+2025-05-09 10:18:21,018 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e0817101-6568-440c-9649-f25fb730f09e: C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:18:21,018 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e0817101-6568-440c-9649-f25fb730f09e: C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:18:21,018 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e0817101-6568-440c-9649-f25fb730f09e to C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:18:21,018 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e0817101-6568-440c-9649-f25fb730f09e to C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:18:21,020 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:21,020 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:21,029 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:18:21,029 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:18:21,029 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:18:21,029 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:18:21,031 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:109 - Wall detection successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:21,031 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:109 - Wall detection successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:30,135 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:18:30,135 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:18:30,137 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:18:30,137 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:18:30,137 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:30,137 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:30,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:30,138 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:18:30,139 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e0817101-6568-440c-9649-f25fb730f09e.jpg
+2025-05-09 10:18:30,139 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e0817101-6568-440c-9649-f25fb730f09e.jpg
+2025-05-09 10:18:30,139 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:18:30,139 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:19:09,626 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:19:09,626 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:19:09,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_0
+2025-05-09 10:19:09,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_0
+2025-05-09 10:19:09,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:19:09,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:19:09,635 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,635 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 0 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,636 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,636 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 8 points
+2025-05-09 10:19:09,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 8 points
+2025-05-09 10:19:09,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 1 with 8 points
+2025-05-09 10:19:09,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 1 with 8 points
+2025-05-09 10:19:09,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 2 with 5 points
+2025-05-09 10:19:09,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 2 with 5 points
+2025-05-09 10:19:09,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 3 contours
+2025-05-09 10:19:09,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 3 contours
+2025-05-09 10:19:09,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_0 with svg_path length: 206
+2025-05-09 10:19:09,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_0 with svg_path length: 206
+2025-05-09 10:19:09,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_1
+2025-05-09 10:19:09,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_1
+2025-05-09 10:19:09,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:19:09,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:19:09,645 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,645 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 1 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,646 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,646 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,646 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:19:09,646 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:19:09,647 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,647 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,647 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_1 with svg_path length: 35
+2025-05-09 10:19:09,647 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_1 with svg_path length: 35
+2025-05-09 10:19:09,648 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_2
+2025-05-09 10:19:09,648 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_2
+2025-05-09 10:19:09,648 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:19:09,648 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:19:09,654 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,654 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 2 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,655 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,655 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:19:09,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:19:09,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_2 with svg_path length: 61
+2025-05-09 10:19:09,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_2 with svg_path length: 61
+2025-05-09 10:19:09,657 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_3
+2025-05-09 10:19:09,657 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_3
+2025-05-09 10:19:09,657 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:19:09,657 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:19:09,663 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,663 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 3 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,664 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:19:09,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 6 points
+2025-05-09 10:19:09,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,665 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_3 with svg_path length: 58
+2025-05-09 10:19:09,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_3 with svg_path length: 58
+2025-05-09 10:19:09,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_4
+2025-05-09 10:19:09,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:126 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_4
+2025-05-09 10:19:09,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:19:09,666 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:130 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:19:09,670 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,670 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:327 - Saved debug visualizations for wall 4 to C:\Dev\Home-Decor\backend\static\processed\debug_masks
+2025-05-09 10:19:09,671 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,671 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:242 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:19:09,672 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:19:09,672 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:290 - Added contour 0 with 4 points
+2025-05-09 10:19:09,672 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,672 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:297 - Generated SVG path with 1 contours
+2025-05-09 10:19:09,673 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_4 with svg_path length: 33
+2025-05-09 10:19:09,673 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:152 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_4 with svg_path length: 33
+2025-05-09 10:19:09,673 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:161 - Successfully processed 5 walls
+2025-05-09 10:19:09,673 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:161 - Successfully processed 5 walls
+2025-05-09 10:19:09,674 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:164 - Preparing cache data for image e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:19:09,674 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:164 - Preparing cache data for image e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:19:09,674 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:171 - Cache data prepared successfully
+2025-05-09 10:19:09,674 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:171 - Cache data prepared successfully
+2025-05-09 10:19:09,675 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e0817101-6568-440c-9649-f25fb730f09e: C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:19:09,675 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e0817101-6568-440c-9649-f25fb730f09e: C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:19:09,675 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e0817101-6568-440c-9649-f25fb730f09e to C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:19:09,675 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e0817101-6568-440c-9649-f25fb730f09e to C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:19:09,677 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:19:09,677 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:19:09,683 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:19:09,683 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:19:09,684 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:19:09,684 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:19:09,684 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:109 - Wall detection successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:19:09,684 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:109 - Wall detection successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:20:37,436 - app - INFO - C:\Dev\Home-Decor\backend\app\core\config.py:96 - Application directories and logging initialized
+2025-05-09 10:20:49,883 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:20:49,883 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:24 - Initialized ImageService with cache directory: C:\Dev\Home-Decor\backend\static\processed\cache
+2025-05-09 10:20:49,885 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:20:49,885 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:31 - Cache directory is writable
+2025-05-09 10:20:49,888 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:20:49,888 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:80 - Received wall detection request for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:20:49,888 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:20:49,888 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:83 - Getting file path for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:20:49,889 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e0817101-6568-440c-9649-f25fb730f09e.jpg
+2025-05-09 10:20:49,889 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:88 - Found file at: C:\Dev\Home-Decor\backend\static\uploads\e0817101-6568-440c-9649-f25fb730f09e.jpg
+2025-05-09 10:20:49,889 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:20:49,889 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:91 - Starting wall detection processing
+2025-05-09 10:21:21,618 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:21:21,618 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:83 - Processing detection result with 5 masks
+2025-05-09 10:21:21,623 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_0
+2025-05-09 10:21:21,623 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_0
+2025-05-09 10:21:21,623 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:21:21,623 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 0 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 43361
+2025-05-09 10:21:21,624 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,624 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,625 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 31 points
+2025-05-09 10:21:21,625 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 31 points
+2025-05-09 10:21:21,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 1 with 14 points
+2025-05-09 10:21:21,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 1 with 14 points
+2025-05-09 10:21:21,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 2 with 36 points
+2025-05-09 10:21:21,626 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 2 with 36 points
+2025-05-09 10:21:21,627 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 3 contours
+2025-05-09 10:21:21,627 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 3 contours
+2025-05-09 10:21:21,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_0 with svg_path length: 789
+2025-05-09 10:21:21,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_0 with svg_path length: 789
+2025-05-09 10:21:21,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_1
+2025-05-09 10:21:21,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_1
+2025-05-09 10:21:21,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:21:21,628 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 1 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 16543
+2025-05-09 10:21:21,629 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,629 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,630 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 8 points
+2025-05-09 10:21:21,630 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 8 points
+2025-05-09 10:21:21,631 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 1 contours
+2025-05-09 10:21:21,631 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 1 contours
+2025-05-09 10:21:21,631 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_1 with svg_path length: 71
+2025-05-09 10:21:21,631 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_1 with svg_path length: 71
+2025-05-09 10:21:21,632 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_2
+2025-05-09 10:21:21,632 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_2
+2025-05-09 10:21:21,632 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:21:21,632 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 2 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 12247
+2025-05-09 10:21:21,633 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,633 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 18 points
+2025-05-09 10:21:21,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 18 points
+2025-05-09 10:21:21,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 1 contours
+2025-05-09 10:21:21,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 1 contours
+2025-05-09 10:21:21,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_2 with svg_path length: 181
+2025-05-09 10:21:21,634 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_2 with svg_path length: 181
+2025-05-09 10:21:21,635 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_3
+2025-05-09 10:21:21,635 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_3
+2025-05-09 10:21:21,635 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:21:21,635 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 3 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 9304
+2025-05-09 10:21:21,636 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,636 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,636 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 16 points
+2025-05-09 10:21:21,636 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 16 points
+2025-05-09 10:21:21,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 1 with 33 points
+2025-05-09 10:21:21,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 1 with 33 points
+2025-05-09 10:21:21,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 2 contours
+2025-05-09 10:21:21,637 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 2 contours
+2025-05-09 10:21:21,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_3 with svg_path length: 482
+2025-05-09 10:21:21,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_3 with svg_path length: 482
+2025-05-09 10:21:21,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_4
+2025-05-09 10:21:21,638 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:96 - Processing wall e0817101-6568-440c-9649-f25fb730f09e_wall_4
+2025-05-09 10:21:21,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:21:21,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:100 - Mask 4 properties - Shape: (286, 438), Type: bool, Range: False-True, Area: 6212
+2025-05-09 10:21:21,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,639 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:200 - Processing mask shape: (286, 438), dtype: uint8, range: 0-255
+2025-05-09 10:21:21,640 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 38 points
+2025-05-09 10:21:21,640 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:244 - Added contour 0 with 38 points
+2025-05-09 10:21:21,640 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 1 contours
+2025-05-09 10:21:21,640 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:251 - Generated SVG path with 1 contours
+2025-05-09 10:21:21,641 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_4 with svg_path length: 303
+2025-05-09 10:21:21,641 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:119 - Successfully processed wall e0817101-6568-440c-9649-f25fb730f09e_wall_4 with svg_path length: 303
+2025-05-09 10:21:21,641 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:128 - Successfully processed 5 walls
+2025-05-09 10:21:21,641 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:128 - Successfully processed 5 walls
+2025-05-09 10:21:21,642 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:131 - Preparing cache data for image e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:21:21,642 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:131 - Preparing cache data for image e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:21:21,642 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:138 - Cache data prepared successfully
+2025-05-09 10:21:21,642 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:138 - Cache data prepared successfully
+2025-05-09 10:21:21,642 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e0817101-6568-440c-9649-f25fb730f09e: C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:21:21,642 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:39 - Cache path for e0817101-6568-440c-9649-f25fb730f09e: C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:21:21,643 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e0817101-6568-440c-9649-f25fb730f09e to C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:21:21,643 - app - DEBUG - C:\Dev\Home-Decor\backend\app\services\image_service.py:46 - Saving cache for e0817101-6568-440c-9649-f25fb730f09e to C:\Dev\Home-Decor\backend\static\processed\cache\e0817101-6568-440c-9649-f25fb730f09e_cache.pkl
+2025-05-09 10:21:21,644 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:21:21,644 - app - INFO - C:\Dev\Home-Decor\backend\app\services\image_service.py:50 - Successfully saved cache for e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:21:21,655 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:21:21,655 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:96 - Wall detection completed. Found 5 walls
+2025-05-09 10:21:21,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:21:21,656 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
+2025-05-09 10:21:21,657 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
+2025-05-09 10:21:21,657 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: e0817101-6568-440c-9649-f25fb730f09e
