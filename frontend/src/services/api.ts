@@ -34,9 +34,10 @@ To use a specific API URL, set VITE_API_URL in your .env file:
 
 export interface Wall {
   mask_id: string;
-  coordinates: [number, number][];
+  svg_path: string;
   area: number;
   confidence: number;
+  dimensions: [number, number];  // [width, height]
 }
 
 interface UploadResponse {

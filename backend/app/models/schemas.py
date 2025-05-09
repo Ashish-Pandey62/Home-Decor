@@ -5,9 +5,10 @@ import re
 
 class WallMask(BaseModel):
     mask_id: str = Field(..., description="Unique identifier for the wall mask")
-    coordinates: List[List[int]] = Field(..., description="Wall mask coordinates")
+    svg_path: str = Field(..., description="SVG path representation of wall mask")
     area: int = Field(..., description="Area of the wall in pixels")
     confidence: float = Field(..., ge=0, le=1, description="Confidence score of the wall detection")
+    dimensions: Tuple[int, int] = Field(..., description="Original image dimensions (width, height)")
 
 class WallDetectionResponse(BaseModel):
     image_id: str

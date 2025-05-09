@@ -79,15 +79,53 @@ class ImageService:
             
             # Convert masks to response format
             walls = []
+            height, width = image.shape[:2]
+            logger.info(f"Processing detection result with {len(detection_result.get('masks', []))} masks")
+            
+            if not detection_result.get('masks'):
+                logger.error("No masks found in detection result")
+                raise ImageProcessingError("No walls detected in image")
+
             for idx, mask in enumerate(detection_result['masks']):
-                wall_id = f"{image_id}_wall_{idx}"
-                mask_obj = WallMask(
-                    mask_id=wall_id,
-                    coordinates=self._encode_mask_coordinates(mask['segmentation']),
-                    area=mask['area'],
-                    confidence=mask.get('stability_score', 0.0)  # Use stability_score instead of score
-                )
-                walls.append(mask_obj)
+                try:
+                    if 'segmentation' not in mask:
+                        logger.error(f"Missing segmentation in mask {idx}")
+                        continue
+
+                    wall_id = f"{image_id}_wall_{idx}"
+                    logger.debug(f"Processing wall {wall_id}")
+                    
+                    # Debug mask properties
+                    segmentation = mask['segmentation']
+                    logger.debug(f"Mask {idx} properties - Shape: {segmentation.shape}, "
+                               f"Type: {segmentation.dtype}, "
+                               f"Range: {segmentation.min()}-{segmentation.max()}, "
+                               f"Area: {mask.get('area', 0)}")
+                    
+                    svg_path = self._encode_mask_coordinates(segmentation)
+                    
+                    if not svg_path:
+                        logger.error(f"Empty SVG path generated for mask {idx}")
+                        continue
+                        
+                    mask_obj = WallMask(
+                        mask_id=wall_id,
+                        svg_path=svg_path,
+                        area=mask.get('area', 0),
+                        confidence=mask.get('stability_score', 0.0),
+                        dimensions=(width, height)
+                    )
+                    walls.append(mask_obj)
+                    logger.debug(f"Successfully processed wall {wall_id} with svg_path length: {len(svg_path)}")
+                except Exception as e:
+                    logger.error(f"Error processing mask {idx}: {str(e)}")
+                    continue
+                    
+            if not walls:
+                logger.error("No valid walls processed from detection results")
+                raise ImageProcessingError("No valid wall segments found")
+                
+            logger.info(f"Successfully processed {len(walls)} walls")
             
             # Cache the detection result for later use
             logger.debug(f"Preparing cache data for image {image_id}")
@@ -147,10 +185,75 @@ class ImageService:
             raise ImageProcessingError(f"Error applying color: {str(e)}")
 
     @staticmethod
-    def _encode_mask_coordinates(mask: np.ndarray) -> List[List[int]]:
-        """Convert mask to list of coordinates for API response"""
-        coords = np.where(mask)
-        return [[int(x), int(y)] for x, y in zip(coords[0], coords[1])]
+    def _encode_mask_coordinates(mask: np.ndarray) -> str:
+        """Convert mask to SVG path for efficient representation"""
+        try:
+            if mask is None or mask.size == 0:
+                logger.error("Empty or invalid mask received")
+                raise ImageProcessingError("Invalid mask data")
+
+            # Convert boolean mask to uint8
+            binary_mask = mask.astype(np.uint8)
+            if binary_mask.max() == 1:  # If mask is 0-1, scale to 0-255
+                binary_mask = binary_mask * 255
+
+            logger.debug(f"Processing mask shape: {binary_mask.shape}, dtype: {binary_mask.dtype}, range: {binary_mask.min()}-{binary_mask.max()}")
+            
+            # Find contours
+            contours, _ = cv2.findContours(
+                binary_mask,
+                cv2.RETR_EXTERNAL,
+                cv2.CHAIN_APPROX_SIMPLE
+            )
+            
+            if not contours:
+                logger.error("No contours found in mask")
+                raise ImageProcessingError("No valid wall segments found")
+            
+            # Convert contours to SVG paths
+            paths = []
+            for idx, contour in enumerate(contours):
+                if len(contour) < 3:
+                    logger.debug(f"Skipping contour {idx}: too few points ({len(contour)})")
+                    continue
+                
+                # Calculate contour area and perimeter
+                area = cv2.contourArea(contour)
+                perimeter = cv2.arcLength(contour, True)
+                
+                # Skip tiny or invalid contours
+                if area < 100 or perimeter < 20:
+                    logger.debug(f"Skipping contour {idx}: too small (area={area}, perimeter={perimeter})")
+                    continue
+                
+                # Simplify contour
+                epsilon = 0.002 * perimeter  # Increased epsilon for better simplification
+                approx = cv2.approxPolyDP(contour, epsilon, True)
+                
+                if len(approx) < 3:
+                    logger.debug(f"Skipping contour {idx}: too few points after simplification ({len(approx)})")
+                    continue
+                
+                # Create SVG path with absolute coordinates
+                points = approx.squeeze()
+                path = f"M {int(points[0][0])},{int(points[0][1])}"
+                for point in points[1:]:
+                    path += f" L {int(point[0])},{int(point[1])}"
+                path += " Z"
+                paths.append(path)
+                logger.debug(f"Added contour {idx} with {len(approx)} points")
+            
+            if not paths:
+                logger.error("No valid paths generated from contours")
+                raise ImageProcessingError("Failed to generate wall segments")
+            
+            result = " ".join(paths)
+            logger.debug(f"Generated SVG path with {len(paths)} contours")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error encoding mask: {str(e)}")
+            raise ImageProcessingError(f"Failed to process wall segments: {str(e)}")
 
     @staticmethod
     def _create_detection_preview(image: np.ndarray, wall_mask: np.ndarray) -> np.ndarray:

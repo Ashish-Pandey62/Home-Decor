@@ -71,6 +71,7 @@ const SegmentOverlay = styled.svg`
   left: 0;
   width: 100%;
   height: 100%;
+  transform-origin: 0 0;
 `;
 
 interface ColorCustomizerProps {
@@ -81,7 +82,10 @@ interface ColorCustomizerProps {
 
 interface WallSegment {
   id: string;
-  coordinates: [number, number][];
+  pathData: string;
+  area: number;
+  confidence: number;
+  dimensions: [number, number];
 }
 
 interface HistoryEntry {
@@ -89,6 +93,52 @@ interface HistoryEntry {
   imageUrl: string;
   segments: WallSegment[];
 }
+
+
+// Helper function to sort coordinates to form a proper boundary
+// Process coordinates to form proper wall boundaries
+const processWallBoundary = (coordinates: [number, number][]): [number, number][] => {
+  if (coordinates.length < 3) return coordinates;
+
+  // Group coordinates by rows to detect boundary points
+  const pointsByRow = new Map<number, Set<number>>();
+  coordinates.forEach(([y, x]) => {
+    if (!pointsByRow.has(y)) {
+      pointsByRow.set(y, new Set());
+    }
+    pointsByRow.get(y)!.add(x);
+  });
+
+  // Extract boundary points by finding leftmost and rightmost points in each row
+  const boundaryPoints: [number, number][] = [];
+  pointsByRow.forEach((xValues, y) => {
+    const sortedX = Array.from(xValues).sort((a, b) => a - b);
+    if (sortedX.length > 0) {
+      // Add leftmost and rightmost points
+      boundaryPoints.push([y, sortedX[0]]);
+      if (sortedX.length > 1) {
+        boundaryPoints.push([y, sortedX[sortedX.length - 1]]);
+      }
+    }
+  });
+
+  // Sort points to form a continuous boundary
+  const sortedPoints = boundaryPoints.sort((a, b) => {
+    if (a[0] === b[0]) {
+      return a[1] - b[1]; // Sort by x if y is same
+    }
+    return a[0] - b[0]; // Sort by y
+  });
+
+  // Add top points first, then bottom points in reverse
+  const midPoint = Math.floor(sortedPoints.length / 2);
+  const result: [number, number][] = [
+    ...sortedPoints.slice(0, midPoint),
+    ...sortedPoints.slice(midPoint).reverse()
+  ];
+
+  return result;
+};
 
 const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor }) => {
   // Generate a consistent color for each wall segment
@@ -189,30 +239,42 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
           wallCount: wallsResponse.walls.length
         });
 
-        logAction('Converting wall data to segments', {
-          wallCount: wallsResponse.walls.length,
-          firstWallSample: wallsResponse.walls[0]?.coordinates.slice(0, 5),
-          dimensions: {
-            width: image.width,
-            height: image.height
-          }
+        logAction('Processing walls response', {
+          totalWalls: wallsResponse.walls.length,
+          firstWall: wallsResponse.walls[0] ? {
+            id: wallsResponse.walls[0].mask_id,
+            pathSample: wallsResponse.walls[0].svg_path.substring(0, 50) + '...',
+            area: wallsResponse.walls[0].area,
+            confidence: wallsResponse.walls[0].confidence,
+            dimensions: wallsResponse.walls[0].dimensions
+          } : 'no walls found',
+          imageDimensions: { width: image.width, height: image.height }
         });
+
+        if (!wallsResponse.walls.length) {
+          throw new Error('No walls detected in the image');
+        }
+
+        // Convert wall data to segments
         const wallSegments = wallsResponse.walls.map(wall => ({
           id: wall.mask_id,
-          coordinates: wall.coordinates
+          pathData: wall.svg_path,
+          area: wall.area,
+          confidence: wall.confidence,
+          dimensions: wall.dimensions
         }));
+        if (wallSegments.length === 0) {
+          throw new Error('No valid wall segments found in the response');
+        }
 
-        // Log scaled coordinates for first segment
+        // Log first segment details if available
         if (wallSegments.length > 0) {
           const firstSegment = wallSegments[0];
-          const sampleCoords = firstSegment.coordinates.slice(0, 5).map(([row, col]) => ({
-            original: [row, col],
-            transformed: [col, row],
-            normalized: [col / image.width, row / image.height]
-          }));
-          logAction('Sample coordinates transformation', {
-            segmentId: firstSegment.id,
-            sampleCoords
+          logAction('First wall segment processed', {
+            id: firstSegment.id,
+            pathPreview: firstSegment.pathData.substring(0, 50) + '...',
+            area: firstSegment.area,
+            confidence: firstSegment.confidence
           });
         }
 
@@ -273,30 +335,38 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     logAction('Segment selected', {
       segmentId: clickedSegment.id,
       color: currentColor,
-      coordinates: {
-        sample: clickedSegment.coordinates.slice(0, 5),
-        total: clickedSegment.coordinates.length
-      }
+      area: clickedSegment.area,
+      confidence: clickedSegment.confidence
     });
 
     setSelectedSegment(clickedSegment.id);
-    
-    // Create path for the segment
-    ctx.beginPath();
-    clickedSegment.coordinates.forEach(([row, col], index) => {
-      const x = (col / image.width) * canvas.width;
-      const y = (row / image.height) * canvas.height;
-      if (index === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
-    ctx.closePath();
 
+    // Setup for seamless color blending
+    ctx.save();
+    
+    // Draw original image
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    
+    // Create path from SVG data
+    const path = new Path2D(clickedSegment.pathData);
+    
+    // Scale the path to match canvas dimensions
+    const scaleX = canvas.width / image.width;
+    const scaleY = canvas.height / image.height;
+    ctx.scale(scaleX, scaleY);
+
+    // Set blending for natural color application
+    ctx.globalAlpha = 0.85;
+    ctx.globalCompositeOperation = 'multiply';
+    
     // Apply the new color
     ctx.fillStyle = currentColor;
-    ctx.fill();
+    ctx.fill(path);
+
+    // Reset context state
+    ctx.globalAlpha = 1.0;
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.restore();
 
     // Update history
     const imageData = canvas.toDataURL();
@@ -317,32 +387,31 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     });
   };
 
-  const isPointInPolygon = (clickPoint: [number, number], polygon: [number, number][]) => {
+  // Check if a point is near or inside a wall boundary using SVG Path
+  const isPointInPath = (point: [number, number], pathData: string): boolean => {
     if (!canvasRef.current) return false;
 
-    // Convert click coordinates to percentages
-    const [clickX, clickY] = clickPoint;
-    const percentX = clickX / canvasRef.current.clientWidth;
-    const percentY = clickY / canvasRef.current.clientHeight;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return false;
 
-    // Convert polygon coordinates from [row, col] to normalized [x, y]
-    const normalizedPolygon = polygon.map(([row, col]) => [
-      col / image.width,  // col becomes x
-      row / image.height  // row becomes y
-    ]);
+    // Create path and scale it
+    const path = new Path2D(pathData);
+    const scaleX = canvas.width / image.width;
+    const scaleY = canvas.height / image.height;
 
-    let inside = false;
-    for (let i = 0, j = normalizedPolygon.length - 1; i < normalizedPolygon.length; j = i++) {
-      const [xi, yi] = normalizedPolygon[i];
-      const [xj, yj] = normalizedPolygon[j];
+    // Transform context to match the wall scale
+    ctx.save();
+    ctx.scale(scaleX, scaleY);
 
-      const intersect = ((yi > percentY) !== (yj > percentY))
-        && (percentX < (xj - xi) * (percentY - yi) / (yj - yi) + xi);
+    // Check if point is in path
+    const [x, y] = point;
+    const scaledX = x / scaleX;
+    const scaledY = y / scaleY;
+    const result = ctx.isPointInPath(path, scaledX, scaledY);
 
-      if (intersect) inside = !inside;
-    }
-
-    return inside;
+    ctx.restore();
+    return result;
   };
 
   const undo = () => {
@@ -431,55 +500,73 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         <Canvas
           ref={canvasRef}
         />
-        <SegmentOverlay>
-          {segments.map((segment) => {
-            // Scale coordinates to match canvas dimensions
-            // Backend sends coordinates as [row, col] pairs from np.where()
-            // We need to:
-            // 1. Swap row/col to x/y
-            // 2. Scale to canvas dimensions
-            const scaledCoords = segment.coordinates.map(([row, col]) => {
-              // Convert from [row, col] to [x, y]
-              const x = col; // column becomes x
-              const y = row; // row becomes y
-
-              // Get percentage of position relative to original image
-              const percentX = x / image.width;
-              const percentY = y / image.height;
-
-              // Convert percentage to display coordinates
-              const displayX = percentX * canvasRef.current!.clientWidth;
-              const displayY = percentY * canvasRef.current!.clientHeight;
-
-              return [displayX, displayY];
-            });
-
-            return (
+        <SegmentOverlay
+          style={{
+            transform: canvasRef.current
+              ? `scale(${canvasRef.current.clientWidth / image.width}, ${canvasRef.current.clientHeight / image.height})`
+              : 'none'
+          }}
+        >
+          {segments.map(segment => (
+            <g key={segment.id}>
+              {/* Colored wall fill */}
               <path
-                key={segment.id}
-                d={`M ${scaledCoords.map(([x, y]) => `${x},${y}`).join(' L ')} Z`}
-                fill="none"
-                stroke={segment.id === selectedSegment ? '#007bff' : getWallColor(segment.id)}
-                strokeWidth={segment.id === selectedSegment ? "4" : "2.5"}
-                strokeDasharray={segment.id === selectedSegment ? "none" : "none"}
+                data-segment-id={`fill-${segment.id}`}
+                d={segment.pathData}
+                fill={segment.id === selectedSegment ? currentColor : getWallColor(segment.id)}
                 style={{
-                  cursor: 'pointer',
+                  opacity: 0.85,
+                  mixBlendMode: 'multiply',
                   transition: 'all 0.3s ease',
                 }}
-                onClick={() => handleSegmentClick(segment.id)}
-                onMouseEnter={(e) => {
-                  const target = e.target as SVGPathElement;
-                  target.style.fill = 'rgba(255, 255, 255, 0.1)';
-                  target.style.strokeWidth = '5';
-                }}
-                onMouseLeave={(e) => {
-                  const target = e.target as SVGPathElement;
-                  target.style.fill = 'none';
-                  target.style.strokeWidth = segment.id === selectedSegment ? '4' : '2.5';
+              />
+              {/* Wall boundary - visible only on hover */}
+              <path
+                data-segment-id={`boundary-${segment.id}`}
+                d={segment.pathData}
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth="2"
+                style={{
+                  opacity: 0,
+                  filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.3))',
+                  transition: 'all 0.3s ease',
+                  pointerEvents: 'none',
                 }}
               />
-            );
-          })}
+              {/* Invisible interaction area */}
+              <path
+                d={segment.pathData}
+                fill="transparent"
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleSegmentClick(segment.id)}
+                onMouseEnter={() => {
+                  // Show boundary
+                  const boundaryPath = document.querySelector(`path[data-segment-id="boundary-${segment.id}"]`);
+                  if (boundaryPath) {
+                    (boundaryPath as SVGPathElement).style.opacity = '1';
+                  }
+                  // Highlight fill
+                  const fillPath = document.querySelector(`path[data-segment-id="fill-${segment.id}"]`);
+                  if (fillPath) {
+                    (fillPath as SVGPathElement).style.opacity = '0.9';
+                  }
+                }}
+                onMouseLeave={() => {
+                  // Hide boundary
+                  const boundaryPath = document.querySelector(`path[data-segment-id="boundary-${segment.id}"]`);
+                  if (boundaryPath) {
+                    (boundaryPath as SVGPathElement).style.opacity = '0';
+                  }
+                  // Reset fill
+                  const fillPath = document.querySelector(`path[data-segment-id="fill-${segment.id}"]`);
+                  if (fillPath) {
+                    (fillPath as SVGPathElement).style.opacity = '0.85';
+                  }
+                }}
+              />
+            </g>
+          ))}
         </SegmentOverlay>
         {isProcessing && (
           <LoadingOverlay>
