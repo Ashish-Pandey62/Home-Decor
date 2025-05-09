@@ -2558,3 +2558,8 @@ app.core.exceptions.ImageProcessingError: 422: Error applying color: 422: Failed
 2025-05-07 09:17:44,196 - app - DEBUG - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:100 - Scheduling file cleanup
 2025-05-07 09:17:44,198 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 45aeff72-5ef4-4b5c-b93e-d8c1b04562f2
 2025-05-07 09:17:44,198 - app - INFO - C:\Dev\Home-Decor\backend\app\api\endpoints\wall.py:108 - Wall detection successful for image_id: 45aeff72-5ef4-4b5c-b93e-d8c1b04562f2
+2025-05-07 09:44:20,782 - app - INFO - /home/ashish/MyPC/projects/home decor/backend/app/core/config.py:95 - Application directories and logging initialized
+2025-05-07 09:45:07,069 - app - INFO - /home/ashish/MyPC/projects/home decor/backend/app/core/config.py:95 - Application directories and logging initialized
+2025-05-07 09:48:04,375 - app - INFO - /home/ashish/MyPC/projects/home decor/backend/app/core/config.py:95 - Application directories and logging initialized
+2025-05-07 09:50:16,448 - app - INFO - /home/ashish/MyPC/projects/home decor/backend/app/core/config.py:95 - Application directories and logging initialized
+2025-05-07 10:07:57,630 - app - INFO - /home/ashish/MyPC/projects/home decor/backend/app/core/config.py:95 - Application directories and logging initialized
