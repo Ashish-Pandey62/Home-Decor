@@ -219,6 +219,49 @@ class WallDetector:
 
         return result_image
 
+    def apply_wallpaper(self, wallpaper_bytes: bytes) -> np.ndarray:
+        """Apply wallpaper to detected walls"""
+        try:
+            # Decode wallpaper image
+            wallpaper = cv2.imdecode(np.frombuffer(wallpaper_bytes, np.uint8), cv2.IMREAD_UNCHANGED)
+            if wallpaper is None:
+                raise InvalidImageError("Failed to decode wallpaper image")
+
+            # Handle transparency
+            if wallpaper.shape[2] == 4:
+                wallpaper = cv2.cvtColor(wallpaper, cv2.COLOR_BGRA2RGBA)
+            else:
+                wallpaper = cv2.cvtColor(wallpaper, cv2.COLOR_BGR2RGB)
+                alpha_channel = np.ones((wallpaper.shape[0], wallpaper.shape[1]), dtype=np.uint8) * 255
+                wallpaper = np.dstack((wallpaper, alpha_channel))
+
+            # Resize to match room dimensions
+            wallpaper = cv2.resize(wallpaper, (self.width, self.height), interpolation=cv2.INTER_LINEAR)
+
+            # Prepare components
+            wallpaper_rgb = wallpaper[..., :3]
+            wallpaper_alpha = wallpaper[..., 3] / 255.0  # Normalize alpha
+
+            # Verify wall mask
+            if not hasattr(self, 'wall_mask') or self.wall_mask is None:
+                self.detect_walls()
+
+            # Create smooth mask
+            mask_blurred = cv2.GaussianBlur(self.wall_mask.astype(np.float32), (15, 15), 0)
+            combined_alpha = mask_blurred * wallpaper_alpha
+
+            # Blend images
+            result = self.original_image.copy().astype(np.float32)
+            wallpaper_rgb = wallpaper_rgb.astype(np.float32)
+
+            for c in range(3):
+                result[..., c] = result[..., c] * (1 - combined_alpha) + wallpaper_rgb[..., c] * combined_alpha
+
+            return np.clip(result, 0, 255).astype(np.uint8)
+
+        except Exception as e:
+            raise InvalidImageError(f"Error applying wallpaper: {str(e)}")
+
     def display_results(self, original, mask, result):
         """Display original image, mask, and result side by side"""
         plt.figure(figsize=(18, 6))
