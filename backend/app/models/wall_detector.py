@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import torch
+import random
 from pathlib import Path
 import matplotlib.pyplot as plt
 from segment_anything import sam_model_registry, SamPredictor, SamAutomaticMaskGenerator
@@ -32,6 +33,7 @@ class WallDetector:
             self.predictor = SamPredictor(self.sam)
             self.selected_segments = []
             self.wall_mask = None
+            self.original_image = None
         except Exception as e:
             raise ModelError(f"Failed to initialize SAM model: {str(e)}")
 
@@ -262,6 +264,32 @@ class WallDetector:
         except Exception as e:
             raise InvalidImageError(f"Error applying wallpaper: {str(e)}")
 
+    def generate_recommendations(self, num_colors: int = 4) -> list:
+        """
+        Generate recommended color schemes based on current wall detection
+        Returns list of tuples (hex_color, preview_image)
+        """
+        if not hasattr(self, 'wall_mask') or self.wall_mask is None:
+            self.detect_walls()
+
+        recommendations = []
+        for _ in range(num_colors):
+            # Generate pleasant colors in HSV space
+            hue = random.randint(0, 360)
+            saturation = random.randint(30, 70)
+            value = random.randint(70, 95)
+            
+            # Convert to RGB
+            hsv_color = np.uint8([[[hue, saturation, value]]])
+            rgb_color = cv2.cvtColor(hsv_color, cv2.COLOR_HSV2RGB)[0][0]
+            
+            # Apply color and store result
+            colored_image = self.apply_color(tuple(rgb_color))
+            hex_color = '#%02x%02x%02x' % tuple(rgb_color)
+            recommendations.append((hex_color, colored_image))
+        
+        return recommendations
+    
     def display_results(self, original, mask, result):
         """Display original image, mask, and result side by side"""
         plt.figure(figsize=(18, 6))
