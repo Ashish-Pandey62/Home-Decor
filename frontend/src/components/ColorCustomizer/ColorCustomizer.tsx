@@ -233,23 +233,18 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   }, [image, updateScale]);
 
   useEffect(() => {
-    // Ensure image is loaded before processing
-    if (!image || !image.complete) {
-      logAction('Image not ready', {
-        hasImage: !!image,
-        complete: image?.complete,
-        naturalWidth: image?.naturalWidth,
-        naturalHeight: image?.naturalHeight
-      });
-      return;
-    }
-    let isComponentMounted = true;
-    logAction('Starting image initialization effect', {
-      hasImage: !!image,
-      imageId,
-      currentHistoryLength: history.length
-    });
+    let mounted = true;
     const initializeImage = async () => {
+      // Skip if missing data
+      if (!image || !image.complete || !imageId) {
+        logAction('Skipping initialization - missing data', {
+          hasImage: !!image,
+          imageComplete: image?.complete,
+          hasImageId: !!imageId
+        });
+        return;
+      }
+
       logAction('Initializing image', {
         width: image.width,
         height: image.height
@@ -388,8 +383,9 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       }
     };
 
-    initializeImage();
-
+    if (!isProcessing) {
+      initializeImage();
+    }
 
     // Add keyboard event listeners for preview functionality
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -431,12 +427,12 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     window.addEventListener('keyup', handleKeyUp);
 
     return () => {
-      isComponentMounted = false;
-      logAction('Cleaning up image initialization effect');
+      mounted = false;
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
+      logAction('Cleaning up image initialization effect');
     };
-  }, [image, history, historyIndex, isShowingOriginal, isProcessing, imageId]);
+  }, [image, imageId]); // Only depend on image and imageId
 
   const handleSegmentClick = (segmentId: string) => {
     if (isProcessing || !canvasRef.current || !image) {
