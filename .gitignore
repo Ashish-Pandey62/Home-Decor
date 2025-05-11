@@ -7,5 +7,5 @@ backend/static/uploads/*
 backend/logs/app.log
 dpt_swin2_large_384
 Home Decor Advisor.pdf
-
-
+*.log
+backend/logs/app.log
