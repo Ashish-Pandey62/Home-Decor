@@ -5,13 +5,11 @@ from pathlib import Path
 
 def download_sam_model():
     """Download the SAM model weights if they don't exist."""
-    
     # Create models directory if it doesn't exist
     models_dir = Path(__file__).parent.parent / "models"
     models_dir.mkdir(exist_ok=True)
     
     model_path = models_dir / "sam_vit_h_4b8939.pth"
-    
     if model_path.exists():
         print("Model weights already exist.")
         return
@@ -27,7 +25,6 @@ def download_sam_model():
         
         urllib.request.urlretrieve(url, model_path, reporthook=report_progress)
         print("\nDownload completed successfully!")
-        
     except Exception as e:
         print(f"\nError downloading model weights: {e}")
         if model_path.exists():

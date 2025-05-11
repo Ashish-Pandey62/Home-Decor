@@ -5,6 +5,7 @@ venv
 backend/static/processed/*
 backend/static/uploads/*
 backend/logs/app.log
-backend/logs/app.log
-*.log
-backend/logs/app.log
+dpt_swin2_large_384
+Home Decor Advisor.pdf
+
+
