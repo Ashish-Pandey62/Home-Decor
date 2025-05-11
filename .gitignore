@@ -7,3 +7,4 @@ backend/static/uploads/*
 backend/logs/app.log
 backend/logs/app.log
 *.log
+backend/logs/app.log
