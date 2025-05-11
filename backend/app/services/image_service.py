@@ -80,53 +80,15 @@ class ImageService:
             
             # Convert masks to response format
             walls = []
-            height, width = image.shape[:2]
-            logger.info(f"Processing detection result with {len(detection_result.get('masks', []))} masks")
-            
-            if not detection_result.get('masks'):
-                logger.error("No masks found in detection result")
-                raise ImageProcessingError("No walls detected in image")
-
             for idx, mask in enumerate(detection_result['masks']):
-                try:
-                    if 'segmentation' not in mask:
-                        logger.error(f"Missing segmentation in mask {idx}")
-                        continue
-
-                    wall_id = f"{image_id}_wall_{idx}"
-                    logger.debug(f"Processing wall {wall_id}")
-                    
-                    # Debug mask properties
-                    segmentation = mask['segmentation']
-                    logger.debug(f"Mask {idx} properties - Shape: {segmentation.shape}, "
-                               f"Type: {segmentation.dtype}, "
-                               f"Range: {segmentation.min()}-{segmentation.max()}, "
-                               f"Area: {mask.get('area', 0)}")
-                    
-                    svg_path = self._encode_mask_coordinates(segmentation)
-                    
-                    if not svg_path:
-                        logger.error(f"Empty SVG path generated for mask {idx}")
-                        continue
-                        
-                    mask_obj = WallMask(
-                        mask_id=wall_id,
-                        svg_path=svg_path,
-                        area=mask.get('area', 0),
-                        confidence=mask.get('stability_score', 0.0),
-                        dimensions=(width, height)
-                    )
-                    walls.append(mask_obj)
-                    logger.debug(f"Successfully processed wall {wall_id} with svg_path length: {len(svg_path)}")
-                except Exception as e:
-                    logger.error(f"Error processing mask {idx}: {str(e)}")
-                    continue
-                    
-            if not walls:
-                logger.error("No valid walls processed from detection results")
-                raise ImageProcessingError("No valid wall segments found")
-                
-            logger.info(f"Successfully processed {len(walls)} walls")
+                wall_id = f"{image_id}_wall_{idx}"
+                mask_obj = WallMask(
+                    mask_id=wall_id,
+                    coordinates=self._encode_mask_coordinates(mask['segmentation']),
+                    area=mask['area'],
+                    confidence=mask['score']
+                )
+                walls.append(mask_obj)
             
             # Cache the detection result for later use
             logger.debug(f"Preparing cache data for image {image_id}")

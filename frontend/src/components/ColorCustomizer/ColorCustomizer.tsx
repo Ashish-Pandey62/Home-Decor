@@ -72,7 +72,6 @@ const SegmentOverlay = styled.svg`
   left: 0;
   width: 100%;
   height: 100%;
-  transform-origin: 0 0;
 `;
 
 interface ColorCustomizerProps {
@@ -83,10 +82,7 @@ interface ColorCustomizerProps {
 
 interface WallSegment {
   id: string;
-  pathData: string;
-  area: number;
-  confidence: number;
-  dimensions: [number, number];
+  coordinates: [number, number][];
 }
 
 interface HistoryEntry {
@@ -95,63 +91,7 @@ interface HistoryEntry {
   segments: WallSegment[];
 }
 
-
-// Helper function to sort coordinates to form a proper boundary
-// Process coordinates to form proper wall boundaries
-const processWallBoundary = (coordinates: [number, number][]): [number, number][] => {
-  if (coordinates.length < 3) return coordinates;
-
-  // Group coordinates by rows to detect boundary points
-  const pointsByRow = new Map<number, Set<number>>();
-  coordinates.forEach(([y, x]) => {
-    if (!pointsByRow.has(y)) {
-      pointsByRow.set(y, new Set());
-    }
-    pointsByRow.get(y)!.add(x);
-  });
-
-  // Extract boundary points by finding leftmost and rightmost points in each row
-  const boundaryPoints: [number, number][] = [];
-  pointsByRow.forEach((xValues, y) => {
-    const sortedX = Array.from(xValues).sort((a, b) => a - b);
-    if (sortedX.length > 0) {
-      // Add leftmost and rightmost points
-      boundaryPoints.push([y, sortedX[0]]);
-      if (sortedX.length > 1) {
-        boundaryPoints.push([y, sortedX[sortedX.length - 1]]);
-      }
-    }
-  });
-
-  // Sort points to form a continuous boundary
-  const sortedPoints = boundaryPoints.sort((a, b) => {
-    if (a[0] === b[0]) {
-      return a[1] - b[1]; // Sort by x if y is same
-    }
-    return a[0] - b[0]; // Sort by y
-  });
-
-  // Add top points first, then bottom points in reverse
-  const midPoint = Math.floor(sortedPoints.length / 2);
-  const result: [number, number][] = [
-    ...sortedPoints.slice(0, midPoint),
-    ...sortedPoints.slice(midPoint).reverse()
-  ];
-
-  return result;
-};
-
 const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor }) => {
-  // Generate a consistent color for each wall segment
-  const getWallColor = (segmentId: string): string => {
-    // Use segmentId to generate a consistent hue
-    const hash = segmentId.split('').reduce((acc, char) => {
-      return char.charCodeAt(0) + ((acc << 5) - acc);
-    }, 0);
-    const hue = Math.abs(hash % 360);
-    return `hsl(${hue}, 70%, 50%)`;
-  };
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const previousScaleRef = useRef({ x: 1, y: 1 });
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -219,7 +159,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       // Draw initial image with proper dimensions
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
+      
       logAction('Initial image drawn', {
         canvasDimensions: { width: canvas.width, height: canvas.height },
         imageDimensions: { width: image.width, height: image.height }
@@ -227,49 +167,37 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
 
       try {
         setIsProcessing(true);
-
+        
         logAction('Detecting walls', { image_id: imageId });
         const wallsResponse = await api.detectWalls(imageId);
         logAction('Wall detection successful', {
           wallCount: wallsResponse.walls.length
         });
 
-        logAction('Processing walls response', {
-          totalWalls: wallsResponse.walls.length,
-          firstWall: wallsResponse.walls[0] ? {
-            id: wallsResponse.walls[0].mask_id,
-            pathSample: wallsResponse.walls[0].svg_path.substring(0, 50) + '...',
-            area: wallsResponse.walls[0].area,
-            confidence: wallsResponse.walls[0].confidence,
-            dimensions: wallsResponse.walls[0].dimensions
-          } : 'no walls found',
-          imageDimensions: { width: image.width, height: image.height }
+        logAction('Converting wall data to segments', {
+          wallCount: wallsResponse.walls.length,
+          firstWallSample: wallsResponse.walls[0]?.coordinates.slice(0, 5),
+          dimensions: {
+            width: image.width,
+            height: image.height
+          }
         });
-
-        if (!wallsResponse.walls.length) {
-          throw new Error('No walls detected in the image');
-        }
-
-        // Convert wall data to segments
         const wallSegments = wallsResponse.walls.map(wall => ({
           id: wall.mask_id,
-          pathData: wall.svg_path,
-          area: wall.area,
-          confidence: wall.confidence,
-          dimensions: wall.dimensions
+          coordinates: wall.coordinates
         }));
-        if (wallSegments.length === 0) {
-          throw new Error('No valid wall segments found in the response');
-        }
 
-        // Log first segment details if available
+        // Log scaled coordinates for first segment
         if (wallSegments.length > 0) {
           const firstSegment = wallSegments[0];
-          logAction('First wall segment processed', {
-            id: firstSegment.id,
-            pathPreview: firstSegment.pathData.substring(0, 50) + '...',
-            area: firstSegment.area,
-            confidence: firstSegment.confidence
+          const sampleCoords = firstSegment.coordinates.slice(0, 5).map(([row, col]) => ({
+            original: [row, col],
+            transformed: [col, row],
+            normalized: [col / image.width, row / image.height]
+          }));
+          logAction('Sample coordinates transformation', {
+            segmentId: firstSegment.id,
+            sampleCoords
           });
         }
 
@@ -436,30 +364,32 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   const isPointInPath = (point: [number, number], pathData: string): boolean => {
     if (!canvasRef.current) return false;
 
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return false;
+    // Convert click coordinates to percentages
+    const [clickX, clickY] = clickPoint;
+    const percentX = clickX / canvasRef.current.clientWidth;
+    const percentY = clickY / canvasRef.current.clientHeight;
 
-    // Create path and scale it
-    const path = new Path2D(pathData);
-    const scaleX = canvas.width / image.width;
-    const scaleY = canvas.height / image.height;
+    // Convert polygon coordinates from [row, col] to normalized [x, y]
+    const normalizedPolygon = polygon.map(([row, col]) => [
+      col / image.width,  // col becomes x
+      row / image.height  // row becomes y
+    ]);
 
-    // Transform context to match the wall scale
-    ctx.save();
-    ctx.scale(scaleX, scaleY);
+    let inside = false;
+    for (let i = 0, j = normalizedPolygon.length - 1; i < normalizedPolygon.length; j = i++) {
+      const [xi, yi] = normalizedPolygon[i];
+      const [xj, yj] = normalizedPolygon[j];
 
-    // Check if point is in path
-    const [x, y] = point;
-    const scaledX = x / scaleX;
-    const scaledY = y / scaleY;
-    const result = ctx.isPointInPath(path, scaledX, scaledY);
+      const intersect = ((yi > percentY) !== (yj > percentY))
+        && (percentX < (xj - xi) * (percentY - yi) / (yj - yi) + xi);
 
-    ctx.restore();
-    return result;
+      if (intersect) inside = !inside;
+    }
+
+    return inside;
   };
 
-  const undo = () => {
+  const undo = async () => {
     logAction('Undo requested', {
       currentIndex: historyIndex,
       historyLength: history.length
@@ -495,7 +425,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     img.src = prevEntry.imageUrl;
   };
 
-  const redo = () => {
+  const redo = async () => {
     logAction('Redo requested', {
       currentIndex: historyIndex,
       historyLength: history.length
@@ -553,16 +483,30 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         <Canvas
           ref={canvasRef}
         />
-        <SegmentOverlay
-          style={{
-            transform: canvasRef.current
-              ? `scale(${canvasRef.current.clientWidth / image.width}, ${canvasRef.current.clientHeight / image.height})`
-              : 'none'
-          }}
-        >
-          {segments.map(segment => (
-            <g key={segment.id}>
-              {/* Colored wall fill */}
+        <SegmentOverlay>
+          {segments.map((segment) => {
+            // Scale coordinates to match canvas dimensions
+            // Backend sends coordinates as [row, col] pairs from np.where()
+            // We need to:
+            // 1. Swap row/col to x/y
+            // 2. Scale to canvas dimensions
+            const scaledCoords = segment.coordinates.map(([row, col]) => {
+              // Convert from [row, col] to [x, y]
+              const x = col; // column becomes x
+              const y = row; // row becomes y
+              
+              // Get percentage of position relative to original image
+              const percentX = x / image.width;
+              const percentY = y / image.height;
+              
+              // Convert percentage to display coordinates
+              const displayX = percentX * canvasRef.current!.clientWidth;
+              const displayY = percentY * canvasRef.current!.clientHeight;
+              
+              return [displayX, displayY];
+            });
+
+            return (
               <path
                 data-segment-id={`fill-${segment.id}`}
                 d={segment.pathData}
