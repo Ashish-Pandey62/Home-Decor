@@ -52,6 +52,14 @@ interface ColorResponse {
   preview_url: string;
 }
 
+interface ColorRecommendationResponse {
+  image_id: string;
+  recommendations: {
+    hex_color: string;
+    preview_url: string;
+  }[];
+}
+
 function logAPIRequest(endpoint: string, method: string, body?: any) {
   console.log(`🌐 API Request: ${method} ${endpoint}`);
   if (body) {
@@ -392,4 +400,53 @@ export function dataURLtoFile(dataUrl: string, filename: string): File {
   }
 
   return new File([u8arr], filename, { type: mime });
+}
+
+export async function getColorRecommendations(imageId: string, numColors: number = 4): Promise<ColorRecommendationResponse> {
+  const endpoint = `${API_BASE_URL}/recommendations`;
+  try {
+    const requestBody = {
+      image_id: imageId,
+      num_colors: numColors
+    };
+
+    logAPIRequest(endpoint, 'POST', requestBody);
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(import.meta.env.DEV && {
+          'Origin': window.location.origin
+        })
+      },
+      credentials: 'include',
+      body: JSON.stringify(requestBody),
+    });
+
+    const responseData = await response.text();
+    let parsedData;
+    try {
+      parsedData = JSON.parse(responseData);
+    } catch (e) {
+      console.error('Failed to parse response as JSON:', responseData);
+      throw new Error('Invalid JSON response from server');
+    }
+
+    if (!response.ok) {
+      throw new Error(`Failed to get color recommendations: ${responseData}`);
+    }
+
+    logAPIResponse(endpoint, parsedData);
+    return parsedData;
+  } catch (error) {
+    logAPIError(endpoint, error);
+    const enhancedError = new Error(
+      error instanceof Error
+        ? `Failed to get color recommendations: ${error.message}`
+        : 'Failed to get color recommendations: Network error'
+    );
+    Object.defineProperty(enhancedError, 'cause', { value: error });
+    throw enhancedError;
+  }
 }

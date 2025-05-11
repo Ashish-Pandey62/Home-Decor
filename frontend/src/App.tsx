@@ -79,6 +79,7 @@ function App() {
   const [currentColor, setCurrentColor] = useState('#007bff');
   const [error, setError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [wallsDetected, setWallsDetected] = useState(false);
 
   const handleImageUpload = async (image: HTMLImageElement) => {
     try {
@@ -124,6 +125,7 @@ function App() {
               image={uploadedImage}
               imageId={imageId!}
               currentColor={currentColor}
+              onWallsDetected={() => setWallsDetected(true)}
             />
           </EditorSection>
 
@@ -135,6 +137,7 @@ function App() {
             <ColorPalette
               selectedColor={currentColor}
               onColorSelect={setCurrentColor}
+              imageId={wallsDetected ? imageId! : undefined}
             />
           </SidePanel>
 

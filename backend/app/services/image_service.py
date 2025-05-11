@@ -13,7 +13,18 @@ from ..core.config import settings, logger
 from .file_service import FileService
 
 class ImageService:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(ImageService, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self):
+        if self._initialized:
+            return
+        self._initialized = True
         """Initialize the image service with wall detector"""
         self.wall_detector = WallDetector()
         # Ensure required directories exist
@@ -228,3 +239,34 @@ class ImageService:
                 os.remove(cache_path)
         except Exception as e:
             logger.error(f"Failed to cleanup cache for {image_id}: {str(e)}")
+
+    async def generate_color_recommendations(self, image_id: str, num_colors: int = 4) -> List[Tuple[str, Path]]:
+        """Generate color recommendations for walls"""
+        try:
+            # Load cached image and mask
+            cache = self._load_from_cache(image_id)
+            
+            # Set the image and wall mask in wall detector
+            image = cache['image']
+            wall_mask = cache['wall_mask']
+            self.wall_detector.original_image = image
+            self.wall_detector.wall_mask = wall_mask
+            
+            # Generate recommendations using wall detector
+            recommendations = self.wall_detector.generate_recommendations(num_colors)
+            
+            # Save preview images for each recommendation
+            result = []
+            for hex_color, preview_image in recommendations:
+                # Save the preview image
+                preview_path = FileService.save_processed_image(
+                    image_id,
+                    cv2.imencode('.jpg', cv2.cvtColor(preview_image, cv2.COLOR_RGB2BGR))[1].tobytes(),
+                    f"_preview_{hex_color[1:]}"  # Remove # from hex color for filename
+                )
+                result.append((hex_color, preview_path))
+            
+            return result
+            
+        except Exception as e:
+            raise ImageProcessingError(f"Error generating recommendations: {str(e)}")

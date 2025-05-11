@@ -47,3 +47,21 @@ class WallDetectionRequest(BaseModel):
         if not re.match(r'^[a-zA-Z0-9_-]+$', v):
             raise ValueError('Invalid image ID format')
         return v
+
+class RecommendationRequest(BaseModel):
+    image_id: str = Field(..., description="ID of the uploaded image to process")
+    num_colors: Optional[int] = Field(4, ge=1, le=10, description="Number of color recommendations to generate")
+    
+    @validator('image_id')
+    def validate_image_id(cls, v):
+        if not re.match(r'^[a-zA-Z0-9_-]+$', v):
+            raise ValueError('Invalid image ID format')
+        return v
+
+class ColorRecommendation(BaseModel):
+    hex_color: str = Field(..., pattern="^#[0-9a-fA-F]{6}$", description="Hex color code")
+    preview_url: str = Field(..., description="URL of the preview image with this color")
+
+class RecommendationResponse(BaseModel):
+    image_id: str
+    recommendations: List[ColorRecommendation]

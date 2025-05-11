@@ -78,6 +78,7 @@ interface ColorCustomizerProps {
   image: HTMLImageElement;
   imageId: string;
   currentColor: string;
+  onWallsDetected?: () => void;
 }
 
 interface WallSegment {
@@ -166,7 +167,7 @@ const createPattern = async (url: string): Promise<string> => {
   });
 };
 
-const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor }) => {
+const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor, onWallsDetected }) => {
   // Generate a consistent color for each wall segment
   const getWallColor = (segmentId: string): string => {
     // Use segmentId to generate a consistent hue
@@ -390,6 +391,9 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         setSegments(wallSegments);
         setHistory([initialEntry]);
         setHistoryIndex(0);
+
+        // Notify parent that walls have been detected
+        onWallsDetected?.();
 
         logAction('History initialized', {
           entryCount: 1,

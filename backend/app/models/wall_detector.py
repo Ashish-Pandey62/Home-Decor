@@ -274,13 +274,13 @@ class WallDetector:
 
         recommendations = []
         for _ in range(num_colors):
-            # Generate pleasant colors in HSV space
-            hue = random.randint(0, 360)
-            saturation = random.randint(30, 70)
-            value = random.randint(70, 95)
+            # Generate pleasant colors in HSV space for OpenCV (H: 0-179, S: 0-255, V: 0-255)
+            hue = random.randint(0, 179)  # OpenCV uses 0-179 for hue
+            saturation = int(random.randint(30, 70) * 2.55)  # Convert 0-100 to 0-255
+            value = int(random.randint(70, 95) * 2.55)  # Convert 0-100 to 0-255
             
             # Convert to RGB
-            hsv_color = np.uint8([[[hue, saturation, value]]])
+            hsv_color = np.uint8([[[hue, saturation, value]]])  # All values now in uint8 range
             rgb_color = cv2.cvtColor(hsv_color, cv2.COLOR_HSV2RGB)[0][0]
             
             # Apply color and store result
