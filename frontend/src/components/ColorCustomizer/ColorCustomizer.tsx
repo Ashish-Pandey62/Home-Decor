@@ -233,6 +233,22 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   }, [image, updateScale]);
 
   useEffect(() => {
+    // Ensure image is loaded before processing
+    if (!image || !image.complete) {
+      logAction('Image not ready', {
+        hasImage: !!image,
+        complete: image?.complete,
+        naturalWidth: image?.naturalWidth,
+        naturalHeight: image?.naturalHeight
+      });
+      return;
+    }
+    let isComponentMounted = true;
+    logAction('Starting image initialization effect', {
+      hasImage: !!image,
+      imageId,
+      currentHistoryLength: history.length
+    });
     const initializeImage = async () => {
       logAction('Initializing image', {
         width: image.width,
@@ -260,56 +276,82 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       try {
         setIsProcessing(true);
 
+        // Check if we have valid input
+        logAction('Validating inputs', {
+          hasImageId: !!imageId,
+          imageWidth: image?.width,
+          imageHeight: image?.height
+        });
+
+        if (!imageId) {
+          throw new Error('No image ID provided');
+        }
+
+        // Attempt API call with error boundary
         logAction('Detecting walls', { image_id: imageId });
-        const wallsResponse = await api.detectWalls(imageId);
-        logAction('Wall detection successful', {
-          wallCount: wallsResponse.walls.length
+        let response;
+        try {
+          response = await api.detectWalls(imageId);
+        } catch (apiError) {
+          logError('API call failed', apiError);
+          throw new Error(
+            apiError instanceof Error
+              ? `API call failed: ${apiError.message}`
+              : 'API call failed with unknown error'
+          );
+        }
+
+        // Log detailed API response
+        logAction('Raw API response', {
+          apiUrl: api.API_BASE_URL,
+          hasResponse: !!response,
+          responseKeys: response ? Object.keys(response) : [],
+          mask: response?.mask?.substring(0, 100) + '...',
+          image_id: response?.image_id,
+          preview_url: response?.preview_url
         });
 
-        logAction('Processing walls response', {
-          totalWalls: wallsResponse.walls.length,
-          firstWall: wallsResponse.walls[0] ? {
-            id: wallsResponse.walls[0].mask_id,
-            pathSample: wallsResponse.walls[0].svg_path.substring(0, 50) + '...',
-            area: wallsResponse.walls[0].area,
-            confidence: wallsResponse.walls[0].confidence,
-            dimensions: wallsResponse.walls[0].dimensions
-          } : 'no walls found',
-          imageDimensions: { width: image.width, height: image.height }
+        // Validate API response
+        if (!response) {
+          throw new Error('API response is empty');
+        }
+
+        if (!response.mask) {
+          throw new Error('API response missing mask data');
+        }
+
+        // Parse SVG mask to extract path data
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(response.mask, 'image/svg+xml');
+        const paths = svgDoc.querySelectorAll('path');
+
+        if (paths.length === 0) {
+          throw new Error('No wall segments found in SVG mask');
+        }
+
+        // Convert SVG paths to wall segments
+        const wallSegments = Array.from(paths).map((path, index) => {
+          const pathData = path.getAttribute('d') || '';
+          const dimensions = [0, 0] as [number, number]; // We don't need exact dimensions for SVG paths
+          
+          return {
+            id: `wall-${index}`,
+            pathData,
+            area: 0, // We don't have area data anymore
+            confidence: 1, // We don't have confidence data anymore
+            dimensions
+          };
         });
 
-        if (!wallsResponse.walls.length) {
-          throw new Error('No walls detected in the image');
-        }
+        logAction('Processed SVG mask', {
+          totalPaths: paths.length,
+          firstPath: wallSegments[0]?.pathData.substring(0, 50) + '...'
+        });
 
-        // Convert wall data to segments
-        const wallSegments = wallsResponse.walls.map(wall => ({
-          id: wall.mask_id,
-          pathData: wall.svg_path,
-          area: wall.area,
-          confidence: wall.confidence,
-          dimensions: wall.dimensions
-        }));
-        if (wallSegments.length === 0) {
-          throw new Error('No valid wall segments found in the response');
-        }
-
-        // Log first segment details if available
-        if (wallSegments.length > 0) {
-          const firstSegment = wallSegments[0];
-          logAction('First wall segment processed', {
-            id: firstSegment.id,
-            pathPreview: firstSegment.pathData.substring(0, 50) + '...',
-            area: firstSegment.area,
-            confidence: firstSegment.confidence
-          });
-        }
-
-        // Update segments and history
-        // Create initial history entry with original image
+        // Create initial history entry
         const initialEntry = {
-          image_id: wallsResponse.image_id,
-          imageUrl: wallsResponse.preview_url,
+          image_id: response.image_id,
+          imageUrl: response.preview_url,
           segments: wallSegments
         };
 
@@ -326,6 +368,8 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         logError('Image processing', error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
         logError('Image initialization', {
+          error_type: error?.constructor?.name,
+          error_message: errorMessage,
           error,
           canvas: {
             width: canvas.width,
@@ -387,15 +431,23 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     window.addEventListener('keyup', handleKeyUp);
 
     return () => {
+      isComponentMounted = false;
+      logAction('Cleaning up image initialization effect');
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [image, history, historyIndex, isShowingOriginal, isProcessing]);
+  }, [image, history, historyIndex, isShowingOriginal, isProcessing, imageId]);
 
   const handleSegmentClick = (segmentId: string) => {
-    if (isProcessing || !canvasRef.current || !image) return;
-
-
+    if (isProcessing || !canvasRef.current || !image) {
+      logAction('Segment click ignored', {
+        isProcessing,
+        hasCanvas: !!canvasRef.current,
+        hasImage: !!image
+      });
+      return;
+    }
+    logAction('Starting segment click handler', { segmentId });
 
 
 
@@ -403,12 +455,15 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     if (!clickedSegment) return;
 
     setIsProcessing(true);
-
-
-
-
-
-
+    logAction('Processing state details', {
+      currentHistoryIndex: historyIndex,
+      historyLength: history.length,
+      selectedSegment,
+      canvasDimensions: {
+        width: canvasRef.current.width,
+        height: canvasRef.current.height
+      }
+    });
 
 
     try {
@@ -580,6 +635,26 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     };
     img.src = nextEntry.imageUrl;
   };
+
+  if (!image || !image.complete) {
+    return (
+      <CustomizerContainer>
+        <CanvasContainer>
+          <LoadingOverlay>Loading image...</LoadingOverlay>
+        </CanvasContainer>
+      </CustomizerContainer>
+    );
+  }
+
+  if (!imageId) {
+    return (
+      <CustomizerContainer>
+        <CanvasContainer>
+          <LoadingOverlay>Missing image ID</LoadingOverlay>
+        </CanvasContainer>
+      </CustomizerContainer>
+    );
+  }
 
   return (
     <CustomizerContainer>

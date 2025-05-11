@@ -93,7 +93,7 @@ async def detect_walls(
             request.image_id,
             file_path
         )
-        logger.info(f"Wall detection completed. Found {len(result['walls'])} walls")
+        logger.info("Wall detection completed - mask generated")
         
         # Schedule cleanup
         if background_tasks:
@@ -102,7 +102,7 @@ async def detect_walls(
         
         response = WallDetectionResponse(
             image_id=request.image_id,
-            walls=result['walls'],
+            mask=result['mask'],
             preview_url=result['preview_url']
         )
         logger.info(f"Wall detection successful for image_id: {request.image_id}")
@@ -137,8 +137,7 @@ async def apply_color(
         logger.info("Starting color application process")
         result_path = await image_service.apply_wall_color(
             request.image_id,
-            request.color_rgb,
-            request.wall_ids
+            request.color_rgb
         )
         logger.debug(f"Color applied successfully, result saved to: {result_path}")
         

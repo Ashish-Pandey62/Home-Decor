@@ -5,9 +5,9 @@ from typing import List, Tuple, Dict
 import base64
 import pickle
 import os
+import svgwrite
 
 from ..models.wall_detector import WallDetector
-from ..models.schemas import WallMask
 from ..core.exceptions import ImageProcessingError
 from ..core.config import settings, logger
 from .file_service import FileService
@@ -68,34 +68,88 @@ class ImageService:
             logger.error(f"Failed to load cache for {image_id}: {str(e)}")
             raise ImageProcessingError(f"Failed to load cache: {str(e)}")
 
-    async def process_upload(self, image_id: str, file_path: Path) -> Dict[str, List[WallMask]]:
+    def _mask_to_svg(self, mask: np.ndarray, width: int, height: int) -> str:
+        """Convert binary mask to SVG path, properly handling holes"""
+        # Find all contours including holes
+        contours, hierarchy = cv2.findContours(
+            mask.astype(np.uint8),
+            cv2.RETR_CCOMP,  # Retrieve both external and internal contours
+            cv2.CHAIN_APPROX_SIMPLE
+        )
+        
+        # Create SVG drawing
+        dwg = svgwrite.Drawing(size=(width, height))
+        
+        if len(contours) == 0:
+            return dwg.tostring()
+            
+        # Process contours hierarchically
+        def process_contour(contour):
+            """Convert contour to SVG path data"""
+            epsilon = 0.001 * cv2.arcLength(contour, True)
+            approx = cv2.approxPolyDP(contour, epsilon, True)
+            
+            if len(approx) <= 2:  # Skip invalid polygons
+                return ""
+                
+            points = approx.squeeze()
+            if len(points.shape) == 1:  # Skip single points
+                return ""
+                
+            path_data = f"M {points[0][0]},{points[0][1]}"
+            for point in points[1:]:
+                path_data += f" L {point[0]},{point[1]}"
+            path_data += " Z"  # Close the path
+            return path_data
+            
+        # Build path data with proper fill rule
+        path_data = ""
+        for i, contour in enumerate(contours):
+            # Check if this is an outer contour (no parent)
+            if hierarchy[0][i][3] == -1:  # No parent
+                # Add outer contour
+                path_data += process_contour(contour)
+                
+                # Find and add all holes for this contour
+                for j, potential_hole in enumerate(contours):
+                    if hierarchy[0][j][3] == i:  # If parent is current contour
+                        path_data += " " + process_contour(potential_hole)
+        
+        if path_data:
+            # Add single path with fill-rule for proper hole rendering
+            path = dwg.path(
+                d=path_data,
+                fill="black",
+                fill_rule="evenodd"  # Properly handles holes
+            )
+            dwg.add(path)
+        
+        return dwg.tostring()
+
+    async def process_upload(self, image_id: str, file_path: Path) -> Dict[str, str]:
         """Process an uploaded image to detect walls"""
         try:
             # Load and process image
             image = self.wall_detector.load_image(file_path)
             
             # Detect walls
-            detection_result = self.wall_detector.detect_walls(image)
+            wall_mask = self.wall_detector.detect_walls(image)
             
-            # Convert masks to response format
-            walls = []
-            for idx, mask in enumerate(detection_result['masks']):
-                wall_id = f"{image_id}_wall_{idx}"
-                mask_obj = WallMask(
-                    mask_id=wall_id,
-                    coordinates=self._encode_mask_coordinates(mask['segmentation']),
-                    area=mask['area'],
-                    confidence=mask['score']
-                )
-                walls.append(mask_obj)
+            # Convert mask to SVG
+            svg_mask = self._mask_to_svg(wall_mask, image.shape[1], image.shape[0])
             
-            # Cache the detection result for later use
+            # Save SVG for debugging
+            debug_path = settings.PROCESSED_DIR / f"{image_id}_mask_debug.svg"
+            with open(debug_path, 'w') as f:
+                f.write(svg_mask)
+            logger.debug(f"Saved debug SVG mask to {debug_path}")
+            
+            # Cache the detection result
             logger.debug(f"Preparing cache data for image {image_id}")
             try:
                 cache_data = {
                     'image': image,
-                    'wall_mask': detection_result['wall_mask'],
-                    'walls': walls
+                    'wall_mask': wall_mask
                 }
                 logger.debug("Cache data prepared successfully")
                 self._save_to_cache(image_id, cache_data)
@@ -104,15 +158,15 @@ class ImageService:
                 raise ImageProcessingError(f"Failed to prepare cache data: {str(e)}")
             
             # Save preview with detected walls highlighted
-            preview_image = self._create_detection_preview(image, detection_result['wall_mask'])
+            preview_image = self._create_detection_preview(image, wall_mask)
             preview_path = FileService.save_processed_image(
-                image_id, 
+                image_id,
                 cv2.imencode('.jpg', preview_image)[1].tobytes(),
                 "_preview"
             )
             
             return {
-                'walls': walls,
+                'mask': svg_mask,
                 'preview_url': FileService.get_file_url(preview_path)
             }
             
@@ -120,10 +174,9 @@ class ImageService:
             raise ImageProcessingError(f"Error processing image: {str(e)}")
 
     async def apply_wall_color(
-        self, 
-        image_id: str, 
-        color_rgb: Tuple[int, int, int],
-        wall_ids: List[str]
+        self,
+        image_id: str,
+        color_rgb: Tuple[int, int, int]
     ) -> Path:
         """Apply color to specified walls"""
         try:

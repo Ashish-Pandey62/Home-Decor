@@ -32,13 +32,6 @@ To use a specific API URL, set VITE_API_URL in your .env file:
 `);
 }
 
-export interface Wall {
-  mask_id: string;
-  coordinates: [number, number][];
-  area: number;
-  confidence: number;
-}
-
 interface UploadResponse {
   image_id: string;
   filename: string;
@@ -49,7 +42,7 @@ interface UploadResponse {
 
 interface WallDetectionResponse {
   image_id: string;
-  walls: Wall[];
+  mask: string;  // SVG string containing wall paths
   preview_url: string;
 }
 
@@ -323,6 +316,7 @@ export async function applyColor(
 
 export async function checkHealth(): Promise<{ status: string }> {
   const endpoint = `${API_BASE_URL}/health`;
+  console.log('🔍 Health Check URL:', endpoint);
   try {
     logAPIRequest(endpoint, 'GET');
 

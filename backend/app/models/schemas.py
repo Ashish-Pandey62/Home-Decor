@@ -3,21 +3,14 @@ from typing import List, Tuple, Optional
 from pathlib import Path
 import re
 
-class WallMask(BaseModel):
-    mask_id: str = Field(..., description="Unique identifier for the wall mask")
-    coordinates: List[List[int]] = Field(..., description="Wall mask coordinates")
-    area: int = Field(..., description="Area of the wall in pixels")
-    confidence: float = Field(..., ge=0, le=1, description="Confidence score of the wall detection")
-
 class WallDetectionResponse(BaseModel):
     image_id: str
-    walls: List[WallMask]
+    mask: str = Field(..., description="SVG path data for the wall mask")
     preview_url: str
 
 class ColorRequest(BaseModel):
     image_id: str
     color_rgb: Tuple[int, int, int] = Field(..., description="RGB color values")
-    wall_ids: List[str] = Field(..., description="List of wall IDs to color")
 
     @validator('color_rgb')
     def validate_rgb(cls, v):
