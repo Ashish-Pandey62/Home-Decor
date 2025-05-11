@@ -494,11 +494,16 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       const scaleY = canvas.height / image.height;
       ctx.scale(scaleX, scaleY);
 
-      // Set blending for better texture preservation
-      ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = 'overlay';
+      // Create layered effect for better texture preservation
+      // First layer: Base tint
+      ctx.globalAlpha = 0.3;
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.fillStyle = currentColor;
+      ctx.fill(path, 'evenodd');
 
-      // Apply the new color with proper handling of holes
+      // Second layer: Overlay for highlights
+      ctx.globalAlpha = 0.4;
+      ctx.globalCompositeOperation = 'overlay';
       ctx.fillStyle = currentColor;
       ctx.fill(path, 'evenodd');
 
@@ -683,14 +688,26 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         >
           {segments.map(segment => (
             <g key={segment.id}>
-              {/* Colored wall fill */}
+              {/* Base tint layer */}
               <path
-                data-segment-id={`fill-${segment.id}`}
+                data-segment-id={`base-${segment.id}`}
                 d={segment.pathData}
                 fill={segment.id === selectedSegment ? currentColor : getWallColor(segment.id)}
                 fillRule="evenodd"
                 style={{
-                  opacity: 1,
+                  opacity: 0.3,
+                  mixBlendMode: 'multiply',
+                  transition: 'all 0.3s ease',
+                }}
+              />
+              {/* Overlay highlight layer */}
+              <path
+                data-segment-id={`overlay-${segment.id}`}
+                d={segment.pathData}
+                fill={segment.id === selectedSegment ? currentColor : getWallColor(segment.id)}
+                fillRule="evenodd"
+                style={{
+                  opacity: 0.4,
                   mixBlendMode: 'overlay',
                   transition: 'all 0.3s ease',
                 }}
