@@ -152,46 +152,14 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const previousScaleRef = useRef({ x: 1, y: 1 });
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [segments, setSegments] = useState<WallSegment[]>([]);
   const [selectedSegment, setSelectedSegment] = useState<string | null>(null);
   const [scale, setScale] = useState({ x: 1, y: 1 });
-
-  // Update scale whenever canvas size changes
-  useEffect(() => {
-    const updateScale = () => {
-      if (canvasRef.current) {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        // Get the display dimensions
-        const displayWidth = canvas.clientWidth;
-        const displayHeight = canvas.clientHeight;
-
-        // Calculate scale based on original image dimensions
-        setScale({
-          x: image.width / displayWidth,
-          y: image.height / displayHeight
-        });
-
-        logAction('Scale updated', {
-          original: { width: image.width, height: image.height },
-          display: { width: displayWidth, height: displayHeight },
-          scale: {
-            x: image.width / displayWidth,
-            y: image.height / displayHeight
-          }
-        });
-      }
-    };
-
-    updateScale();
-    window.addEventListener('resize', updateScale);
-    return () => window.removeEventListener('resize', updateScale);
-  }, [image]);
+  const [isShowingOriginal, setIsShowingOriginal] = useState(false);
 
   const logAction = (action: string, details?: any) => {
     console.log(`🎨 ColorCustomizer - ${action}`, details || '');
@@ -204,6 +172,32 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       stack: error instanceof Error ? error.stack : undefined
     });
   };
+
+  // Update scale based on canvas dimensions
+  const updateScale = React.useCallback(() => {
+    if (!canvasRef.current || !image) return;
+
+    const canvas = canvasRef.current;
+    const displayWidth = canvas.clientWidth;
+    const displayHeight = canvas.clientHeight;
+
+    // Only update if dimensions have changed
+    const newScaleX = image.width / displayWidth;
+    const newScaleY = image.height / displayHeight;
+    
+    const prevScale = previousScaleRef.current;
+    if (newScaleX !== prevScale.x || newScaleY !== prevScale.y) {
+      previousScaleRef.current = { x: newScaleX, y: newScaleY };
+      setScale({ x: newScaleX, y: newScaleY });
+    }
+  }, [image]);
+
+  // Update scale whenever canvas size changes
+  useEffect(() => {
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, [image, updateScale]);
 
   useEffect(() => {
     const initializeImage = async () => {
@@ -318,73 +312,123 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     };
 
     initializeImage();
-  }, [image]);
+
+    // Add keyboard event listeners for preview functionality
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && !isShowingOriginal && !isProcessing) {
+        e.preventDefault();
+        setIsShowingOriginal(true);
+        const canvas = canvasRef.current;
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+          }
+        }
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.code === 'Space' && isShowingOriginal && !isProcessing) {
+        e.preventDefault();
+        setIsShowingOriginal(false);
+        const canvas = canvasRef.current;
+        if (canvas && historyIndex >= 0) {
+          const ctx = canvas.getContext('2d');
+          const currentState = history[historyIndex];
+          if (ctx && currentState) {
+            const img = new Image();
+            img.onload = () => {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            };
+            img.src = currentState.imageUrl;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [image, history, historyIndex, isShowingOriginal, isProcessing]);
 
   const handleSegmentClick = (segmentId: string) => {
-    if (isProcessing) return;
-
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (isProcessing || !canvasRef.current || !image) return;
 
     const clickedSegment = segments.find(segment => segment.id === segmentId);
     if (!clickedSegment) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    logAction('Segment selected', {
-      segmentId: clickedSegment.id,
-      color: currentColor,
-      area: clickedSegment.area,
-      confidence: clickedSegment.confidence
-    });
-
-    setSelectedSegment(clickedSegment.id);
-
-    // Setup for seamless color blending
-    ctx.save();
+    setIsProcessing(true);
     
-    // Draw original image
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    
-    // Create path from SVG data
-    const path = new Path2D(clickedSegment.pathData);
-    
-    // Scale the path to match canvas dimensions
-    const scaleX = canvas.width / image.width;
-    const scaleY = canvas.height / image.height;
-    ctx.scale(scaleX, scaleY);
+    try {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Failed to get canvas context');
 
-    // Set blending for natural color application
-    ctx.globalAlpha = 0.85;
-    ctx.globalCompositeOperation = 'multiply';
-    
-    // Apply the new color
-    ctx.fillStyle = currentColor;
-    ctx.fill(path);
+      logAction('Segment selected', {
+        segmentId: clickedSegment.id,
+        color: currentColor,
+        area: clickedSegment.area,
+        confidence: clickedSegment.confidence
+      });
 
-    // Reset context state
-    ctx.globalAlpha = 1.0;
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.restore();
+      setSelectedSegment(clickedSegment.id);
 
-    // Update history
-    const imageData = canvas.toDataURL();
-    const newHistory = history.slice(0, historyIndex + 1);
-    newHistory.push({
-      image_id: imageId, // Keep the same image_id since we're not sending to backend
-      imageUrl: imageData,
-      segments
-    });
-    setHistory(newHistory);
-    setHistoryIndex(prev => prev + 1);
+      // Setup for seamless color blending
+      ctx.save();
+      
+      // Draw original image
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      
+      // Create path from SVG data
+      const path = new Path2D(clickedSegment.pathData);
+      
+      // Scale the path to match canvas dimensions
+      const scaleX = canvas.width / image.width;
+      const scaleY = canvas.height / image.height;
+      ctx.scale(scaleX, scaleY);
 
-    logAction('Color applied locally', {
-      segmentId: clickedSegment.id,
-      color: currentColor,
-      historyLength: newHistory.length,
-      currentIndex: historyIndex + 1
-    });
+      // Set blending for better texture preservation
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'overlay';
+      
+      // Apply the new color with proper handling of holes
+      ctx.fillStyle = currentColor;
+      ctx.fill(path, 'evenodd');
+
+      // Reset context state
+      ctx.globalAlpha = 1.0;
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.restore();
+
+      // Update history
+      const imageData = canvas.toDataURL();
+      const newHistory = history.slice(0, historyIndex + 1);
+      newHistory.push({
+        image_id: imageId,
+        imageUrl: imageData,
+        segments
+      });
+      setHistory(newHistory);
+      setHistoryIndex(prev => prev + 1);
+
+      logAction('Color applied locally', {
+        segmentId: clickedSegment.id,
+        color: currentColor,
+        historyLength: newHistory.length,
+        currentIndex: historyIndex + 1
+      });
+    } catch (error) {
+      logError('Segment color application', error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   // Check if a point is near or inside a wall boundary using SVG Path
@@ -435,13 +479,17 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     img.onload = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      setIsProcessing(false);
       setHistoryIndex(newIndex);
       setSegments(prevEntry.segments);
+      setIsProcessing(false);
       logAction('Undo complete', {
         newIndex,
         imageUrl: prevEntry.imageUrl
       });
+    };
+    img.onerror = () => {
+      setIsProcessing(false);
+      logError('Undo operation', 'Failed to load image');
     };
     img.src = prevEntry.imageUrl;
   };
@@ -467,13 +515,17 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     img.onload = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      setIsProcessing(false);
       setHistoryIndex(newIndex);
       setSegments(nextEntry.segments);
+      setIsProcessing(false);
       logAction('Redo complete', {
         newIndex,
         imageUrl: nextEntry.imageUrl
       });
+    };
+    img.onerror = () => {
+      setIsProcessing(false);
+      logError('Redo operation', 'Failed to load image');
     };
     img.src = nextEntry.imageUrl;
   };
@@ -514,9 +566,10 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                 data-segment-id={`fill-${segment.id}`}
                 d={segment.pathData}
                 fill={segment.id === selectedSegment ? currentColor : getWallColor(segment.id)}
+                fillRule="evenodd"
                 style={{
-                  opacity: 0.85,
-                  mixBlendMode: 'multiply',
+                  opacity: 1,
+                  mixBlendMode: 'overlay',
                   transition: 'all 0.3s ease',
                 }}
               />
@@ -561,7 +614,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   // Reset fill
                   const fillPath = document.querySelector(`path[data-segment-id="fill-${segment.id}"]`);
                   if (fillPath) {
-                    (fillPath as SVGPathElement).style.opacity = '0.85';
+                    (fillPath as SVGPathElement).style.opacity = '1';
                   }
                 }}
               />

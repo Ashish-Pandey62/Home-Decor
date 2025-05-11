@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import ImageUploader from './components/ImageUploader/ImageUploader';
 import ColorCustomizer from './components/ColorCustomizer/ColorCustomizer';
 import ColorPicker from './components/ColorPicker/ColorPicker';
-import ComparisonSlider from './components/ComparisonSlider/ComparisonSlider';
 import ColorPalette from './components/ColorPalette/ColorPalette';
 import * as api from './services/api';
 
@@ -63,30 +62,6 @@ const SidePanel = styled.div`
   }
 `;
 
-const CompareButton = styled.button`
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
-  }
-
-  &:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-`;
-
 const ErrorMessage = styled.div`
   color: #dc3545;
   background: #fff;
@@ -102,8 +77,6 @@ function App() {
   const [uploadedImage, setUploadedImage] = useState<HTMLImageElement | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
   const [currentColor, setCurrentColor] = useState('#007bff');
-  const [showComparison, setShowComparison] = useState(false);
-  const [originalDataUrl, setOriginalDataUrl] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -111,37 +84,25 @@ function App() {
     try {
       setIsProcessing(true);
       setError(null);
-      
-      // Store original image for comparison
+
+      // Upload image to server
       const canvas = document.createElement('canvas');
       canvas.width = image.width;
       canvas.height = image.height;
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(image, 0, 0);
-        setOriginalDataUrl(canvas.toDataURL());
+        const imageFile = api.dataURLtoFile(canvas.toDataURL(), 'room.jpg');
+        const uploadResponse = await api.uploadImage(imageFile);
+        setImageId(uploadResponse.image_id);
+        setUploadedImage(image);
       }
-
-      // Upload image to server
-      const imageFile = api.dataURLtoFile(canvas.toDataURL(), 'room.jpg');
-      const uploadResponse = await api.uploadImage(imageFile);
-      setImageId(uploadResponse.image_id);
-      setUploadedImage(image);
     } catch (err) {
       setError('Failed to process image. Please try again.');
       console.error('Error processing image:', err);
     } finally {
       setIsProcessing(false);
     }
-  };
-
-  const handleCompareClick = () => {
-    setShowComparison(true);
-  };
-
-  const getCurrentCanvasImage = (): string => {
-    const canvas = document.querySelector('canvas');
-    return canvas ? canvas.toDataURL() : '';
   };
 
   return (
@@ -164,12 +125,6 @@ function App() {
               imageId={imageId!}
               currentColor={currentColor}
             />
-            <CompareButton
-              onClick={handleCompareClick}
-              disabled={isProcessing}
-            >
-              Compare with Original
-            </CompareButton>
           </EditorSection>
 
           <SidePanel>
@@ -183,13 +138,6 @@ function App() {
             />
           </SidePanel>
 
-          {showComparison && (
-            <ComparisonSlider
-              originalImage={originalDataUrl}
-              modifiedImage={getCurrentCanvasImage()}
-              onClose={() => setShowComparison(false)}
-            />
-          )}
         </MainContent>
       )}
     </AppContainer>

@@ -200,11 +200,13 @@ class ImageService:
             logger.debug(f"Processing mask shape: {binary_mask.shape}, dtype: {binary_mask.dtype}, range: {binary_mask.min()}-{binary_mask.max()}")
             
             # Find contours
-            contours, _ = cv2.findContours(
+            contours, hierarchy = cv2.findContours(
                 binary_mask,
-                cv2.RETR_EXTERNAL,
+                cv2.RETR_TREE,  # Changed to RETR_TREE to get hierarchy
                 cv2.CHAIN_APPROX_SIMPLE
             )
+            
+            logger.debug(f"Found {len(contours)} contours with hierarchy shape: {hierarchy.shape if hierarchy is not None else None}")
             
             if not contours:
                 logger.error("No contours found in mask")
@@ -212,36 +214,62 @@ class ImageService:
             
             # Convert contours to SVG paths
             paths = []
-            for idx, contour in enumerate(contours):
+            # Process contours based on hierarchy
+            for idx, (contour, h) in enumerate(zip(contours, hierarchy[0])):
+                # h[3] is parent index, -1 means no parent (outer contour)
+                if h[3] != -1:  # Skip child contours, we'll process them with their parents
+                    continue
+
                 if len(contour) < 3:
                     logger.debug(f"Skipping contour {idx}: too few points ({len(contour)})")
                     continue
                 
-                # Calculate contour area and perimeter
+                # Process parent contour
                 area = cv2.contourArea(contour)
                 perimeter = cv2.arcLength(contour, True)
                 
-                # Skip tiny or invalid contours
                 if area < 100 or perimeter < 20:
                     logger.debug(f"Skipping contour {idx}: too small (area={area}, perimeter={perimeter})")
                     continue
                 
-                # Simplify contour
-                epsilon = 0.002 * perimeter  # Increased epsilon for better simplification
+                epsilon = 0.002 * perimeter
                 approx = cv2.approxPolyDP(contour, epsilon, True)
                 
                 if len(approx) < 3:
                     logger.debug(f"Skipping contour {idx}: too few points after simplification ({len(approx)})")
                     continue
                 
-                # Create SVG path with absolute coordinates
+                # Start with parent contour
                 points = approx.squeeze()
                 path = f"M {int(points[0][0])},{int(points[0][1])}"
                 for point in points[1:]:
                     path += f" L {int(point[0])},{int(point[1])}"
                 path += " Z"
+                
+                # Process holes (child contours)
+                current = h[2]  # First child index
+                while current != -1:  # Process all children
+                    child_contour = contours[current]
+                    child_area = cv2.contourArea(child_contour)
+                    child_perimeter = cv2.arcLength(child_contour, True)
+                    
+                    if child_area > 100 and child_perimeter > 20:
+                        epsilon = 0.002 * child_perimeter
+                        child_approx = cv2.approxPolyDP(child_contour, epsilon, True)
+                        
+                        if len(child_approx) >= 3:
+                            # Add hole with reversed orientation
+                            points = child_approx.squeeze()
+                            path += f" M {int(points[0][0])},{int(points[0][1])}"
+                            for point in reversed(points[1:]):  # Reverse orientation for holes
+                                path += f" L {int(point[0])},{int(point[1])}"
+                            path += " Z"
+                            logger.debug(f"Added hole {current} to contour {idx}")
+                    
+                    current = hierarchy[0][current][0]  # Move to next sibling
+                
                 paths.append(path)
-                logger.debug(f"Added contour {idx} with {len(approx)} points")
+                logger.debug(f"Added contour {idx} with holes")
             
             if not paths:
                 logger.error("No valid paths generated from contours")
