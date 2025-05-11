@@ -365,7 +365,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         const wallSegments = Array.from(paths).map((path, index) => {
           const pathData = path.getAttribute('d') || '';
           const dimensions = [0, 0] as [number, number]; // We don't need exact dimensions for SVG paths
-          
+
           return {
             id: `wall-${index}`,
             pathData,
@@ -519,7 +519,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
 
       // Setup for drawing
       ctx.save();
-      
+
       // Draw original image
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
@@ -531,12 +531,16 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       const scaleY = canvas.height / image.height;
       ctx.scale(scaleX, scaleY);
 
-      // Apply base color
+      // First apply base color
       ctx.fillStyle = currentColor;
-      ctx.globalAlpha = 0.85;
+      ctx.globalAlpha = 0.6;
+      ctx.globalCompositeOperation = 'overlay';
       ctx.fill(path, 'evenodd');
 
-      // Apply wallpaper on top if available
+      // Reset composite operation for wallpaper
+      ctx.globalCompositeOperation = 'source-over';
+
+      // Then apply wallpaper if available
       if (wallpaperUrl && selectedSegment === clickedSegment.id) {
         const patternCanvas = document.createElement('canvas');
         patternCanvas.width = 200;
@@ -565,10 +569,10 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
 
           const pattern = ctx.createPattern(patternCanvas, 'repeat');
           if (pattern) {
-            pattern.setTransform(new DOMMatrix().scale(1/scaleX, 1/scaleY));
-            ctx.globalCompositeOperation = 'soft-light';
+            pattern.setTransform(new DOMMatrix().scale(1 / scaleX, 1 / scaleY));
             ctx.fillStyle = pattern;
-            ctx.globalAlpha = 0.7;
+            ctx.globalCompositeOperation = 'overlay';
+            ctx.globalAlpha = 0.45;
             ctx.fill(path, 'evenodd');
           }
         }
@@ -680,7 +684,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-     const newIndex = historyIndex + 1;
+    const newIndex = historyIndex + 1;
     const nextEntry = history[newIndex];
 
     setIsProcessing(true);
@@ -739,8 +743,18 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         {wallpaperUrl && (
           <ToolButton
             onClick={() => {
+              // Clean up old URL object if it exists
+              if (wallpaperUrl) {
+                URL.revokeObjectURL(wallpaperUrl);
+              }
               setWallpaperUrl(null);
               setWallpaperFile(null);
+              setSelectedSegment(null);
+              // Reset file input
+              const fileInput = document.getElementById('wallpaper-upload') as HTMLInputElement;
+              if (fileInput) {
+                fileInput.value = '';
+              }
             }}
             disabled={isProcessing}
             title="Remove Wallpaper"
@@ -775,10 +789,20 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
           onChange={async (e) => {
             const file = e.target.files?.[0];
             if (file) {
-              setWallpaperFile(file);
-              const url = URL.createObjectURL(file);
-              const pattern = await createPattern(url);
-              setWallpaperUrl(pattern);
+              try {
+                setWallpaperFile(file);
+                const url = URL.createObjectURL(file);
+                const pattern = await createPattern(url);
+                // Clean up old URL object if it exists
+                if (wallpaperUrl) {
+                  URL.revokeObjectURL(wallpaperUrl);
+                }
+                setWallpaperUrl(pattern);
+              } catch (error) {
+                logError('Wallpaper upload', error);
+                setWallpaperFile(null);
+                setWallpaperUrl(null);
+              }
             }
           }}
           id="wallpaper-upload"
@@ -800,7 +824,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                     patternUnits="userSpaceOnUse"
                     width="200"
                     height="200"
-                    patternTransform={`scale(${1/scale.x}, ${1/scale.y})`}
+                    patternTransform={`scale(${1 / scale.x}, ${1 / scale.y})`}
                   >
                     <image
                       href={wallpaperUrl}
@@ -812,7 +836,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   </pattern>
                 )}
               </defs>
-              
+
               {/* Base color layer */}
               <path
                 data-segment-id={`color-${segment.id}`}
@@ -820,7 +844,8 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                 fill={segment.id === selectedSegment ? currentColor : getWallColor(segment.id)}
                 fillRule="evenodd"
                 style={{
-                  opacity: 0.85,
+                  opacity: 0.6,
+                  mixBlendMode: 'overlay',
                   transition: 'all 0.3s ease',
                 }}
               />
@@ -832,8 +857,8 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   fill={`url(#wallpaper-${segment.id})`}
                   fillRule="evenodd"
                   style={{
-                    opacity: 0.7,
-                    mixBlendMode: 'soft-light',
+                    opacity: 0.5,
+                    mixBlendMode: 'overlay',
                     transition: 'all 0.3s ease',
                   }}
                 />
@@ -873,7 +898,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   // Highlight color layer
                   const colorPath = document.querySelector(`path[data-segment-id="color-${segment.id}"]`);
                   if (colorPath) {
-                    (colorPath as SVGPathElement).style.opacity = '0.95';
+                    (colorPath as SVGPathElement).style.opacity = '0.75';
                   }
                   // Highlight wallpaper if present
                   const wallpaperPath = document.querySelector(`path[data-segment-id="wallpaper-${segment.id}"]`);
@@ -890,11 +915,11 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   // Reset color and wallpaper opacity
                   const colorPath = document.querySelector(`path[data-segment-id="color-${segment.id}"]`);
                   if (colorPath) {
-                    (colorPath as SVGPathElement).style.opacity = '0.85';
+                    (colorPath as SVGPathElement).style.opacity = '0.6';
                   }
                   const wallpaperPath = document.querySelector(`path[data-segment-id="wallpaper-${segment.id}"]`);
                   if (wallpaperPath) {
-                    (wallpaperPath as SVGPathElement).style.opacity = '0.7';
+                    (wallpaperPath as SVGPathElement).style.opacity = '0.5';
                   }
                 }}
               />
