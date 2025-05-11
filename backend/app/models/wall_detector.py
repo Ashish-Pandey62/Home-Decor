@@ -62,6 +62,7 @@ class WallDetector:
         if image is not None:
             self.original_image = image
             self.height, self.width = self.original_image.shape[:2]
+            print(f"Original image dimensions: {self.height}x{self.width}")
             self.predictor.set_image(self.original_image)
         
         if not hasattr(self, 'segments'):
@@ -73,7 +74,13 @@ class WallDetector:
 
         all_colors = []
         for idx, segment in enumerate(self.segments):
-            mask = segment['segmentation']
+            # Resize segmentation mask to match original image dimensions
+            mask = cv2.resize(
+                segment['segmentation'].astype(np.uint8),
+                (self.width, self.height),
+                interpolation=cv2.INTER_NEAREST
+            ).astype(bool)
+            print(f"Mask dimensions: {mask.shape}")
             segment_pixels = self.original_image[mask]
             if len(segment_pixels) > 0:
                 avg_color = np.mean(segment_pixels, axis=0)
@@ -86,7 +93,14 @@ class WallDetector:
         sorted_segments.sort(key=lambda x: x[1]['area'], reverse=True)
 
         for idx, segment in sorted_segments:
-            mask = segment['segmentation']
+            # Resize segmentation mask to match original image dimensions
+            mask = cv2.resize(
+                segment['segmentation'].astype(np.uint8),
+                (self.width, self.height),
+                interpolation=cv2.INTER_NEAREST
+            ).astype(bool)
+            
+            print(f"Resized mask dimensions: {mask.shape}")
             segment_pixels = self.original_image[mask]
 
             if len(segment_pixels) == 0:
@@ -141,7 +155,12 @@ class WallDetector:
                     if idx in selected_segment_ids:
                         continue
 
-                    mask = segment['segmentation']
+                    # Resize segmentation mask to match original image dimensions
+                    mask = cv2.resize(
+                        segment['segmentation'].astype(np.uint8),
+                        (self.width, self.height),
+                        interpolation=cv2.INTER_NEAREST
+                    ).astype(bool)
                     segment_pixels = self.original_image[mask]
 
                     if len(segment_pixels) == 0:
@@ -161,7 +180,12 @@ class WallDetector:
                 if idx in selected_segment_ids:
                     continue
 
-                mask = segment['segmentation']
+                # Resize segmentation mask to match original image dimensions
+                mask = cv2.resize(
+                    segment['segmentation'].astype(np.uint8),
+                    (self.width, self.height),
+                    interpolation=cv2.INTER_NEAREST
+                ).astype(bool)
                 segment_pixels = self.original_image[mask]
 
                 if len(segment_pixels) == 0:
