@@ -10,3 +10,5 @@ Home Decor Advisor.pdf
 *.log
 backend/logs/app.log
 backend/.env
+.env
+

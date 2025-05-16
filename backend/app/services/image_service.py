@@ -220,6 +220,16 @@ class ImageService:
     def _create_detection_preview(image: np.ndarray, wall_mask: np.ndarray) -> np.ndarray:
         """Create a preview image with detected walls highlighted"""
         preview = image.copy()
+        height, width = preview.shape[:2]
+        
+        # Resize wall_mask to match image dimensions if needed
+        if wall_mask.shape[:2] != preview.shape[:2]:
+            logger.debug(f"Resizing wall mask from {wall_mask.shape[:2]} to {preview.shape[:2]}")
+            wall_mask = cv2.resize(
+                wall_mask,
+                (width, height),
+                interpolation=cv2.INTER_NEAREST
+            )
         
         # Create semi-transparent overlay
         overlay = np.zeros_like(preview)

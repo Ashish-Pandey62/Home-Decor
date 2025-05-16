@@ -72,7 +72,11 @@ const SegmentOverlay = styled.svg`
   left: 0;
   width: 100%;
   height: 100%;
-  transform-origin: 0 0;
+  transform-origin: center;
+  pointer-events: none;
+  & > g {
+    pointer-events: auto;
+  }
 `;
 
 interface ColorCustomizerProps {
@@ -193,6 +197,25 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   const [decorationAnalysis, setDecorationAnalysis] = useState<api.DecorationAnalysisResponse | null>(null);
 
   // Debug logging for state changes
+// Debug logging for scaling and dimensions
+  useEffect(() => {
+    logAction('Overlay scaling debug', {
+      canvasRef: {
+        current: !!canvasRef.current,
+        clientWidth: canvasRef.current?.clientWidth,
+        clientHeight: canvasRef.current?.clientHeight
+      },
+      image: {
+        width: image?.width,
+        height: image?.height
+      },
+      scale,
+      computedScale: canvasRef.current ? {
+        x: canvasRef.current.clientWidth / (image?.width || 1),
+        y: canvasRef.current.clientHeight / (image?.height || 1)
+      } : null
+    });
+  }, [image, scale, canvasRef.current]);
   useEffect(() => {
     logAction('State Update', {
       wallpaperUrl,
@@ -632,22 +655,13 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     const ctx = canvas.getContext('2d');
     if (!ctx) return false;
 
-    // Create path and scale it
+    // Create path without scaling since SVG viewBox handles scaling
     const path = new Path2D(pathData);
-    const scaleX = canvas.width / image.width;
-    const scaleY = canvas.height / image.height;
-
-    // Transform context to match the wall scale
-    ctx.save();
-    ctx.scale(scaleX, scaleY);
-
-    // Check if point is in path
     const [x, y] = point;
-    const scaledX = x / scaleX;
-    const scaledY = y / scaleY;
-    const result = ctx.isPointInPath(path, scaledX, scaledY);
+    
+    // Point coordinates are already in SVG space due to viewBox
+    const result = ctx.isPointInPath(path, x, y);
 
-    ctx.restore();
     return result;
   };
 
@@ -826,10 +840,11 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         />
 
         <SegmentOverlay
+          viewBox={`0 0 ${image.width} ${image.height}`}
+          preserveAspectRatio="xMidYMid meet"
           style={{
-            transform: canvasRef.current
-              ? `scale(${canvasRef.current.clientWidth / image.width}, ${canvasRef.current.clientHeight / image.height})`
-              : 'none'
+            width: canvasRef.current?.clientWidth || '100%',
+            height: canvasRef.current?.clientHeight || '100%'
           }}
         >
           {segments.map(segment => (
@@ -841,7 +856,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                     patternUnits="userSpaceOnUse"
                     width="200"
                     height="200"
-                    patternTransform={`scale(${1 / scale.x}, ${1 / scale.y})`}
+                    patternTransform={`scale(${image.width / (canvasRef.current?.clientWidth || image.width)}, ${image.height / (canvasRef.current?.clientHeight || image.height)})`}
                   >
                     <image
                       href={wallpaperUrl}

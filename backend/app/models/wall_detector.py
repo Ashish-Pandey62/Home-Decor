@@ -5,7 +5,7 @@ import random
 from pathlib import Path
 import matplotlib.pyplot as plt
 from segment_anything import sam_model_registry, SamPredictor, SamAutomaticMaskGenerator
-from ..core.config import settings
+from ..core.config import settings, logger
 from ..core.exceptions import ModelError, InvalidImageError
 
 class WallDetector:
@@ -23,30 +23,80 @@ class WallDetector:
             
             self.mask_generator = SamAutomaticMaskGenerator(
                 model=self.sam,
-                points_per_side=64,
-                pred_iou_thresh=0.86,
-                stability_score_thresh=0.9,
-                crop_n_layers=1,
-                crop_n_points_downscale_factor=2,
-                min_mask_region_area=500
+                points_per_side=16,                  # Lower = faster (but fewer seed points)
+                pred_iou_thresh=0.8,                 # Lower for faster inference, more masks
+                stability_score_thresh=0.8,          # Slightly relaxed to reduce processing
+                crop_n_layers=0,                     # Disable cropping for speed
+                crop_n_points_downscale_factor=2,   # Irrelevant if crop_n_layers=0, but safe to keep
+                min_mask_region_area=1500           # Avoid tiny masks that slow down post-processing
             )
+
             self.predictor = SamPredictor(self.sam)
             self.selected_segments = []
             self.wall_mask = None
             self.original_image = None
+            # Store original dimensions
+            self.orig_width = None
+            self.orig_height = None
+            # Store processed dimensions
+            self.proc_width = None
+            self.proc_height = None
         except Exception as e:
             raise ModelError(f"Failed to initialize SAM model: {str(e)}")
 
-    def load_image(self, image_path: Path) -> np.ndarray:
-        """Load and prepare image for processing"""
+    def load_image(self, image_path: Path, max_size: int = 1920, quality: int = 85) -> np.ndarray:
+        """
+        Load and prepare image for processing with compression and resizing
+        
+        Args:
+            image_path: Path to the image file
+            max_size: Maximum dimension (width or height) of the image
+            quality: JPEG compression quality (0-100)
+        """
         try:
-            self.original_image = cv2.imread(str(image_path))
-            if self.original_image is None:
+            # Load image
+            original = cv2.imread(str(image_path))
+            if original is None:
                 raise InvalidImageError(f"Could not load image from {image_path}")
             
+            # Convert to RGB
+            original = cv2.cvtColor(original, cv2.COLOR_BGR2RGB)
+            
+            # Store original dimensions
+            self.orig_height, self.orig_width = original.shape[:2]
+            logger.debug(f"Original image dimensions: {self.orig_width}x{self.orig_height}")
+            
+            # Create processed version for detection
+            self.original_image = original.copy()
+            
+            # Resize if needed while maintaining aspect ratio
+            if self.orig_height > max_size or self.orig_width > max_size:
+                scale = min(max_size / self.orig_width, max_size / self.orig_height)
+                self.proc_width = int(self.orig_width * scale)
+                self.proc_height = int(self.orig_height * scale)
+                
+                self.original_image = cv2.resize(
+                    self.original_image,
+                    (self.proc_width, self.proc_height),
+                    interpolation=cv2.INTER_AREA
+                )
+                logger.info(f"Resized image to {self.proc_width}x{self.proc_height}")
+            else:
+                self.proc_width = self.orig_width
+                self.proc_height = self.orig_height
+            
+            # Compress image for processing
+            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), quality]
+            _, encoded = cv2.imencode('.jpg', self.original_image, encode_param)
+            self.original_image = cv2.imdecode(encoded, cv2.IMREAD_COLOR)
+            
+            # Convert back to RGB after compression
             self.original_image = cv2.cvtColor(self.original_image, cv2.COLOR_BGR2RGB)
-            self.height, self.width = self.original_image.shape[:2]
+            
+            # Set predictor with processed image
             self.predictor.set_image(self.original_image)
+            
+            logger.info(f"Processed image dimensions: {self.proc_width}x{self.proc_height}")
             return self.original_image
         except Exception as e:
             raise InvalidImageError(f"Error loading image: {str(e)}")
@@ -61,26 +111,29 @@ class WallDetector:
         """Detect walls in the image using SAM with improved algorithm"""
         if image is not None:
             self.original_image = image
-            self.height, self.width = self.original_image.shape[:2]
-            print(f"Original image dimensions: {self.height}x{self.width}")
+            self.proc_height, self.proc_width = self.original_image.shape[:2]
+            logger.debug(f"Image dimensions for processing: {self.proc_width}x{self.proc_height}")
             self.predictor.set_image(self.original_image)
         
         if not hasattr(self, 'segments'):
             self.generate_segments()
 
-        self.wall_mask = np.zeros((self.height, self.width), dtype=np.uint8)
+        # Create mask at processing dimensions
+        self.wall_mask = np.zeros((self.proc_height, self.proc_width), dtype=np.uint8)
         self.selected_segments = []
         selected_segment_ids = set()
+        
+        logger.info(f"Starting wall detection on {len(self.segments)} segments")
+        total_area = self.proc_height * self.proc_width
 
         all_colors = []
         for idx, segment in enumerate(self.segments):
             # Resize segmentation mask to match original image dimensions
             mask = cv2.resize(
                 segment['segmentation'].astype(np.uint8),
-                (self.width, self.height),
+                (self.proc_width, self.proc_height),
                 interpolation=cv2.INTER_NEAREST
             ).astype(bool)
-            print(f"Mask dimensions: {mask.shape}")
             segment_pixels = self.original_image[mask]
             if len(segment_pixels) > 0:
                 avg_color = np.mean(segment_pixels, axis=0)
@@ -96,11 +149,11 @@ class WallDetector:
             # Resize segmentation mask to match original image dimensions
             mask = cv2.resize(
                 segment['segmentation'].astype(np.uint8),
-                (self.width, self.height),
+                (self.proc_width, self.proc_height),
                 interpolation=cv2.INTER_NEAREST
             ).astype(bool)
             
-            print(f"Resized mask dimensions: {mask.shape}")
+            # Removed print statement
             segment_pixels = self.original_image[mask]
 
             if len(segment_pixels) == 0:
@@ -130,7 +183,7 @@ class WallDetector:
 
             color_homogeneity = np.mean(std_color)
 
-            area_percentage = segment['area'] / (self.height * self.width)
+            area_percentage = segment['area'] / (self.proc_height * self.proc_width)
 
             is_wall = (
                 (touches_boundary) and
@@ -158,7 +211,7 @@ class WallDetector:
                     # Resize segmentation mask to match original image dimensions
                     mask = cv2.resize(
                         segment['segmentation'].astype(np.uint8),
-                        (self.width, self.height),
+                        (self.proc_width, self.proc_height),
                         interpolation=cv2.INTER_NEAREST
                     ).astype(bool)
                     segment_pixels = self.original_image[mask]
@@ -175,7 +228,11 @@ class WallDetector:
                         selected_segment_ids.add(idx)
 
         # Fallback for when no walls are detected
-        if np.sum(self.wall_mask) < 0.1 * (self.height * self.width):
+        wall_coverage = (np.sum(self.wall_mask) / total_area) * 100
+        logger.info(f"Initial wall detection found {len(self.selected_segments)} walls covering {wall_coverage:.2f}%")
+        
+        if wall_coverage < 10:  # Less than 10% coverage
+            logger.warning("Low wall coverage detected, attempting fallback detection")
             for idx, segment in sorted_segments[:10]:
                 if idx in selected_segment_ids:
                     continue
@@ -183,7 +240,7 @@ class WallDetector:
                 # Resize segmentation mask to match original image dimensions
                 mask = cv2.resize(
                     segment['segmentation'].astype(np.uint8),
-                    (self.width, self.height),
+                    (self.proc_width, self.proc_height),
                     interpolation=cv2.INTER_NEAREST
                 ).astype(bool)
                 segment_pixels = self.original_image[mask]
@@ -196,26 +253,57 @@ class WallDetector:
                 # Check if it might be a green screen
                 is_green = avg_color[1] > avg_color[0] and avg_color[1] > avg_color[2]
 
-                if is_green and segment['area'] > 0.05 * (self.height * self.width):
+                if is_green and segment['area'] > 0.05 * (self.proc_height * self.proc_width):
                     self.wall_mask = np.logical_or(self.wall_mask, mask)
                     self.selected_segments.append(segment)
                     selected_segment_ids.add(idx)
 
         # Smoothing the mask
         kernel = np.ones((15, 15), np.uint8)
+        # Optimize mask processing
         self.wall_mask = cv2.morphologyEx(self.wall_mask.astype(np.uint8), cv2.MORPH_CLOSE, kernel)
-
+        wall_pixels = np.sum(self.wall_mask > 0)
+        
+        if wall_pixels > 0:
+            logger.info(f"Wall detection completed - {wall_pixels} wall pixels found")
+            self.wall_mask = (self.wall_mask > 0).astype(np.uint8)
+            
+            # Scale mask to original dimensions if needed
+            if hasattr(self, 'orig_width') and hasattr(self, 'orig_height'):
+                if self.orig_width != self.proc_width or self.orig_height != self.proc_height:
+                    logger.info("Scaling wall mask to original dimensions")
+                    self.wall_mask = cv2.resize(
+                        self.wall_mask,
+                        (self.orig_width, self.orig_height),
+                        interpolation=cv2.INTER_NEAREST
+                    )
+                    # Update dimensions to match original
+                    self.proc_width = self.orig_width
+                    self.proc_height = self.orig_height
+        else:
+            logger.warning("No walls detected in final mask")
+        
         return self.wall_mask
 
     def apply_color(self, color_rgb, image=None, wall_mask=None):
         """Apply color to detected walls"""
         if image is not None:
             self.original_image = image
-        
+            
         if wall_mask is not None:
             self.wall_mask = wall_mask
         elif not hasattr(self, 'wall_mask') or self.wall_mask is None:
             self.detect_walls()
+
+        # Ensure wall mask matches image dimensions
+        img_height, img_width = self.original_image.shape[:2]
+        if self.wall_mask.shape[:2] != (img_height, img_width):
+            logger.debug(f"Resizing wall mask from {self.wall_mask.shape[:2]} to {(img_height, img_width)}")
+            self.wall_mask = cv2.resize(
+                self.wall_mask,
+                (img_width, img_height),
+                interpolation=cv2.INTER_NEAREST
+            )
 
         result_image = self.original_image.copy()
 

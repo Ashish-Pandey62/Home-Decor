@@ -1,6 +1,6 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings
-from typing import Set
+from typing import Set, Optional
 from functools import lru_cache
 import logging
 import logging.handlers
@@ -26,7 +26,7 @@ class Settings(BaseSettings):
     DEVICE: str = "cuda" if False else "cpu"  # We'll add CUDA check later
 
     # Gemini AI Settings
-    GEMINI_API_KEY: str
+    GEMINI_API_KEY: Optional[str] = None
     
     # File Cleanup
     CLEANUP_INTERVAL: int = 3600  # 1 hour
