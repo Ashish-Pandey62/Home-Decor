@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     MODEL_PATH: Path = BASE_DIR.parent / "models/sam_vit_h_4b8939.pth"
     MODEL_TYPE: str = "vit_h"
     DEVICE: str = "cuda" if False else "cpu"  # We'll add CUDA check later
+
+    # Gemini AI Settings
+    GEMINI_API_KEY: str
     
     # File Cleanup
     CLEANUP_INTERVAL: int = 3600  # 1 hour

@@ -1,26 +1,17 @@
-// Get base URL from environment or use relative path
+// Change base URL to use decoration endpoint
 const getApiBaseUrl = () => {
   const apiURL = import.meta.env.VITE_API_URL;
 
-  // Log detailed API configuration
-  console.log('🔧 Detailed API Configuration:', {
-    VITE_API_URL: apiURL,
-    origin: window.location.origin,
-    href: window.location.href,
-    mode: import.meta.env.MODE,
-    prod: import.meta.env.PROD
-  });
-
-  // Always use the provided API URL if available
   if (apiURL) {
-    return `${apiURL}/api/wall`;
+    return apiURL;
   }
 
-  // If no API URL is set, use a path relative to the current origin
-  return '/api/wall';
+  return '';
 };
 
-export const API_BASE_URL = getApiBaseUrl();
+export const API_BASE_URL = `${getApiBaseUrl()}/api`;
+export const WALL_API_URL = `${API_BASE_URL}/wall`;
+export const DECORATION_API_URL = `${API_BASE_URL}/decoration`;
 
 // Add a helpful warning if using relative URL
 if (!import.meta.env.VITE_API_URL) {
@@ -50,6 +41,16 @@ interface ColorResponse {
   image_id: string;
   processed_image_url: string;
   preview_url: string;
+}
+
+export interface DecorationAnalysisResponse {
+  image_id: string;
+  analysis: {
+    background: string;
+    good_points: string[];
+    bad_points: string[];
+    suggestions: string[];
+  }
 }
 
 interface ColorRecommendationResponse {
@@ -96,7 +97,7 @@ function logAPIError(endpoint: string, error: any) {
 }
 
 export async function uploadImage(file: File): Promise<UploadResponse> {
-  const endpoint = `${API_BASE_URL}/upload`;
+  const endpoint = `${WALL_API_URL}/upload`;
   try {
     // Check API health before upload
     try {
@@ -178,7 +179,7 @@ export async function uploadImage(file: File): Promise<UploadResponse> {
 }
 
 export async function detectWalls(imageId: string): Promise<WallDetectionResponse> {
-  const endpoint = `${API_BASE_URL}/detect-walls`;
+  const endpoint = `${WALL_API_URL}/detect-walls`;
   try {
     const requestBody = { image_id: imageId };
     logAPIRequest(endpoint, 'POST', requestBody);
@@ -247,7 +248,7 @@ export async function applyColor(
   color: string,
   wallIds: string[]
 ): Promise<ColorResponse> {
-  const endpoint = `${API_BASE_URL}/apply-color`;
+  const endpoint = `${WALL_API_URL}/apply-color`;
   try {
     // Convert hex color to RGB
     const hex = color.replace('#', '');
@@ -323,7 +324,7 @@ export async function applyColor(
 }
 
 export async function checkHealth(): Promise<{ status: string }> {
-  const endpoint = `${API_BASE_URL}/health`;
+  const endpoint = `${WALL_API_URL}/health`;
   console.log('🔍 Health Check URL:', endpoint);
   try {
     logAPIRequest(endpoint, 'GET');
@@ -403,7 +404,7 @@ export function dataURLtoFile(dataUrl: string, filename: string): File {
 }
 
 export async function getColorRecommendations(imageId: string, numColors: number = 4): Promise<ColorRecommendationResponse> {
-  const endpoint = `${API_BASE_URL}/recommendations`;
+  const endpoint = `${WALL_API_URL}/recommendations`;
   try {
     const requestBody = {
       image_id: imageId,
@@ -445,6 +446,69 @@ export async function getColorRecommendations(imageId: string, numColors: number
       error instanceof Error
         ? `Failed to get color recommendations: ${error.message}`
         : 'Failed to get color recommendations: Network error'
+    );
+    Object.defineProperty(enhancedError, 'cause', { value: error });
+    throw enhancedError;
+  }
+}
+
+export async function analyzeDecoration(imageId: string): Promise<DecorationAnalysisResponse> {
+  const endpoint = `${DECORATION_API_URL}/analyze`;
+  try {
+    console.log('🔍 Starting decoration analysis:', {
+      endpoint,
+      imageId,
+      decorationApiUrl: DECORATION_API_URL,
+      baseApiUrl: API_BASE_URL
+    });
+    const requestBody = { image_id: imageId };
+    logAPIRequest(endpoint, 'POST', requestBody);
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(import.meta.env.DEV && {
+          'Origin': window.location.origin
+        })
+      },
+      credentials: 'include',
+      body: JSON.stringify(requestBody),
+    });
+
+    const responseData = await response.text();
+    console.log('📥 Raw decoration analysis response:', responseData);
+    
+    let parsedData;
+    try {
+      parsedData = JSON.parse(responseData);
+      console.log('✅ Parsed decoration analysis:', parsedData);
+    } catch (e) {
+      console.error('❌ Failed to parse response as JSON:', {
+        error: e,
+        responseData,
+        contentType: response.headers.get('content-type')
+      });
+      throw new Error('Invalid JSON response from server');
+    }
+
+    if (!response.ok) {
+      console.error('❌ Decoration analysis failed:', {
+        status: response.status,
+        statusText: response.statusText,
+        data: responseData
+      });
+      throw new Error(`Failed to analyze decoration: ${responseData}`);
+    }
+
+    logAPIResponse(endpoint, parsedData);
+    return parsedData;
+  } catch (error) {
+    logAPIError(endpoint, error);
+    const enhancedError = new Error(
+      error instanceof Error
+        ? `Failed to analyze decoration: ${error.message}`
+        : 'Failed to analyze decoration: Network error'
     );
     Object.defineProperty(enhancedError, 'cause', { value: error });
     throw enhancedError;

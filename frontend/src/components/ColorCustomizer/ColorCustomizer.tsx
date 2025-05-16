@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { MdUndo, MdRedo } from 'react-icons/md';
 import * as api from '../../services/api';
+import DecorationAnalysis from '../DecorationAnalysis/DecorationAnalysis';
 
 const CustomizerContainer = styled.div`
   display: flex;
@@ -189,6 +190,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   const [isShowingOriginal, setIsShowingOriginal] = useState(false);
   const [wallpaperFile, setWallpaperFile] = useState<File | null>(null);
   const [wallpaperUrl, setWallpaperUrl] = useState<string | null>(null);
+  const [decorationAnalysis, setDecorationAnalysis] = useState<api.DecorationAnalysisResponse | null>(null);
 
   // Debug logging for state changes
   useEffect(() => {
@@ -380,6 +382,17 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
           totalPaths: paths.length,
           firstPath: wallSegments[0]?.pathData.substring(0, 50) + '...'
         });
+
+        try {
+          // Analyze decoration after wall detection
+          logAction('Analyzing decoration', { image_id: imageId });
+          const analysisResult = await api.analyzeDecoration(imageId);
+          setDecorationAnalysis(analysisResult);
+          logAction('Decoration analysis complete', analysisResult);
+        } catch (analysisError) {
+          logError('Decoration analysis failed', analysisError);
+          console.warn('Decoration analysis failed but continuing with wall detection', analysisError);
+        }
 
         // Create initial history entry
         const initialEntry = {
@@ -936,6 +949,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
           </LoadingOverlay>
         )}
       </CanvasContainer>
+      {decorationAnalysis && <DecorationAnalysis analysis={decorationAnalysis} />}
     </CustomizerContainer>
   );
 };

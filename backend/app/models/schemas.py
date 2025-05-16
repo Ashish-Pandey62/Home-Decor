@@ -65,3 +65,22 @@ class ColorRecommendation(BaseModel):
 class RecommendationResponse(BaseModel):
     image_id: str
     recommendations: List[ColorRecommendation]
+
+class DecorationSuggestion(BaseModel):
+    background: str = Field(..., description="Description of the current room background")
+    good_points: List[str] = Field(..., description="List of positive aspects about the current decoration")
+    bad_points: List[str] = Field(..., description="List of areas that need improvement")
+    suggestions: List[str] = Field(..., description="List of professional decoration suggestions")
+
+class DecorationRequest(BaseModel):
+    image_id: str = Field(..., description="ID of the uploaded image to analyze")
+    
+    @validator('image_id')
+    def validate_image_id(cls, v):
+        if not re.match(r'^[a-zA-Z0-9_-]+$', v):
+            raise ValueError('Invalid image ID format')
+        return v
+
+class DecorationResponse(BaseModel):
+    image_id: str
+    analysis: DecorationSuggestion
