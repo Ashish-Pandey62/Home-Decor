@@ -202,11 +202,6 @@ const processWallBoundary = (coordinates: [number, number][]): [number, number][
 };
 
 // Function to create a pattern from an image URL
-// Function to get a wallpaper image data URL
-const createPattern = async (url: string): Promise<string> => {
-  return url; // Return the original URL directly without modifications
-};
-
 const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor, onWallsDetected }) => {
   // Generate a consistent color for each wall segment
   const getWallColor = (segmentId: string): string => {
@@ -765,35 +760,40 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       }
 
       // Apply wallpaper if available (regardless of color state)
+      // Apply wallpaper if selected
       if (wallpaperUrl && selectedSegment === clickedSegment.id) {
-        // Draw wallpaper pattern
+        // Create a clipping path for the selected wall
+        ctx.save();
+        ctx.clip(path, 'evenodd');
+
+        // Load and apply wallpaper
         const patternImg = new Image();
         await new Promise<void>((resolve, reject) => {
           patternImg.onload = () => {
             try {
-              // Create pattern directly from the image
-              const pattern = ctx.createPattern(patternImg, 'repeat');
-              if (pattern) {
-                // Scale pattern to be clearly visible
-                pattern.setTransform(new DOMMatrix().scale(0.2, 0.2));
-                ctx.fillStyle = pattern;
-                // Use normal blend mode with full opacity
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.globalAlpha = 1.0;
-                // Draw the pattern
-                ctx.fill(path, 'evenodd');
+              // Calculate pattern size
+              const patternSize = Math.min(canvas.width, canvas.height) / 2;
+              
+              // Create a pattern that repeats
+              for (let x = 0; x < canvas.width; x += patternSize) {
+                for (let y = 0; y < canvas.height; y += patternSize) {
+                  ctx.drawImage(
+                    patternImg,
+                    x, y,
+                    patternSize, patternSize
+                  );
+                }
               }
               resolve();
             } catch (error) {
               reject(error);
             }
           };
-          patternImg.onerror = () => reject(new Error('Failed to load pattern'));
+          patternImg.onerror = () => reject(new Error('Failed to load wallpaper'));
           patternImg.src = wallpaperUrl;
         });
+        ctx.restore();
       }
-
-      // Final restore of original context state
       ctx.restore();
 
       // Update history
@@ -818,6 +818,80 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  // Create a repeating pattern from an image URL
+  const createPattern = async (imageUrl: string): Promise<string> => {
+    const canvas = document.createElement('canvas');
+    const size = 800; // Larger base size for better quality
+    canvas.width = size;
+    canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Failed to get canvas context');
+
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          // Calculate scaling to fit the image proportionally
+          const scale = Math.min(size / img.width, size / img.height);
+          const width = img.width * scale;
+          const height = img.height * scale;
+          
+          // Create a 2x2 grid of images for seamless tiling
+          for (let x = 0; x < 2; x++) {
+            for (let y = 0; y < 2; y++) {
+              ctx.drawImage(
+                img,
+                x * (width / 2), y * (height / 2),
+                width / 2, height / 2
+              );
+            }
+          }
+
+          // Apply slight blur for smoother transitions
+          ctx.filter = 'blur(1px)';
+          ctx.drawImage(canvas, 0, 0);
+          ctx.filter = 'none';
+
+          // Adjust contrast slightly
+          ctx.globalCompositeOperation = 'overlay';
+          ctx.fillStyle = 'rgba(255,255,255,0.1)';
+          ctx.fillRect(0, 0, size, size);
+
+          resolve(canvas.toDataURL('image/jpeg', 0.95));
+        } catch (error) {
+          reject(error);
+        }
+      };
+      img.onerror = reject;
+      img.src = imageUrl;
+    });
+  };
+
+  // Helper function to get bounding box of a path
+  const getBoundingBox = (path: Path2D, ctx: CanvasRenderingContext2D): { x: number, y: number, width: number, height: number } => {
+    // Default bounds
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    
+    // Sample points along the path to find bounds
+    for (let x = 0; x < ctx.canvas.width; x += 10) {
+      for (let y = 0; y < ctx.canvas.height; y += 10) {
+        if (ctx.isPointInPath(path, x, y)) {
+          minX = Math.min(minX, x);
+          minY = Math.min(minY, y);
+          maxX = Math.max(maxX, x);
+          maxY = Math.max(maxY, y);
+        }
+      }
+    }
+    
+    return {
+      x: minX,
+      y: minY,
+      width: maxX - minX,
+      height: maxY - minY
+    };
   };
 
   // Check if a point is near or inside a wall boundary using SVG Path
@@ -1085,15 +1159,38 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   const path = new Path2D(segment.pathData);
                   const wallPattern = ctx.createPattern(patternCanvas, 'repeat');
                   if (wallPattern) {
-                    // Apply wallpaper directly with full opacity
+                    // Get the bounding box for scaling calculation
+                    const bounds = getBoundingBox(path, ctx);
+                    
+                    // Apply wallpaper with proper scaling
                     ctx.save();
-                    wallPattern.setTransform(new DOMMatrix().scale(6000, 6000));
+                    
+                    // Calculate pattern size based on wall dimensions but slightly larger
+                    const patternSize = Math.min(bounds.width, bounds.height) / 3; // Larger pattern size
+                    const matrix = new DOMMatrix().scale(
+                      patternSize / patternCanvas.width,
+                      patternSize / patternCanvas.height
+                    );
+                    
+                    // Apply the pattern transformation
+                    wallPattern.setTransform(matrix);
                     ctx.fillStyle = wallPattern;
-                    // Use default source-over blend mode for maximum visibility
-                    ctx.globalCompositeOperation = 'source-over';
-                    // Full opacity
-                    ctx.globalAlpha = 1;
-                    ctx.fill(path, 'evenodd');
+                    
+                    // Clip to wall segment shape
+                    ctx.clip(path, 'evenodd');
+                    
+                    // Use overlay blend mode for better texture preservation
+                    ctx.globalCompositeOperation = 'overlay';
+                    ctx.globalAlpha = 0.9; // Slightly higher opacity
+                    
+                    // Fill the entire canvas area to ensure no gaps
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Add a subtle shadow effect for depth
+                    ctx.globalCompositeOperation = 'multiply';
+                    ctx.fillStyle = 'rgba(0,0,0,0.1)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
                     ctx.restore();
                   }
                 }
