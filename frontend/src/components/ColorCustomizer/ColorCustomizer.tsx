@@ -4,6 +4,60 @@ import { MdUndo, MdRedo } from 'react-icons/md';
 import * as api from '../../services/api';
 import DecorationAnalysis from '../DecorationAnalysis/DecorationAnalysis';
 
+// Color conversion utilities
+function rgbToHsv(r: number, g: number, b: number): { h: number, s: number, v: number } {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const diff = max - min;
+
+  let h = 0;
+  const s = max === 0 ? 0 : diff / max;
+  const v = max;
+
+  if (diff !== 0) {
+    if (max === r) {
+      h = 60 * ((g - b) / diff + (g < b ? 6 : 0));
+    } else if (max === g) {
+      h = 60 * ((b - r) / diff + 2);
+    } else if (max === b) {
+      h = 60 * ((r - g) / diff + 4);
+    }
+  }
+
+  return { h, s, v };
+}
+
+function hsvToRgb(h: number, s: number, v: number): { r: number, g: number, b: number } {
+  const c = v * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = v - c;
+
+  let r = 0, g = 0, b = 0;
+  if (h >= 0 && h < 60) {
+    [r, g, b] = [c, x, 0];
+  } else if (h >= 60 && h < 120) {
+    [r, g, b] = [x, c, 0];
+  } else if (h >= 120 && h < 180) {
+    [r, g, b] = [0, c, x];
+  } else if (h >= 180 && h < 240) {
+    [r, g, b] = [0, x, c];
+  } else if (h >= 240 && h < 300) {
+    [r, g, b] = [x, 0, c];
+  } else {
+    [r, g, b] = [c, 0, x];
+  }
+
+  return {
+    r: Math.round((r + m) * 255),
+    g: Math.round((g + m) * 255),
+    b: Math.round((b + m) * 255)
+  };
+}
+
 const CustomizerContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -197,7 +251,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   const [decorationAnalysis, setDecorationAnalysis] = useState<api.DecorationAnalysisResponse | null>(null);
 
   // Debug logging for state changes
-// Debug logging for scaling and dimensions
+  // Debug logging for scaling and dimensions
   useEffect(() => {
     logAction('Overlay scaling debug', {
       canvasRef: {
@@ -514,7 +568,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
   // Auto-apply color when segment or color changes
   useEffect(() => {
     if (!selectedSegment || !currentColor || isProcessing || !canvasRef.current || !image) return;
-    
+
     const applyColor = async () => {
       setIsProcessing(true);
       try {
@@ -523,7 +577,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         setIsProcessing(false);
       }
     };
-    
+
     applyColor();
   }, [selectedSegment, currentColor]);
 
@@ -551,19 +605,14 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     const clickedSegment = segments.find(segment => segment.id === segmentId);
     if (!clickedSegment) return;
 
-    setIsProcessing(true);
-    logAction('Processing state details', {
-      currentHistoryIndex: historyIndex,
-      historyLength: history.length,
-      selectedSegment,
-      canvasDimensions: {
-        width: canvasRef.current.width,
-        height: canvasRef.current.height
-      }
-    });
-
-
     try {
+      logAction('Processing color application', {
+        segmentId,
+        currentColor,
+        hasWallpaper: !!wallpaperUrl,
+        historyIndex,
+        historyLength: history.length
+      });
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
       if (!ctx) throw new Error('Failed to get canvas context');
@@ -576,7 +625,6 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         confidence: clickedSegment.confidence
       });
 
-      setSelectedSegment(clickedSegment.id);
 
       // Setup for drawing
       ctx.save();
@@ -592,14 +640,97 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       const scaleY = canvas.height / image.height;
       ctx.scale(scaleX, scaleY);
 
-      // Apply base color with stronger opacity
-      ctx.fillStyle = currentColor;
-      ctx.globalAlpha = 0.85;
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.fill(path, 'evenodd');
+      // Create an offscreen canvas for color manipulation
+      const offscreenCanvas = document.createElement('canvas');
+      offscreenCanvas.width = canvas.width;
+      offscreenCanvas.height = canvas.height;
+      const offCtx = offscreenCanvas.getContext('2d');
+      if (!offCtx) throw new Error('Failed to get offscreen context');
 
-      // Reset composite operation for wallpaper
+      // Draw the original image to the offscreen canvas
+      offCtx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      // Create a temporary canvas for the mask
+      const maskCanvas = document.createElement('canvas');
+      maskCanvas.width = canvas.width;
+      maskCanvas.height = canvas.height;
+      const maskCtx = maskCanvas.getContext('2d');
+      if (!maskCtx) throw new Error('Failed to get mask context');
+
+      // Draw and blur the mask
+      // Create base mask
+      maskCtx.save();
+      maskCtx.scale(scaleX, scaleY);
+      maskCtx.fillStyle = 'white';
+      maskCtx.fill(path, 'evenodd');
+      maskCtx.restore();
+
+      // Apply Gaussian blur for smooth edges
+      for (let i = 0; i < 3; i++) {
+        maskCtx.filter = 'blur(2px)';
+        maskCtx.drawImage(maskCanvas, 0, 0);
+      }
+      maskCtx.filter = 'none';
+
+      // Get and process mask data
+      const maskData = maskCtx.getImageData(0, 0, canvas.width, canvas.height);
+      const pixelData = offCtx.getImageData(0, 0, canvas.width, canvas.height);
+
+      // Parse the color
+      const colorMatch = currentColor.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i);
+      if (!colorMatch) throw new Error('Invalid color format');
+
+      const r = parseInt(colorMatch[1], 16);
+      const g = parseInt(colorMatch[2], 16);
+      const b = parseInt(colorMatch[3], 16);
+
+      // Convert RGB to HSV
+      const { h, s, v } = rgbToHsv(r, g, b);
+
+      // Process each pixel
+      for (let i = 0; i < pixelData.data.length; i += 4) {
+        const maskAlpha = maskData.data[i + 3] / 255;
+        if (maskAlpha > 0) {
+          // Convert pixel to HSV
+          const pixelHsv = rgbToHsv(
+            pixelData.data[i],
+            pixelData.data[i + 1],
+            pixelData.data[i + 2]
+          );
+
+          // Calculate luminance of original pixel
+          const origLuminance = (0.299 * pixelData.data[i] + 0.587 * pixelData.data[i + 1] + 0.114 * pixelData.data[i + 2]) / 255;
+          
+          // Adjust HSV values with overlay-optimized blending
+          const blendedHsv = {
+            h: h,
+            s: Math.min(1, s * (1.2 - origLuminance * 0.4)), // Reduce saturation in highlights
+            v: pixelHsv.v * 0.7 + v * 0.3 // Keep more original brightness for overlay
+          };
+          
+          // Convert back to RGB
+          const blendedRgb = hsvToRgb(blendedHsv.h, blendedHsv.s, blendedHsv.v);
+          
+          // Apply overlay-optimized alpha blending
+          const blendFactor = maskAlpha * 0.75; // Reduce overall intensity for overlay blend
+          pixelData.data[i] = blendedRgb.r;
+          pixelData.data[i + 1] = blendedRgb.g;
+          pixelData.data[i + 2] = blendedRgb.b;
+        }
+      }
+
+      // Put the processed image back
+      offCtx.putImageData(pixelData, 0, 0);
+
+      // Apply the result with overlay blending
+      ctx.globalCompositeOperation = 'overlay';
+      ctx.drawImage(offscreenCanvas, 0, 0);
       ctx.globalCompositeOperation = 'source-over';
+
+      // Apply a second pass with reduced opacity for texture preservation
+      ctx.globalAlpha = 0.3;
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1.0;
 
       // Then apply wallpaper if available
       if (wallpaperUrl && selectedSegment === clickedSegment.id) {
@@ -645,11 +776,11 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       ctx.restore();
 
       // Update history
-      const imageData = canvas.toDataURL();
+      const finalImageUrl = canvas.toDataURL();
       const newHistory = history.slice(0, historyIndex + 1);
       newHistory.push({
         image_id: imageId,
-        imageUrl: imageData,
+        imageUrl: finalImageUrl,
         segments
       });
       setHistory(newHistory);
@@ -679,7 +810,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     // Create path without scaling since SVG viewBox handles scaling
     const path = new Path2D(pathData);
     const [x, y] = point;
-    
+
     // Point coordinates are already in SVG space due to viewBox
     const result = ctx.isPointInPath(path, x, y);
 
