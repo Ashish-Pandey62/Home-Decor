@@ -202,43 +202,9 @@ const processWallBoundary = (coordinates: [number, number][]): [number, number][
 };
 
 // Function to create a pattern from an image URL
+// Function to get a wallpaper image data URL
 const createPattern = async (url: string): Promise<string> => {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      // Increased size for better quality
-      canvas.width = 2000;
-      canvas.height = 2000;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        // Create a single large pattern without gaps
-        const scaleFactor = Math.min(2000 / img.width, 2000 / img.height);
-        const width = img.width * scaleFactor;
-        const height = img.height * scaleFactor;
-        const x = (2000 - width) / 2;
-        const y = (2000 - height) / 2;
-
-        // Draw single large image
-        ctx.drawImage(img, x, y, width, height);
-
-        // Mirror edges for seamless tiling
-        ctx.save();
-        ctx.translate(width, 0);
-        ctx.scale(-1, 1);
-        ctx.drawImage(canvas, x, y, width, height);
-        ctx.restore();
-
-        ctx.save();
-        ctx.translate(0, height);
-        ctx.scale(1, -1);
-        ctx.drawImage(canvas, x, y, width, height);
-        ctx.restore();
-      }
-      resolve(canvas.toDataURL());
-    };
-    img.src = url;
-  });
+  return url; // Return the original URL directly without modifications
 };
 
 const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, currentColor, onWallsDetected }) => {
@@ -800,54 +766,34 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
 
       // Apply wallpaper if available (regardless of color state)
       if (wallpaperUrl && selectedSegment === clickedSegment.id) {
-        const patternCanvas = document.createElement('canvas');
-        patternCanvas.width = 800;
-        patternCanvas.height = 800;
-        const patternCtx = patternCanvas.getContext('2d');
-
-        if (patternCtx) {
-          const patternImg = new Image();
-          await new Promise<void>((resolve, reject) => {
-            patternImg.onload = () => {
-              try {
-                const scale = Math.min(800 / patternImg.width, 800 / patternImg.height);
-                const width = patternImg.width * scale;
-                const height = patternImg.height * scale;
-                const x = (800 - width) / 2;
-                const y = (800 - height) / 2;
-                patternCtx.drawImage(patternImg, x, y, width, height);
-                resolve();
-              } catch (error) {
-                reject(error);
+        // Draw wallpaper pattern
+        const patternImg = new Image();
+        await new Promise<void>((resolve, reject) => {
+          patternImg.onload = () => {
+            try {
+              // Create pattern directly from the image
+              const pattern = ctx.createPattern(patternImg, 'repeat');
+              if (pattern) {
+                // Scale pattern to be clearly visible
+                pattern.setTransform(new DOMMatrix().scale(0.2, 0.2));
+                ctx.fillStyle = pattern;
+                // Use normal blend mode with full opacity
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.globalAlpha = 1.0;
+                // Draw the pattern
+                ctx.fill(path, 'evenodd');
               }
-            };
-            patternImg.onerror = () => reject(new Error('Failed to load pattern'));
-            patternImg.src = wallpaperUrl;
-          });
-
-          const pattern = ctx.createPattern(patternCanvas, 'repeat');
-          if (pattern) {
-            ctx.save();
-            pattern.setTransform(new DOMMatrix().scale(600, 600)); // Maximum scale for visibility
-            ctx.fillStyle = pattern;
-            ctx.globalCompositeOperation = 'multiply';
-            ctx.globalAlpha = 0.95;
-            ctx.fill(path, 'evenodd');
-
-            // Apply post-processing for better visibility
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.filter = 'contrast(1.1) brightness(1.05)';
-            ctx.fill(path, 'evenodd');
-            ctx.filter = 'none';
-
-            ctx.restore();
-          }
-        }
+              resolve();
+            } catch (error) {
+              reject(error);
+            }
+          };
+          patternImg.onerror = () => reject(new Error('Failed to load pattern'));
+          patternImg.src = wallpaperUrl;
+        });
       }
 
-      // Reset context state
-      ctx.globalAlpha = 1.0;
-      ctx.globalCompositeOperation = 'source-over';
+      // Final restore of original context state
       ctx.restore();
 
       // Update history
@@ -1002,7 +948,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
           <ToolButton
             onClick={async () => {
               if (!canvasRef.current || !image || isProcessing) return;
-              
+
               setIsProcessing(true);
               try {
                 const canvas = canvasRef.current;
@@ -1115,38 +1061,38 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                 const patternImg = new Image();
                 await new Promise<void>((resolve, reject) => {
                   patternImg.onload = () => {
-                    // Draw pattern in a 2x2 grid to ensure seamless tiling
-                    for (let x = 0; x < 2; x++) {
-                      for (let y = 0; y < 2; y++) {
-                        patternCtx.drawImage(
-                          patternImg,
-                          x * 400,
-                          y * 400,
-                          400,
-                          400
-                        );
-                      }
-                    }
+                    // Draw single large seamless pattern
+                    const size = Math.max(patternImg.width, patternImg.height);
+                    patternCtx.drawImage(
+                      patternImg,
+                      0,
+                      0,
+                      size,
+                      size
+                    );
                     resolve();
                   };
                   patternImg.onerror = reject;
                   patternImg.src = pattern;
                 });
 
-                // Reset canvas to original state first
+                // Clear canvas and apply base image
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-                // Apply pattern to all segments
+                // Apply pattern once to each segment - single layer only
                 for (const segment of segments) {
                   const path = new Path2D(segment.pathData);
                   const wallPattern = ctx.createPattern(patternCanvas, 'repeat');
                   if (wallPattern) {
+                    // Apply wallpaper directly with full opacity
                     ctx.save();
-                    wallPattern.setTransform(new DOMMatrix().scale(600, 600));
+                    wallPattern.setTransform(new DOMMatrix().scale(6000, 6000));
                     ctx.fillStyle = wallPattern;
-                    ctx.globalCompositeOperation = 'soft-light';
-                    ctx.globalAlpha = 0.85;
+                    // Use default source-over blend mode for maximum visibility
+                    ctx.globalCompositeOperation = 'source-over';
+                    // Full opacity
+                    ctx.globalAlpha = 1;
                     ctx.fill(path, 'evenodd');
                     ctx.restore();
                   }
@@ -1185,26 +1131,6 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         >
           {segments.map(segment => (
             <g key={segment.id}>
-              <defs>
-                {wallpaperUrl && (
-                  <pattern
-                    id={`wallpaper-${segment.id}`}
-                    patternUnits="userSpaceOnUse"
-                    width="800"
-                    height="800"
-                    patternTransform={`scale(0.15)`}
-                  >
-                    <image
-                      href={wallpaperUrl}
-                      x="0"
-                      y="0"
-                      width="800"
-                      height="800"
-                    />
-                  </pattern>
-                )}
-              </defs>
-
               {/* Base color layer */}
               <path
                 data-segment-id={`color-${segment.id}`}
@@ -1217,21 +1143,6 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   transition: 'all 0.3s ease',
                 }}
               />
-              {/* Wallpaper overlay */}
-              {wallpaperUrl && (
-                <path
-                  data-segment-id={`wallpaper-${segment.id}`}
-                  d={segment.pathData}
-                  fill={`url(#wallpaper-${segment.id})`}
-                  fillRule="evenodd"
-                  style={{
-                    opacity: 0.85,
-                    mixBlendMode: 'soft-light',
-                    transition: 'all 0.3s ease',
-                    filter: 'contrast(1.1) brightness(1.05)',
-                  }}
-                />
-              )}
               {/* Wall boundary - visible only on hover */}
               <path
                 data-segment-id={`boundary-${segment.id}`}
@@ -1273,7 +1184,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   // Highlight wallpaper if present
                   const wallpaperPath = document.querySelector(`path[data-segment-id="wallpaper-${segment.id}"]`);
                   if (wallpaperPath) {
-                    (wallpaperPath as SVGPathElement).style.opacity = '0.8';
+                    // Remove wallpaper opacity adjustment on hover
                   }
                 }}
                 onMouseLeave={() => {
@@ -1287,10 +1198,7 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                   if (colorPath) {
                     (colorPath as SVGPathElement).style.opacity = currentColor ? '0.6' : '0';
                   }
-                  const wallpaperPath = document.querySelector(`path[data-segment-id="wallpaper-${segment.id}"]`);
-                  if (wallpaperPath) {
-                    (wallpaperPath as SVGPathElement).style.opacity = '0.5';
-                  }
+                  // Remove wallpaper opacity reset
                 }}
               />
             </g>
