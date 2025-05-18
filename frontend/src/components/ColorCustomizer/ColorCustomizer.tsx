@@ -511,9 +511,30 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     };
   }, [image, imageId]); // Only depend on image and imageId
 
+  // Auto-apply color when segment or color changes
+  useEffect(() => {
+    if (!selectedSegment || !currentColor || isProcessing || !canvasRef.current || !image) return;
+    
+    const applyColor = async () => {
+      setIsProcessing(true);
+      try {
+        await handleSegmentColor(selectedSegment);
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+    
+    applyColor();
+  }, [selectedSegment, currentColor]);
+
   const handleSegmentClick = async (segmentId: string): Promise<void> => {
+    if (isProcessing || !canvasRef.current || !image) return;
+    setSelectedSegment(segmentId);
+  };
+
+  const handleSegmentColor = async (segmentId: string): Promise<void> => {
     if (isProcessing || !canvasRef.current || !image) {
-      logAction('Segment click ignored', {
+      logAction('Color application ignored', {
         isProcessing,
         hasCanvas: !!canvasRef.current,
         hasImage: !!image
@@ -571,10 +592,10 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       const scaleY = canvas.height / image.height;
       ctx.scale(scaleX, scaleY);
 
-      // First apply base color
+      // Apply base color with stronger opacity
       ctx.fillStyle = currentColor;
-      ctx.globalAlpha = 0.6;
-      ctx.globalCompositeOperation = 'overlay';
+      ctx.globalAlpha = 0.85;
+      ctx.globalCompositeOperation = 'source-over';
       ctx.fill(path, 'evenodd');
 
       // Reset composite operation for wallpaper

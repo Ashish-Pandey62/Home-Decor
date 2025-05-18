@@ -11,4 +11,5 @@ Home Decor Advisor.pdf
 backend/logs/app.log
 backend/.env
 .env
-
+backend/.env
+/backend/*.env
