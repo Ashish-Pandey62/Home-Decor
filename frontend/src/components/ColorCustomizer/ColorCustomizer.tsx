@@ -753,10 +753,10 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
       ctx.putImageData(workingImageData, 0, 0);
 
       if (currentColor && !isRemovingColor) {
-        // Apply the blended result directly without overlay
+        // Apply the final blended result
         ctx.globalAlpha = 1.0;
         ctx.globalCompositeOperation = 'source-over';
-        ctx.drawImage(offscreenCanvas, 0, 0);
+        // No need to draw from offscreenCanvas since workingImageData is already applied
       }
 
       // Apply wallpaper if available (regardless of color state)
