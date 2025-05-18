@@ -771,19 +771,25 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
         await new Promise<void>((resolve, reject) => {
           patternImg.onload = () => {
             try {
-              // Calculate pattern size
-              const patternSize = Math.min(canvas.width, canvas.height) / 2;
+              // Get the bounding box of the wall segment
+              const bbox = getBoundingBox(path, ctx);
               
-              // Create a pattern that repeats
-              for (let x = 0; x < canvas.width; x += patternSize) {
-                for (let y = 0; y < canvas.height; y += patternSize) {
-                  ctx.drawImage(
-                    patternImg,
-                    x, y,
-                    patternSize, patternSize
-                  );
-                }
-              }
+              // Save current state
+              ctx.save();
+              
+              // Set up proper blending for transparency
+              ctx.globalCompositeOperation = 'source-over';
+              ctx.globalAlpha = 1.0;
+              
+              // Draw the wallpaper scaled to fit the wall segment
+              ctx.drawImage(
+                patternImg,
+                bbox.x, bbox.y,
+                bbox.width, bbox.height
+              );
+              
+              // Restore context state
+              ctx.restore();
               resolve();
             } catch (error) {
               reject(error);
@@ -820,46 +826,40 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
     }
   };
 
-  // Create a repeating pattern from an image URL
+  // Create a pattern from an image URL with transparency support
   const createPattern = async (imageUrl: string): Promise<string> => {
     const canvas = document.createElement('canvas');
-    const size = 800; // Larger base size for better quality
+    const size = 1200; // Larger size for better quality
     canvas.width = size;
     canvas.height = size;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) throw new Error('Failed to get canvas context');
 
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
         try {
+          // Clear canvas to ensure transparency
+          ctx.clearRect(0, 0, size, size);
+          
           // Calculate scaling to fit the image proportionally
           const scale = Math.min(size / img.width, size / img.height);
           const width = img.width * scale;
           const height = img.height * scale;
           
-          // Create a 2x2 grid of images for seamless tiling
-          for (let x = 0; x < 2; x++) {
-            for (let y = 0; y < 2; y++) {
-              ctx.drawImage(
-                img,
-                x * (width / 2), y * (height / 2),
-                width / 2, height / 2
-              );
-            }
-          }
+          // Draw single scaled image
+          ctx.drawImage(
+            img,
+            (size - width) / 2, (size - height) / 2, // Center the image
+            width, height
+          );
 
-          // Apply slight blur for smoother transitions
-          ctx.filter = 'blur(1px)';
+          // Apply minimal blur without affecting transparency
+          ctx.filter = 'blur(0.5px)';
           ctx.drawImage(canvas, 0, 0);
           ctx.filter = 'none';
 
-          // Adjust contrast slightly
-          ctx.globalCompositeOperation = 'overlay';
-          ctx.fillStyle = 'rgba(255,255,255,0.1)';
-          ctx.fillRect(0, 0, size, size);
-
-          resolve(canvas.toDataURL('image/jpeg', 0.95));
+          resolve(canvas.toDataURL('image/png'));
         } catch (error) {
           reject(error);
         }
@@ -1127,22 +1127,20 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
 
                 // Create pattern for all segments
                 const patternCanvas = document.createElement('canvas');
-                patternCanvas.width = 800;  // Increased size for better quality
-                patternCanvas.height = 800;
+                // Create pattern canvas at image size
+                patternCanvas.width = canvas.width;
+                patternCanvas.height = canvas.height;
                 const patternCtx = patternCanvas.getContext('2d');
                 if (!patternCtx) return;
 
                 const patternImg = new Image();
                 await new Promise<void>((resolve, reject) => {
                   patternImg.onload = () => {
-                    // Draw single large seamless pattern
-                    const size = Math.max(patternImg.width, patternImg.height);
+                    // Scale and draw wallpaper to match image dimensions
                     patternCtx.drawImage(
                       patternImg,
-                      0,
-                      0,
-                      size,
-                      size
+                      0, 0,
+                      canvas.width, canvas.height
                     );
                     resolve();
                   };
@@ -1157,42 +1155,17 @@ const ColorCustomizer: React.FC<ColorCustomizerProps> = ({ image, imageId, curre
                 // Apply pattern once to each segment - single layer only
                 for (const segment of segments) {
                   const path = new Path2D(segment.pathData);
-                  const wallPattern = ctx.createPattern(patternCanvas, 'repeat');
-                  if (wallPattern) {
-                    // Get the bounding box for scaling calculation
-                    const bounds = getBoundingBox(path, ctx);
-                    
-                    // Apply wallpaper with proper scaling
-                    ctx.save();
-                    
-                    // Calculate pattern size based on wall dimensions but slightly larger
-                    const patternSize = Math.min(bounds.width, bounds.height) / 3; // Larger pattern size
-                    const matrix = new DOMMatrix().scale(
-                      patternSize / patternCanvas.width,
-                      patternSize / patternCanvas.height
-                    );
-                    
-                    // Apply the pattern transformation
-                    wallPattern.setTransform(matrix);
-                    ctx.fillStyle = wallPattern;
-                    
-                    // Clip to wall segment shape
-                    ctx.clip(path, 'evenodd');
-                    
-                    // Use overlay blend mode for better texture preservation
-                    ctx.globalCompositeOperation = 'overlay';
-                    ctx.globalAlpha = 0.9; // Slightly higher opacity
-                    
-                    // Fill the entire canvas area to ensure no gaps
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    // Add a subtle shadow effect for depth
-                    ctx.globalCompositeOperation = 'multiply';
-                    ctx.fillStyle = 'rgba(0,0,0,0.1)';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    
-                    ctx.restore();
-                  }
+                  ctx.save();
+                  
+                  // Clip to wall segment
+                  ctx.clip(path, 'evenodd');
+                  
+                  // Draw the single scaled wallpaper
+                  ctx.globalCompositeOperation = 'source-over';
+                  ctx.globalAlpha = 1.0;
+                  ctx.drawImage(patternCanvas, 0, 0);
+                  
+                  ctx.restore();
                 }
 
                 // Update history
