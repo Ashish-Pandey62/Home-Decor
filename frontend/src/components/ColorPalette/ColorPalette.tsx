@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getColorRecommendations } from '../../services/api';
 import styled from 'styled-components';
 
 const PaletteContainer = styled.div`
@@ -63,14 +64,66 @@ const predefinedPalettes = {
 interface ColorPaletteProps {
   selectedColor: string;
   onColorSelect: (color: string) => void;
+  imageId?: string;
+}
+
+interface Recommendation {
+  hex_color: string;
+  preview_url: string;
 }
 
 const ColorPalette: React.FC<ColorPaletteProps> = ({
   selectedColor,
-  onColorSelect
+  onColorSelect,
+  imageId
 }) => {
+  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      if (!imageId) return;
+      
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await getColorRecommendations(imageId);
+        setRecommendations(response.recommendations);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to get recommendations');
+        console.error('Error fetching recommendations:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecommendations();
+  }, [imageId]);
   return (
     <PaletteContainer>
+      {imageId && (
+        <PaletteSection>
+          <SectionTitle>AI Recommendations</SectionTitle>
+          <ColorGrid>
+            {loading ? (
+              <div>Loading recommendations...</div>
+            ) : error ? (
+              <div>Error: {error}</div>
+            ) : (
+              recommendations.map((rec, index) => (
+                <ColorSwatch
+                  key={`ai-${index}`}
+                  color={rec.hex_color}
+                  selected={selectedColor === rec.hex_color}
+                  onClick={() => onColorSelect(rec.hex_color)}
+                  title={rec.hex_color}
+                />
+              ))
+            )}
+          </ColorGrid>
+        </PaletteSection>
+      )}
       <PaletteSection>
         <SectionTitle>Modern</SectionTitle>
         <ColorGrid>

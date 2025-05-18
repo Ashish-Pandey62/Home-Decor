@@ -3,21 +3,14 @@ from typing import List, Tuple, Optional
 from pathlib import Path
 import re
 
-class WallMask(BaseModel):
-    mask_id: str = Field(..., description="Unique identifier for the wall mask")
-    coordinates: List[List[int]] = Field(..., description="Wall mask coordinates")
-    area: int = Field(..., description="Area of the wall in pixels")
-    confidence: float = Field(..., ge=0, le=1, description="Confidence score of the wall detection")
-
 class WallDetectionResponse(BaseModel):
     image_id: str
-    walls: List[WallMask]
+    mask: str = Field(..., description="SVG path data for the wall mask")
     preview_url: str
 
 class ColorRequest(BaseModel):
     image_id: str
     color_rgb: Tuple[int, int, int] = Field(..., description="RGB color values")
-    wall_ids: List[str] = Field(..., description="List of wall IDs to color")
 
     @validator('color_rgb')
     def validate_rgb(cls, v):
@@ -54,3 +47,40 @@ class WallDetectionRequest(BaseModel):
         if not re.match(r'^[a-zA-Z0-9_-]+$', v):
             raise ValueError('Invalid image ID format')
         return v
+
+class RecommendationRequest(BaseModel):
+    image_id: str = Field(..., description="ID of the uploaded image to process")
+    num_colors: Optional[int] = Field(4, ge=1, le=10, description="Number of color recommendations to generate")
+    
+    @validator('image_id')
+    def validate_image_id(cls, v):
+        if not re.match(r'^[a-zA-Z0-9_-]+$', v):
+            raise ValueError('Invalid image ID format')
+        return v
+
+class ColorRecommendation(BaseModel):
+    hex_color: str = Field(..., pattern="^#[0-9a-fA-F]{6}$", description="Hex color code")
+    preview_url: str = Field(..., description="URL of the preview image with this color")
+
+class RecommendationResponse(BaseModel):
+    image_id: str
+    recommendations: List[ColorRecommendation]
+
+class DecorationSuggestion(BaseModel):
+    background: str = Field(..., description="Description of the current room background")
+    good_points: List[str] = Field(..., description="List of positive aspects about the current decoration")
+    bad_points: List[str] = Field(..., description="List of areas that need improvement")
+    suggestions: List[str] = Field(..., description="List of professional decoration suggestions")
+
+class DecorationRequest(BaseModel):
+    image_id: str = Field(..., description="ID of the uploaded image to analyze")
+    
+    @validator('image_id')
+    def validate_image_id(cls, v):
+        if not re.match(r'^[a-zA-Z0-9_-]+$', v):
+            raise ValueError('Invalid image ID format')
+        return v
+
+class DecorationResponse(BaseModel):
+    image_id: str
+    analysis: DecorationSuggestion

@@ -5,15 +5,26 @@ from typing import List, Tuple, Dict
 import base64
 import pickle
 import os
+import svgwrite
 
 from ..models.wall_detector import WallDetector
-from ..models.schemas import WallMask
 from ..core.exceptions import ImageProcessingError
 from ..core.config import settings, logger
 from .file_service import FileService
 
 class ImageService:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(ImageService, cls).__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+
     def __init__(self):
+        if self._initialized:
+            return
+        self._initialized = True
         """Initialize the image service with wall detector"""
         self.wall_detector = WallDetector()
         # Ensure required directories exist
@@ -68,34 +79,88 @@ class ImageService:
             logger.error(f"Failed to load cache for {image_id}: {str(e)}")
             raise ImageProcessingError(f"Failed to load cache: {str(e)}")
 
-    async def process_upload(self, image_id: str, file_path: Path) -> Dict[str, List[WallMask]]:
+    def _mask_to_svg(self, mask: np.ndarray, width: int, height: int) -> str:
+        """Convert binary mask to SVG path, properly handling holes"""
+        # Find all contours including holes
+        contours, hierarchy = cv2.findContours(
+            mask.astype(np.uint8),
+            cv2.RETR_CCOMP,  # Retrieve both external and internal contours
+            cv2.CHAIN_APPROX_SIMPLE
+        )
+        
+        # Create SVG drawing
+        dwg = svgwrite.Drawing(size=(width, height))
+        
+        if len(contours) == 0:
+            return dwg.tostring()
+            
+        # Process contours hierarchically
+        def process_contour(contour):
+            """Convert contour to SVG path data"""
+            epsilon = 0.001 * cv2.arcLength(contour, True)
+            approx = cv2.approxPolyDP(contour, epsilon, True)
+            
+            if len(approx) <= 2:  # Skip invalid polygons
+                return ""
+                
+            points = approx.squeeze()
+            if len(points.shape) == 1:  # Skip single points
+                return ""
+                
+            path_data = f"M {points[0][0]},{points[0][1]}"
+            for point in points[1:]:
+                path_data += f" L {point[0]},{point[1]}"
+            path_data += " Z"  # Close the path
+            return path_data
+            
+        # Build path data with proper fill rule
+        path_data = ""
+        for i, contour in enumerate(contours):
+            # Check if this is an outer contour (no parent)
+            if hierarchy[0][i][3] == -1:  # No parent
+                # Add outer contour
+                path_data += process_contour(contour)
+                
+                # Find and add all holes for this contour
+                for j, potential_hole in enumerate(contours):
+                    if hierarchy[0][j][3] == i:  # If parent is current contour
+                        path_data += " " + process_contour(potential_hole)
+        
+        if path_data:
+            # Add single path with fill-rule for proper hole rendering
+            path = dwg.path(
+                d=path_data,
+                fill="black",
+                fill_rule="evenodd"  # Properly handles holes
+            )
+            dwg.add(path)
+        
+        return dwg.tostring()
+
+    async def process_upload(self, image_id: str, file_path: Path) -> Dict[str, str]:
         """Process an uploaded image to detect walls"""
         try:
             # Load and process image
             image = self.wall_detector.load_image(file_path)
             
             # Detect walls
-            detection_result = self.wall_detector.detect_walls(image)
+            wall_mask = self.wall_detector.detect_walls(image)
             
-            # Convert masks to response format
-            walls = []
-            for idx, mask in enumerate(detection_result['masks']):
-                wall_id = f"{image_id}_wall_{idx}"
-                mask_obj = WallMask(
-                    mask_id=wall_id,
-                    coordinates=self._encode_mask_coordinates(mask['segmentation']),
-                    area=mask['area'],
-                    confidence=mask['score']
-                )
-                walls.append(mask_obj)
+            # Convert mask to SVG
+            svg_mask = self._mask_to_svg(wall_mask, image.shape[1], image.shape[0])
             
-            # Cache the detection result for later use
+            # Save SVG for debugging
+            debug_path = settings.PROCESSED_DIR / f"{image_id}_mask_debug.svg"
+            with open(debug_path, 'w') as f:
+                f.write(svg_mask)
+            logger.debug(f"Saved debug SVG mask to {debug_path}")
+            
+            # Cache the detection result
             logger.debug(f"Preparing cache data for image {image_id}")
             try:
                 cache_data = {
                     'image': image,
-                    'wall_mask': detection_result['wall_mask'],
-                    'walls': walls
+                    'wall_mask': wall_mask
                 }
                 logger.debug("Cache data prepared successfully")
                 self._save_to_cache(image_id, cache_data)
@@ -104,15 +169,15 @@ class ImageService:
                 raise ImageProcessingError(f"Failed to prepare cache data: {str(e)}")
             
             # Save preview with detected walls highlighted
-            preview_image = self._create_detection_preview(image, detection_result['wall_mask'])
+            preview_image = self._create_detection_preview(image, wall_mask)
             preview_path = FileService.save_processed_image(
-                image_id, 
+                image_id,
                 cv2.imencode('.jpg', preview_image)[1].tobytes(),
                 "_preview"
             )
             
             return {
-                'walls': walls,
+                'mask': svg_mask,
                 'preview_url': FileService.get_file_url(preview_path)
             }
             
@@ -120,10 +185,9 @@ class ImageService:
             raise ImageProcessingError(f"Error processing image: {str(e)}")
 
     async def apply_wall_color(
-        self, 
-        image_id: str, 
-        color_rgb: Tuple[int, int, int],
-        wall_ids: List[str]
+        self,
+        image_id: str,
+        color_rgb: Tuple[int, int, int]
     ) -> Path:
         """Apply color to specified walls"""
         try:
@@ -156,6 +220,16 @@ class ImageService:
     def _create_detection_preview(image: np.ndarray, wall_mask: np.ndarray) -> np.ndarray:
         """Create a preview image with detected walls highlighted"""
         preview = image.copy()
+        height, width = preview.shape[:2]
+        
+        # Resize wall_mask to match image dimensions if needed
+        if wall_mask.shape[:2] != preview.shape[:2]:
+            logger.debug(f"Resizing wall mask from {wall_mask.shape[:2]} to {preview.shape[:2]}")
+            wall_mask = cv2.resize(
+                wall_mask,
+                (width, height),
+                interpolation=cv2.INTER_NEAREST
+            )
         
         # Create semi-transparent overlay
         overlay = np.zeros_like(preview)
@@ -175,3 +249,34 @@ class ImageService:
                 os.remove(cache_path)
         except Exception as e:
             logger.error(f"Failed to cleanup cache for {image_id}: {str(e)}")
+
+    async def generate_color_recommendations(self, image_id: str, num_colors: int = 4) -> List[Tuple[str, Path]]:
+        """Generate color recommendations for walls"""
+        try:
+            # Load cached image and mask
+            cache = self._load_from_cache(image_id)
+            
+            # Set the image and wall mask in wall detector
+            image = cache['image']
+            wall_mask = cache['wall_mask']
+            self.wall_detector.original_image = image
+            self.wall_detector.wall_mask = wall_mask
+            
+            # Generate recommendations using wall detector
+            recommendations = self.wall_detector.generate_recommendations(num_colors)
+            
+            # Save preview images for each recommendation
+            result = []
+            for hex_color, preview_image in recommendations:
+                # Save the preview image
+                preview_path = FileService.save_processed_image(
+                    image_id,
+                    cv2.imencode('.jpg', cv2.cvtColor(preview_image, cv2.COLOR_RGB2BGR))[1].tobytes(),
+                    f"_preview_{hex_color[1:]}"  # Remove # from hex color for filename
+                )
+                result.append((hex_color, preview_path))
+            
+            return result
+            
+        except Exception as e:
+            raise ImageProcessingError(f"Error generating recommendations: {str(e)}")

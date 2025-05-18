@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
-from .api.endpoints import wall, test  # Added test endpoints
+from .api.endpoints import wall, test, decoration  # Added decoration endpoints
 from .core.config import settings, setup_application
 from .core.exceptions import BaseCustomException
 
@@ -31,6 +31,7 @@ app.mount("/static", StaticFiles(directory=Path("static")), name="static")
 # Include routers
 app.include_router(wall.router, prefix=f"{settings.API_V1_STR}/wall", tags=["wall"])
 app.include_router(test.router, prefix=f"{settings.API_V1_STR}/test", tags=["test"])  # Added test router
+app.include_router(decoration.router, prefix=f"{settings.API_V1_STR}/decoration", tags=["decoration"])
 
 # Exception handlers
 @app.exception_handler(BaseCustomException)
@@ -69,3 +70,4 @@ if __name__ == "__main__":
     )
 
 # python3 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+# python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

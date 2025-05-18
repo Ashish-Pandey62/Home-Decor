@@ -7,7 +7,10 @@ from ...models.schemas import (
     ColorRequest,
     ColorResponse,
     ImageResponse,
-    WallDetectionRequest
+    WallDetectionRequest,
+    RecommendationRequest,
+    RecommendationResponse,
+    ColorRecommendation
 )
 from ...services.file_service import FileService
 from ...services.image_service import ImageService
@@ -93,7 +96,7 @@ async def detect_walls(
             request.image_id,
             file_path
         )
-        logger.info(f"Wall detection completed. Found {len(result['walls'])} walls")
+        logger.info("Wall detection completed - mask generated")
         
         # Schedule cleanup
         if background_tasks:
@@ -102,7 +105,7 @@ async def detect_walls(
         
         response = WallDetectionResponse(
             image_id=request.image_id,
-            walls=result['walls'],
+            mask=result['mask'],
             preview_url=result['preview_url']
         )
         logger.info(f"Wall detection successful for image_id: {request.image_id}")
@@ -137,8 +140,7 @@ async def apply_color(
         logger.info("Starting color application process")
         result_path = await image_service.apply_wall_color(
             request.image_id,
-            request.color_rgb,
-            request.wall_ids
+            request.color_rgb
         )
         logger.debug(f"Color applied successfully, result saved to: {result_path}")
         
@@ -175,3 +177,59 @@ async def health_check() -> Dict[str, str]:
     """
     logger.debug("Health check requested")
     return {"status": "healthy"}
+
+@router.post("/recommendations", response_model=RecommendationResponse)
+async def get_color_recommendations(
+    request: RecommendationRequest,
+    background_tasks: BackgroundTasks = None,
+    image_service: ImageService = Depends(get_image_service)
+) -> RecommendationResponse:
+    """
+    Generate color recommendations for detected walls
+    """
+    logger.info(f"Received color recommendations request for image_id: {request.image_id}")
+    
+    try:
+        # Check if image has been processed
+        file_path = FileService.get_file_path(request.image_id)
+        if not file_path.exists():
+            logger.error(f"Original image not found at: {file_path}")
+            raise InvalidImageError("Original image not found. Please upload the image first.")
+
+        # Check if image is already processed
+        cache_path = image_service._get_cache_path(request.image_id)
+        if not cache_path.exists():
+            logger.error(f"Image {request.image_id} has not been processed. Please detect walls first.")
+            raise ImageProcessingError("Please detect walls before requesting recommendations")
+
+        # Generate recommendations
+        recommendations = await image_service.generate_color_recommendations(
+            request.image_id,
+            request.num_colors
+        )
+        
+        # Create response
+        response = RecommendationResponse(
+            image_id=request.image_id,
+            recommendations=[
+                ColorRecommendation(
+                    hex_color=hex_color,
+                    preview_url=FileService.get_file_url(preview_path)
+                )
+                for hex_color, preview_path in recommendations
+            ]
+        )
+        
+        # Schedule cleanup if needed
+        if background_tasks:
+            logger.debug(f"Scheduling cleanup for image_id: {request.image_id}")
+            background_tasks.add_task(image_service.cleanup_cache, request.image_id)
+        
+        return response
+        
+    except ImageProcessingError as e:
+        logger.error(f"Color recommendations failed: {str(e)}", exc_info=True)
+        return JSONResponse(
+            status_code=e.status_code,
+            content={"detail": str(e)}
+        )

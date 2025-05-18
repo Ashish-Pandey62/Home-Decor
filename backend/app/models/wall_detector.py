@@ -5,70 +5,95 @@ import random
 from pathlib import Path
 import matplotlib.pyplot as plt
 from segment_anything import sam_model_registry, SamPredictor, SamAutomaticMaskGenerator
-from ..core.config import settings
+from ..core.config import settings, logger
 from ..core.exceptions import ModelError, InvalidImageError
 
 class WallRecoloringTool:
     def __init__(self):
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        print(f"Using device: {self.device}")
+        """Initialize the wall detector with SAM model"""
+        try:
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            print(f"Using device: {self.device}")
+            
+            model_type = settings.MODEL_TYPE
+            checkpoint = str(settings.MODEL_PATH)
+            
+            self.sam = sam_model_registry[model_type](checkpoint=checkpoint)
+            self.sam.to(device=self.device)
+            
+            self.mask_generator = SamAutomaticMaskGenerator(
+                model=self.sam,
+                points_per_side=64,
+                pred_iou_thresh=0.86,
+                stability_score_thresh=0.9,
+                crop_n_layers=1,
+                crop_n_points_downscale_factor=2,
+                min_mask_region_area=500
+            )
+            self.predictor = SamPredictor(self.sam)
+            self.selected_segments = []
+            self.wall_mask = None
+            self.original_image = None
+        except Exception as e:
+            raise ModelError(f"Failed to initialize SAM model: {str(e)}")
 
-        model_type = "vit_h"
-        checkpoint = "sam_vit_h_4b8939.pth"
-
-        self.sam = sam_model_registry[model_type](checkpoint=checkpoint)
-        self.sam.to(device=self.device)
-
-        self.mask_generator = SamAutomaticMaskGenerator(
-            model=self.sam,
-            points_per_side=32,
-            pred_iou_thresh=0.9,
-            stability_score_thresh=0.92,
-            crop_n_layers=1,
-            crop_n_points_downscale_factor=2,
-            min_mask_region_area=100
-        )
-
-        self.predictor = SamPredictor(self.sam)
-
-        self.selected_segments = []
-        self.wall_mask = None
-
-    def load_image(self, image_path):
-        self.original_image = cv2.imread(image_path)
-        if self.original_image is None:
-            raise ValueError(f"Could not load image from {image_path}")
-        self.original_image = cv2.cvtColor(self.original_image, cv2.COLOR_BGR2RGB)
-        self.height, self.width = self.original_image.shape[:2]
-
-        self.predictor.set_image(self.original_image)
-
-        return self.original_image
+    def load_image(self, image_path: Path) -> np.ndarray:
+        """Load and prepare image for processing"""
+        try:
+            self.original_image = cv2.imread(str(image_path))
+            if self.original_image is None:
+                raise InvalidImageError(f"Could not load image from {image_path}")
+            
+            self.original_image = cv2.cvtColor(self.original_image, cv2.COLOR_BGR2RGB)
+            self.height, self.width = self.original_image.shape[:2]
+            self.predictor.set_image(self.original_image)
+            return self.original_image
+        except Exception as e:
+            raise InvalidImageError(f"Error loading image: {str(e)}")
 
     def generate_segments(self):
         self.segments = self.mask_generator.generate(self.original_image)
         print(f"Generated {len(self.segments)} segments")
         return self.segments
 
-    def select_wall_segments(self):
+    def detect_walls(self, image=None) -> np.ndarray:
+        """Detect walls in the image using SAM with improved algorithm"""
+        if image is not None:
+            self.original_image = image
+            self.height, self.width = self.original_image.shape[:2]
+            self.predictor.set_image(self.original_image)
+        
         if not hasattr(self, 'segments'):
             self.generate_segments()
 
+        self.wall_mask = np.zeros((self.height, self.width), dtype=np.uint8)
         self.selected_segments = []
+        selected_segment_ids = set()
 
-        wall_mask = np.zeros((self.height, self.width), dtype=np.uint8)
-
-
-        sorted_segments = sorted(self.segments, key=lambda x: x['area'], reverse=True)
-
-        # Take the top 30% of segments by area as candidates
-        num_candidates = max(1, int(len(sorted_segments) * 0.3))
-        candidates = sorted_segments[:num_candidates]
-
-        for segment in candidates:
+        all_colors = []
+        for idx, segment in enumerate(self.segments):
             mask = segment['segmentation']
+            segment_pixels = self.original_image[mask]
+            if len(segment_pixels) > 0:
+                avg_color = np.mean(segment_pixels, axis=0)
+                all_colors.append((avg_color, segment['area'], idx))
 
-            # boundary bata in/out
+        all_colors = sorted(all_colors, key=lambda x: x[1], reverse=True)
+        dominant_colors = all_colors[:min(5, len(all_colors))]
+
+        sorted_segments = [(idx, segment) for idx, segment in enumerate(self.segments)]
+        sorted_segments.sort(key=lambda x: x[1]['area'], reverse=True)
+
+        for idx, segment in sorted_segments:
+            mask = segment['segmentation']
+            segment_pixels = self.original_image[mask]
+
+            if len(segment_pixels) == 0:
+                continue
+
+            avg_color = np.mean(segment_pixels, axis=0)
+            std_color = np.std(segment_pixels, axis=0)
+
             touches_boundary = (
                 np.any(mask[0, :]) or
                 np.any(mask[-1, :]) or
@@ -84,23 +109,75 @@ class WallRecoloringTool:
                 solidity = segment['area'] / hull_area if hull_area > 0 else 0
             else:
                 solidity = 0
+                perimeter_area_ratio = float('inf')
 
-            # Check color - walls are typically light colored,haha
-            segment_pixels = self.original_image[mask]
-            avg_color = np.mean(segment_pixels, axis=0)
-            is_light = np.mean(avg_color) > 150  # Threshold for "lightness"
+            color_homogeneity = np.mean(std_color)
 
-            # Combine all criteria
-            if touches_boundary and solidity > 0.7 and is_light:
+            area_percentage = segment['area'] / (self.height * self.width)
+
+            is_wall = (
+                (touches_boundary) and
+                (solidity > 0.75) and
+                (color_homogeneity < 30) and
+                (perimeter_area_ratio < 0.1) and
+                (area_percentage > 0.05)
+            )
+
+            if is_wall:
+                self.wall_mask = np.logical_or(self.wall_mask, mask)
                 self.selected_segments.append(segment)
-                wall_mask = np.logical_or(wall_mask, mask)
+                selected_segment_ids.add(idx)
 
-        # If no segments were selected, use fallback: just take the largest segment
-        if len(self.selected_segments) == 0 and len(sorted_segments) > 0:
-            self.selected_segments.append(sorted_segments[0])
-            wall_mask = np.logical_or(wall_mask, sorted_segments[0]['segmentation'])
+        # Additional color-based refinement
+        if len(self.selected_segments) > 0:
+            wall_pixels = self.original_image[self.wall_mask == 1]
+            if len(wall_pixels) > 0:
+                wall_avg_color = np.mean(wall_pixels, axis=0)
 
-        self.wall_mask = wall_mask.astype(np.uint8)
+                for idx, segment in sorted_segments:
+                    if idx in selected_segment_ids:
+                        continue
+
+                    mask = segment['segmentation']
+                    segment_pixels = self.original_image[mask]
+
+                    if len(segment_pixels) == 0:
+                        continue
+
+                    avg_color = np.mean(segment_pixels, axis=0)
+                    color_distance = np.linalg.norm(avg_color - wall_avg_color)
+
+                    if color_distance < 35 and segment['area'] > 1000:
+                        self.wall_mask = np.logical_or(self.wall_mask, mask)
+                        self.selected_segments.append(segment)
+                        selected_segment_ids.add(idx)
+
+        # Fallback for when no walls are detected
+        if np.sum(self.wall_mask) < 0.1 * (self.height * self.width):
+            for idx, segment in sorted_segments[:10]:
+                if idx in selected_segment_ids:
+                    continue
+
+                mask = segment['segmentation']
+                segment_pixels = self.original_image[mask]
+
+                if len(segment_pixels) == 0:
+                    continue
+
+                avg_color = np.mean(segment_pixels, axis=0)
+                
+                # Check if it might be a green screen
+                is_green = avg_color[1] > avg_color[0] and avg_color[1] > avg_color[2]
+
+                if is_green and segment['area'] > 0.05 * (self.height * self.width):
+                    self.wall_mask = np.logical_or(self.wall_mask, mask)
+                    self.selected_segments.append(segment)
+                    selected_segment_ids.add(idx)
+
+        # Smoothing the mask
+        kernel = np.ones((15, 15), np.uint8)
+        self.wall_mask = cv2.morphologyEx(self.wall_mask.astype(np.uint8), cv2.MORPH_CLOSE, kernel)
+
         return self.wall_mask
 
     def detect_walls(self):
@@ -111,11 +188,21 @@ class WallRecoloringTool:
         """Apply color to detected walls"""
         if image is not None:
             self.original_image = image
-        
+            
         if wall_mask is not None:
             self.wall_mask = wall_mask
         elif not hasattr(self, 'wall_mask') or self.wall_mask is None:
             self.detect_walls()
+
+        # Ensure wall mask matches image dimensions
+        img_height, img_width = self.original_image.shape[:2]
+        if self.wall_mask.shape[:2] != (img_height, img_width):
+            logger.debug(f"Resizing wall mask from {self.wall_mask.shape[:2]} to {(img_height, img_width)}")
+            self.wall_mask = cv2.resize(
+                self.wall_mask,
+                (img_width, img_height),
+                interpolation=cv2.INTER_NEAREST
+            )
 
         result_image = self.original_image.copy()
 
@@ -198,13 +285,13 @@ class WallRecoloringTool:
 
         recommendations = []
         for _ in range(num_colors):
-            # Generate pleasant colors in HSV space
-            hue = random.randint(0, 360)
-            saturation = random.randint(30, 70)
-            value = random.randint(70, 95)
+            # Generate pleasant colors in HSV space for OpenCV (H: 0-179, S: 0-255, V: 0-255)
+            hue = random.randint(0, 179)  # OpenCV uses 0-179 for hue
+            saturation = int(random.randint(30, 70) * 2.55)  # Convert 0-100 to 0-255
+            value = int(random.randint(70, 95) * 2.55)  # Convert 0-100 to 0-255
             
             # Convert to RGB
-            hsv_color = np.uint8([[[hue, saturation, value]]])
+            hsv_color = np.uint8([[[hue, saturation, value]]])  # All values now in uint8 range
             rgb_color = cv2.cvtColor(hsv_color, cv2.COLOR_HSV2RGB)[0][0]
             
             # Apply color and store result
