@@ -81,12 +81,21 @@ class ImageService:
 
     def _mask_to_svg(self, mask: np.ndarray, width: int, height: int) -> str:
         """Convert binary mask to SVG path, properly handling holes"""
-        # Find all contours including holes
+        # Ensure mask is binary and properly formatted
+        mask = (mask > 0).astype(np.uint8) * 255
+        
+        # Debug logging
+        logger.info(f"Mask shape: {mask.shape}, Unique values: {np.unique(mask)}")
+        logger.info(f"Non-zero pixels in mask: {np.count_nonzero(mask)}")
+        
+        # Find all contours including holes with different retrieval mode
         contours, hierarchy = cv2.findContours(
-            mask.astype(np.uint8),
-            cv2.RETR_CCOMP,  # Retrieve both external and internal contours
+            mask,
+            cv2.RETR_EXTERNAL,  # Changed to EXTERNAL to simplify hierarchy
             cv2.CHAIN_APPROX_SIMPLE
         )
+        
+        logger.info(f"Found {len(contours)} contours")
         
         # Create SVG drawing
         dwg = svgwrite.Drawing(size=(width, height))

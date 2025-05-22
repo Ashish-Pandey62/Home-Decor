@@ -16,6 +16,26 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json"
 )
 
+# Configure file upload limits
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
+
+class UploadSizeMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        if request.url.path.startswith(f"{settings.API_V1_STR}/wall/upload"):
+            content_length = request.headers.get('content-length')
+            if content_length and int(content_length) > 0:
+                # Set max size to 10MB
+                if int(content_length) > 20 * 1024 * 1024:
+                    return JSONResponse(
+                        status_code=413,
+                        content={"detail": "File too large. Maximum size is 10MB"}
+                    )
+        return await call_next(request)
+
+app.add_middleware(UploadSizeMiddleware)
+
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,

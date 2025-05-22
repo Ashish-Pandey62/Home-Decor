@@ -23,12 +23,12 @@ class WallDetector:
             
             self.mask_generator = SamAutomaticMaskGenerator(
                 model=self.sam,
-                points_per_side=16,                  # Lower = faster (but fewer seed points)
-                pred_iou_thresh=0.8,                 # Lower for faster inference, more masks
-                stability_score_thresh=0.8,          # Slightly relaxed to reduce processing
-                crop_n_layers=0,                     # Disable cropping for speed
-                crop_n_points_downscale_factor=2,   # Irrelevant if crop_n_layers=0, but safe to keep
-                min_mask_region_area=1500           # Avoid tiny masks that slow down post-processing
+                points_per_side=32,                 
+                pred_iou_thresh=0.8,                 
+                stability_score_thresh=0.8,          
+                crop_n_layers=0,                    
+                crop_n_points_downscale_factor=2,   
+                min_mask_region_area= 1000           
             )
 
             self.predictor = SamPredictor(self.sam)
