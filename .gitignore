@@ -14,5 +14,4 @@ backend/.env
 backend/.env
 /backend/*.env
 test_images/*
-models/*
 
